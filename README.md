@@ -74,6 +74,21 @@ OPENBLAS_NUM_THREADS=1 python scripts/prepare_data.py
 
 仓库已有简短的 issue 与 PR 模板，不额外搭建服务或复杂 CI。
 
+## 已实现的模块
+
+任务一（已知结构分类）已有训练与推理入口，可先用合成样例窗口跑通；用法、输入格式与当前状态见 [分类模块说明](docs/分类模块说明.md)。其余任务尚未实现。
+
+```bash
+pip install -r requirements.txt
+python scripts/make_sample_windows.py   # 合成样例窗口，用于打通流程，不是实验结果
+python scripts/train_classifier.py
+python scripts/predict_classifier.py \
+    --checkpoint outputs/classifier/skeleton/best.pt \
+    --split test --out-csv outputs/classifier/skeleton/predictions_test.csv
+```
+
+真实窗口等 [#2 共享数据处理](https://github.com/hycx233/deep-learning/issues/2)交付后接入。
+
 ## 目录
 
 ```text
