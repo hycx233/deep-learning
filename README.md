@@ -2,7 +2,7 @@
 
 深度学习综合实践三人课程项目。完成已知结构识别、新结构候选发现、多轨道可视化，并选做不同实验条件下的结构差异定位。
 
-**当前状态：三人已加入，按 GitHub issue 分工推进。** 本仓库已整理课程材料和项目计划，模型与数据处理代码尚未实现。成员与职责见下表，具体任务见任务清单及其链接的 issue。
+**当前状态：三人按 GitHub issue 分工推进。** 已实现标注整理、六样本准备与真实窗口预览，正式共享归一化和训练数据划分由 #2 继续完成。成员与职责见下表，具体任务见任务清单及其链接的 issue。
 
 | 成员 | 角色与主责 |
 | --- | --- |
@@ -19,6 +19,7 @@
 - [项目完成计划](docs/项目完成计划.md)：范围、分工、技术路线、进度与提交要求。
 - [GitHub 任务与成员分工](docs/GitHub任务清单.md)：12 项任务、负责人、日期和验收条件。
 - [数据说明](data/README.md)：原始矩阵的获取与放置方式。
+- [数据准备与 CPU 交接样例](docs/数据准备说明.md)：运行方法、坐标依据、表字段与已验证结果。
 - [课程标注 Excel](data/标注数据.xlsx)
 
 ## 项目范围
@@ -43,7 +44,20 @@ git clone git@github.com:hycx233/deep-learning.git
 cd deep-learning
 ```
 
-随后阅读项目计划，按数据说明准备本地文件。开始让 AI agent 工作时，先要求它阅读根目录的 [AGENTS.md](AGENTS.md) 和当前 issue；不确定工具是否自动加载时，直接在提示中写明。依赖安装和运行命令将在对应代码完成后补充。
+随后阅读项目计划，按数据说明准备本地文件。开始让 AI agent 工作时，先要求它阅读根目录的 [AGENTS.md](AGENTS.md) 和当前 issue；不确定工具是否自动加载时，直接在提示中写明。
+
+CPU 数据准备（已验证 Python 3.12）：
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python scripts/prepare_annotations.py
+python scripts/prepare_samples.py
+python scripts/preview_structures.py
+```
+
+这三个入口不需要 PyTorch 或 CUDA；预览为原始 counts，不是已经完成归一化与划分的正式训练数据。
 
 - 从 `main` 创建任务分支，如 `feat/12-classifier`，数字使用实际 issue 号。
 - 每个普通任务提交一个 PR，写明实现内容、运行命令与代表结果；找一名其他成员审核后合并。
@@ -63,16 +77,26 @@ cd deep-learning
 ├── AGENTS.md                   # 三人使用的统一 agent 规则
 ├── .gitignore
 ├── .github/                   # issue / PR 模板
+├── requirements.txt           # 当前数据准备与预览所需依赖
+├── scripts/
+│   ├── prepare_annotations.py
+│   ├── prepare_samples.py
+│   └── preview_structures.py
 ├── 基于深度学习的接触矩阵处理实践方案.pdf
 ├── data/
 │   ├── README.md
 │   ├── 标注数据.xlsx
+│   ├── structures.csv
+│   ├── genes.csv
+│   ├── samples.csv
 │   ├── GSE272159_37C_rep1.mapq_30.10.cool  # 本地，不入 Git
 │   ├── GSE272159_37C_rep2.mapq_30.10.cool  # 本地，不入 Git
 │   └── GSE272161_RAW.tar                  # 本地，不入 Git
 └── docs/
     ├── 项目完成计划.md
-    └── GitHub任务清单.md
+    ├── GitHub任务清单.md
+    ├── 数据准备说明.md
+    └── results/data_preparation/ # 已检查的窗口预览图与位置表
 ```
 
 最终按课程要求分别提交代码 ZIP、实验报告 PDF、讲解视频；组长提交三项，其他成员提交报告。

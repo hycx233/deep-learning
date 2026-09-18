@@ -23,6 +23,8 @@ __pycache__/
 /data/*.tar
 /data/*.tar.gz
 /data/*.zip
+/data/*.7z
+/data/*.7z.*
 /data/raw/
 /data/cache/
 
