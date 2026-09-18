@@ -1,0 +1,41 @@
+# 本机工具与 Python 环境
+/.agents/
+/.codex/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+.ruff_cache/
+.DS_Store
+.idea/
+.vscode/
+.env
+.env.*
+!.env.example
+
+# 原始接触矩阵与数据包；保留小型标注表和说明文档
+*.cool
+*.cool.gz
+*.mcool
+*.scool
+/data/*.tar
+/data/*.tar.gz
+/data/*.zip
+/data/raw/
+/data/cache/
+
+# 训练权重、缓存与批量输出
+*.pt
+*.pth
+*.ckpt
+/checkpoints/
+/cache/
+/outputs/
+/runs/
+/tmp/
+*.log
+
+# 最终提交包在本地生成
+/dist/
