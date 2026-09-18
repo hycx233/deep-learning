@@ -1,27 +1,27 @@
-# 可直接建立的 GitHub 任务清单
+# GitHub 任务与成员分工
 
-状态：草案，尚未发布为 GitHub issue。待另外两位成员加入仓库后，再确认实际负责人并下发任务。
+已于 2026 年 9 月 18 日发布 12 条正式 issue，并设置负责人和里程碑；按下表链接开发和提交 PR。P11 为三人共同任务，每人负责自己的章节与演示部分。
 
-角色：A = 组长，B = 成员二，C = 成员三。日期以 2026 年 9 月 18 日启动为准。下面的 P01—P12 是计划编号，创建 issue 后替换为真实 GitHub 号码。
+角色：A = `hycx233`（组长），B = `onlysonder`，C = `lanshuheng9-oss`。日期以 2026 年 9 月 18 日启动为准。下面的 P01—P12 保留为计划编号，GitHub 编号以链接为准。
 
 这些小时数指 AI agent 辅助下的人工投入，不含模型训练或批量处理的等待时间。每人开发与交付 9 h，共同文稿/展示 3 h，协作审核 1 h，合计约 13 h。
 
 ## 总览
 
-| 编号 | Issue 标题 | 负责人 | 人工预算 | 建议完成日期 | 依赖 |
-| --- | --- | --- | ---: | --- | --- |
-| P01 | 整理结构标注、基因表与六个样本清单 | A | 2 h | 9/19 | 无 |
-| P02 | 实现共享归一化、切窗与数据分组 | A | 3 h | 9/21 | P01 |
-| P03 | 训练轻量 CNN 已知结构分类器 | B | 3 h | 9/23 | P02；骨架可先做 |
-| P04 | 输出分类评价、基线与显著性图 | B | 2 h | 9/24 | P03 |
-| P05 | 实现自编码器与候选窗口打分 | C | 3 h | 9/23 | P02；骨架可先做 |
-| P06 | 聚类候选并导出候选表和代表图 | C | 3 h | 9/25 | P05；参考 P03 已知类别表征 |
-| P07 | 绘制三条件四面板全基因组轨道图 | C | 3 h | 9/24 | P01、P02；布局可先做 |
-| P08 | 完成两种突变条件相对 WT 的差异定位 | A | 3 h | 9/24 | P02；候选补充可等 P06 |
-| P09 | 检查候选的跨重复复现性与已知结构召回 | B | 2 h | 9/26 | P05、P06 |
-| P10 | 串联运行顺序并确认四个任务的最终产物 | A | 1 h | 9/27 | P04、P07、P08、P09 |
-| P11 | 完成报告、PPT 和各自讲解片段 | 三人 | 每人 3 h | 9/28 | 可随实验起草；定稿需 P10 |
-| P12 | 复跑代表流程，打包代码并合成讲解视频 | B | 2 h | 9/28 | P10、P11；复跑部分可提前 |
+| 计划编号 | GitHub issue | 标题 | 负责人 | 人工预算 | 完成日期 | 依赖 |
+| --- | --- | --- | --- | ---: | --- | --- |
+| P01 | [#1](https://github.com/hycx233/deep-learning/issues/1) | 整理结构标注、基因表与六个样本清单 | @hycx233 | 2 h | 9/19 | 无 |
+| P02 | [#2](https://github.com/hycx233/deep-learning/issues/2) | 实现共享归一化、切窗与数据分组 | @hycx233 | 3 h | 9/21 | [#1](https://github.com/hycx233/deep-learning/issues/1) |
+| P03 | [#3](https://github.com/hycx233/deep-learning/issues/3) | 训练轻量 CNN 已知结构分类器 | @onlysonder | 3 h | 9/23 | [#2](https://github.com/hycx233/deep-learning/issues/2)；骨架可先做 |
+| P04 | [#4](https://github.com/hycx233/deep-learning/issues/4) | 输出分类评价、基线与显著性图 | @onlysonder | 2 h | 9/24 | [#3](https://github.com/hycx233/deep-learning/issues/3) |
+| P05 | [#5](https://github.com/hycx233/deep-learning/issues/5) | 实现自编码器与候选窗口打分 | @lanshuheng9-oss | 3 h | 9/23 | [#2](https://github.com/hycx233/deep-learning/issues/2)；骨架可先做 |
+| P06 | [#6](https://github.com/hycx233/deep-learning/issues/6) | 聚类候选并导出候选表和代表图 | @lanshuheng9-oss | 3 h | 9/25 | [#5](https://github.com/hycx233/deep-learning/issues/5)；参考 [#3](https://github.com/hycx233/deep-learning/issues/3) 已知类别表征 |
+| P07 | [#7](https://github.com/hycx233/deep-learning/issues/7) | 绘制三条件四面板全基因组轨道图 | @lanshuheng9-oss | 3 h | 9/24 | [#1](https://github.com/hycx233/deep-learning/issues/1)、[#2](https://github.com/hycx233/deep-learning/issues/2)；布局可先做 |
+| P08 | [#8](https://github.com/hycx233/deep-learning/issues/8) | 完成两种突变条件相对 WT 的差异定位 | @hycx233 | 3 h | 9/24 | [#2](https://github.com/hycx233/deep-learning/issues/2)；候选补充可等 [#6](https://github.com/hycx233/deep-learning/issues/6) |
+| P09 | [#9](https://github.com/hycx233/deep-learning/issues/9) | 检查候选的跨重复复现性与已知结构召回 | @onlysonder | 2 h | 9/26 | [#5](https://github.com/hycx233/deep-learning/issues/5)、[#6](https://github.com/hycx233/deep-learning/issues/6) |
+| P10 | [#10](https://github.com/hycx233/deep-learning/issues/10) | 串联运行顺序并确认四个任务的最终产物 | @hycx233 | 1 h | 9/27 | [#4](https://github.com/hycx233/deep-learning/issues/4)、[#7](https://github.com/hycx233/deep-learning/issues/7)、[#8](https://github.com/hycx233/deep-learning/issues/8)、[#9](https://github.com/hycx233/deep-learning/issues/9) |
+| P11 | [#11](https://github.com/hycx233/deep-learning/issues/11) | 完成 LaTeX 报告、演示文稿和各自讲解片段 | @hycx233、@onlysonder、@lanshuheng9-oss | 每人 3 h | 9/28 | 可随实验起草；定稿需 [#10](https://github.com/hycx233/deep-learning/issues/10) |
+| P12 | [#12](https://github.com/hycx233/deep-learning/issues/12) | 复跑代表流程，打包代码并合成讲解视频 | @onlysonder | 2 h | 9/28 | [#10](https://github.com/hycx233/deep-learning/issues/10)、[#11](https://github.com/hycx233/deep-learning/issues/11)；复跑部分可提前 |
 
 分工复核：A = P01 + P02 + P08 + P10 = 9 h；B = P03 + P04 + P09 + P12 = 9 h；C = P05 + P06 + P07 = 9 h。共同任务另计。最终提交与 A 的协调审核合计计入其 1 h 协作预算，保持提交步骤简单。
 
@@ -157,16 +157,17 @@
 - [ ] 四个任务各有结果文件路径，模型权重与报告采用的实验能对应。
 - [ ] 冻结报告要使用的表格和图；未解决的小问题列在 issue，不扩展范围。
 
-### P11：完成报告、PPT 和各自讲解片段
+### P11：完成 LaTeX 报告、演示文稿和各自讲解片段
 
 **三人共同负责，每人约 3 h，9/28 前；可边做实验边写，定稿依赖 P10。**
 
-A 做协调人。每人仅写自己的章节并提交自己的 PR，避免三人同时重写整篇文档。
+A 做协调人，三人共同 assignee。报告使用 LaTeX：A 在 9/21 前建立简单的 `docs/report/main.tex` 与 `sections/` 章节骨架，各成员编辑自己的章节并提交 PR；此准备包含在每人 3 h 预算中。推荐 `ctexart` 与 XeLaTeX，不增加复杂模板或构建系统。9/26 统一选择 Beamer 或 PPT 作为演示文稿格式，只做一种。
 
-- [ ] A：数据处理、总体设计、差异定位、汇总与结论。
-- [ ] B：已知结构分类、解释、评价、复现操作说明。
-- [ ] C：候选发现、聚类、全基因组可视化与案例。
-- [ ] 每人做对应 PPT 并录自己的讲解片段，交给 B 合成；视频总长内部目标 8—12 分钟。
+- [ ] A（@hycx233）：主文件与章节骨架、数据处理、总体设计、差异定位、汇总与结论。
+- [ ] B（@onlysonder）：已知结构分类、解释、评价、复现操作说明。
+- [ ] C（@lanshuheng9-oss）：候选发现、聚类、全基因组可视化与案例。
+- [ ] 保存 `.tex`、所需图片、引用与一条已验证的编译命令，产出可提交 PDF；编译目录为 `docs/report/build/`，检查相关页面的图表、中文和引用显示。
+- [ ] 统一选择 Beamer 或 PPT，各自做对应演示部分并录讲解片段，交给 B 合成；视频总长内部目标 8—12 分钟。
 - [ ] 报告有独立的“设计思路”章节，有指标、对照和新结构判定规则；成员分工与贡献百分比合计 100%。
 
 ### P12：复跑代表流程，打包代码并合成讲解视频
@@ -177,12 +178,13 @@ A 做协调人。每人仅写自己的章节并提交自己的 PR，避免三人
 
 - [ ] 在另一份环境或干净目录按 README 跑通代表性数据预处理、模型推理/评估和出图；完整训练保留已完成运行的记录，不要求重新训练一遍。
 - [ ] 代码 ZIP 包含可从数据到结果运行的脚本，报告数值能追溯到保存的结果文件。
-- [ ] 三人的 PPT/录音合成为可播放的视频，抽看开头、中间、结尾，声音可听清。
-- [ ] 把代码 ZIP、报告和视频三个单独文件交给 A；A 检查并按课程命名要求提交。
+- [ ] 按记录的命令编译 LaTeX 报告，确认 PDF 中的图表、引用与中文显示正常，并保留源文件。
+- [ ] 三人的演示文稿（统一为 Beamer 或 PPT）与录音合成为可播放的视频，抽看开头、中间、结尾，声音可听清。
+- [ ] 把代码 ZIP、报告 PDF 和视频三个单独文件交给 A；A 检查并按课程命名要求提交。
 
 ## 最简 Issue / PR 写法
 
-普通 issue 可以直接复制上面的对应条目。额外问题使用以下格式即可：
+已有任务直接使用上表链接，不重复创建。新增问题使用以下格式即可：
 
 ```markdown
 负责人：
@@ -210,4 +212,4 @@ Closes #实际 issue 号
 
 共同报告子 PR 用 `Refs #实际 issue 号`，由最后完成者关闭 issue。审核只找一名其他成员，不把所有 PR 都压给组长；检查重点是能运行、输入输出一致、结论与图表一致。
 
-建议只设三个里程碑：9/21 跑通首版、9/26 结果定稿、9/28 可提交。9/29—9/30 不预排功能，用作机动；10/1 为本组内部提交日。
+已建立三个里程碑：[9/21 首版跑通](https://github.com/hycx233/deep-learning/milestone/1)、[9/26 结果定稿](https://github.com/hycx233/deep-learning/milestone/2)、[9/28 可提交版本](https://github.com/hycx233/deep-learning/milestone/3)。9/29—9/30 不预排功能，用作机动；10/1 为本组内部提交日。

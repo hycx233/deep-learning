@@ -2,14 +2,22 @@
 
 深度学习综合实践三人课程项目。完成已知结构识别、新结构候选发现、多轨道可视化，并选做不同实验条件下的结构差异定位。
 
-**当前状态：项目准备阶段。** 本仓库已整理课程材料和项目计划，模型与数据处理代码尚未实现。具体 GitHub issue 和成员分配待另外两位成员加入后发布；文档中的 A/B/C 和 P01—P12 暂为规划代号。
+**当前状态：三人已加入，按 GitHub issue 分工推进。** 本仓库已整理课程材料和项目计划，模型与数据处理代码尚未实现。成员与职责见下表，具体任务见任务清单及其链接的 issue。
+
+| 成员 | 角色与主责 |
+| --- | --- |
+| [hycx233](https://github.com/hycx233)（A，组长） | 共享数据处理、差异定位、统筹与提交 |
+| [onlysonder](https://github.com/onlysonder)（B） | 已知结构分类、跨重复验证、复跑与打包 |
+| [lanshuheng9-oss](https://github.com/lanshuheng9-oss)（C） | 候选发现、聚类与多轨道可视化 |
+
+已发布 [12 条任务](https://github.com/hycx233/deep-learning/issues)。开始顺序：组长先做 [#1 标注与样本](https://github.com/hycx233/deep-learning/issues/1)和 [#2 共享预处理](https://github.com/hycx233/deep-learning/issues/2)；`onlysonder` 可先做 [#3 分类入口](https://github.com/hycx233/deep-learning/issues/3)；`lanshuheng9-oss` 可先做 [#5 自编码器](https://github.com/hycx233/deep-learning/issues/5)与 [#7 轨道样图](https://github.com/hycx233/deep-learning/issues/7)的骨架。B、C 先用小样本开发，依赖完成后接入共享实现。
 
 ## 项目材料
 
 - [Agent 协作规则](AGENTS.md)：统一实现、验证、实验记录和 issue/PR 习惯。
 - [课程实践方案 PDF](基于深度学习的接触矩阵处理实践方案.pdf)
 - [项目完成计划](docs/项目完成计划.md)：范围、分工、技术路线、进度与提交要求。
-- [GitHub 任务清单草案](docs/GitHub任务清单.md)：12 项任务及验收条件，尚未发布为 issue。
+- [GitHub 任务与成员分工](docs/GitHub任务清单.md)：12 项任务、负责人、日期和验收条件。
 - [数据说明](data/README.md)：原始矩阵的获取与放置方式。
 - [课程标注 Excel](data/标注数据.xlsx)
 
@@ -41,7 +49,9 @@ cd deep-learning
 - 每个普通任务提交一个 PR，写明实现内容、运行命令与代表结果；找一名其他成员审核后合并。
 - PR 用 `Closes #编号` 关联普通任务。共同报告的分段 PR 用 `Refs #编号`，最后统一关闭任务。
 - 原始矩阵、缓存、权重与批量输出保留在本地或共享存储；提交脚本、小配置、小型结果表、报告源文件和代表图。
-- 每人负责自己模块的报告、PPT 和讲解录音，具体负责人以之后发布的 issue 为准。
+- 每人负责自己模块的报告、演示文稿和讲解录音，按已分配的 issue 推进。
+
+最终报告采用 **LaTeX**：`docs/report/main.tex` 作为主文件，各成员在 `sections/` 下分章节编辑，提交编译后的 PDF 并保留源文件。演示文稿可用 **LaTeX Beamer 或 PPT**，9/26 统一选一种格式和模板，不重复制作；讲解视频由各成员片段合成。具体交付见三人共同的 [#11 文稿任务](https://github.com/hycx233/deep-learning/issues/11)，章节骨架可提前建立，无需等待所有实验结束。
 
 仓库已有简短的 issue 与 PR 模板，不额外搭建服务或复杂 CI。
 
@@ -65,4 +75,4 @@ cd deep-learning
     └── GitHub任务清单.md
 ```
 
-最终按课程要求分别提交代码 ZIP、实验报告、PPT 讲解视频；组长提交三项，其他成员提交报告。
+最终按课程要求分别提交代码 ZIP、实验报告 PDF、讲解视频；组长提交三项，其他成员提交报告。

@@ -39,3 +39,7 @@ __pycache__/
 
 # 最终提交包在本地生成
 /dist/
+
+# LaTeX 报告与演示文稿的构建目录
+/docs/report/build/
+/docs/slides/build/
