@@ -6,6 +6,7 @@
 
 ## 项目材料
 
+- [Agent 协作规则](AGENTS.md)：统一实现、验证、实验记录和 issue/PR 习惯。
 - [课程实践方案 PDF](基于深度学习的接触矩阵处理实践方案.pdf)
 - [项目完成计划](docs/项目完成计划.md)：范围、分工、技术路线、进度与提交要求。
 - [GitHub 任务清单草案](docs/GitHub任务清单.md)：12 项任务及验收条件，尚未发布为 issue。
@@ -34,7 +35,7 @@ git clone git@github.com:hycx233/deep-learning.git
 cd deep-learning
 ```
 
-随后阅读项目计划，按数据说明准备本地文件。依赖安装和运行命令将在对应代码完成后补充。
+随后阅读项目计划，按数据说明准备本地文件。开始让 AI agent 工作时，先要求它阅读根目录的 [AGENTS.md](AGENTS.md) 和当前 issue；不确定工具是否自动加载时，直接在提示中写明。依赖安装和运行命令将在对应代码完成后补充。
 
 - 从 `main` 创建任务分支，如 `feat/12-classifier`，数字使用实际 issue 号。
 - 每个普通任务提交一个 PR，写明实现内容、运行命令与代表结果；找一名其他成员审核后合并。
@@ -49,6 +50,7 @@ cd deep-learning
 ```text
 .
 ├── README.md
+├── AGENTS.md                   # 三人使用的统一 agent 规则
 ├── .gitignore
 ├── .github/                   # issue / PR 模板
 ├── 基于深度学习的接触矩阵处理实践方案.pdf
