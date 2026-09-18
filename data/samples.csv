@@ -1,0 +1,7 @@
+sample_id,condition,replicate,path,source_archive,source_member,chrom,source_chrom,bin_size,genome_length,n_bins,n_pixels,count_dtype,has_weight,storage_mode,file_size_bytes
+WT_rep1,WT,1,data/GSE272159_37C_rep1.mapq_30.10.cool,,,NC_000913.3,NC_000913.3,10,4641652,464166,257522134,int32,false,symmetric-upper,482254398
+WT_rep2,WT,2,data/GSE272159_37C_rep2.mapq_30.10.cool,,,NC_000913.3,NC_000913.3,10,4641652,464166,249673544,int32,false,symmetric-upper,468345755
+DstpA_rep1,DstpA,1,data/raw/GSM8950761_DstpA_rep1.MG1655.mapq_30.10.cool,data/GSE272161_RAW.tar,GSM8950761_DstpA_rep1.MG1655.mapq_30.10.cool.gz,NC_000913.3,NC_000913.3,10,4641652,464166,79536854,int32,false,symmetric-upper,144563693
+DstpA_rep2,DstpA,2,data/raw/GSM8950762_DstpA_rep2.MG1655.mapq_30.10.cool,data/GSE272161_RAW.tar,GSM8950762_DstpA_rep2.MG1655.mapq_30.10.cool.gz,NC_000913.3,NC_000913.3,10,4641652,464166,80751385,int32,false,symmetric-upper,146567064
+DhnsDstpA_rep1,DhnsDstpA,1,data/raw/GSM8950763_DhnsDstpA_rep1.MG1655.mapq_30.10.cool,data/GSE272161_RAW.tar,GSM8950763_DhnsDstpA_rep1.MG1655.mapq_30.10.cool.gz,NC_000913.3,NC_000913.3,10,4641652,464166,103310425,int32,false,symmetric-upper,188230269
+DhnsDstpA_rep2,DhnsDstpA,2,data/raw/GSM8950764_DhnsDstpA_rep2.MG1655.mapq_30.10.cool,data/GSE272161_RAW.tar,GSM8950764_DhnsDstpA_rep2.MG1655.mapq_30.10.cool.gz,NC_000913.3,NC_000913.3,10,4641652,464166,139016106,int32,false,symmetric-upper,249558773

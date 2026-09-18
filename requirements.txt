@@ -1,0 +1,7 @@
+# 数据准备与真实窗口预览；已验证 Python 3.12.14 / Linux / CPU。
+openpyxl==3.1.5       # 只读课程标注 Excel
+h5py==3.16.0         # Cooler 元数据核对
+cooler==0.10.4       # 局部接触矩阵读取
+numpy==2.5.3         # 局部窗口聚合与数组保存
+matplotlib==3.11.2   # 真实窗口预览
+# 模型训练依赖由分类/发现模块补充；数据准备不需要 PyTorch 或 CUDA。
