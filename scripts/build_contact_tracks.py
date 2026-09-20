@@ -58,10 +58,10 @@ def sample_track(
     cache_dir: Path,
     sample_id: str,
     track_bin_bp: int,
-) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict]:
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, dict]:
     state = load_sample(cache_dir, sample_id)
     metadata = state["metadata"]
-    starts, ends, aggregated = cached_marginal_track(state, track_bin_bp)
+    starts, ends, aggregated, valid = cached_marginal_track(state, track_bin_bp)
     info = {
         "chrom": metadata["chrom"],
         "genome_length": int(metadata["genome_length"]),
@@ -73,7 +73,7 @@ def sample_track(
         "valid_bin_count": int(metadata["valid_bin_count"]),
         "normalized_sum": float(aggregated.sum()),
     }
-    return starts, ends, aggregated, info
+    return starts, ends, aggregated, valid, info
 
 
 def main() -> None:
@@ -96,6 +96,7 @@ def main() -> None:
     samples = samples.sort_values(["condition", "replicate"], kind="stable")
 
     tracks: list[np.ndarray] = []
+    validity: list[np.ndarray] = []
     records: list[dict] = []
     reference_starts: np.ndarray | None = None
     reference_ends: np.ndarray | None = None
@@ -103,12 +104,15 @@ def main() -> None:
     for _, row in samples.iterrows():
         sample_id = str(row["sample_id"])
         print(f"处理 {sample_id}：{args.cache_dir}")
-        starts, ends, signal, info = sample_track(args.cache_dir, sample_id, args.track_bin_bp)
+        starts, ends, signal, valid, info = sample_track(
+            args.cache_dir, sample_id, args.track_bin_bp
+        )
         if reference_starts is None:
             reference_starts, reference_ends = starts, ends
         elif not np.array_equal(starts, reference_starts) or not np.array_equal(ends, reference_ends):
             raise RuntimeError(f"样本 {row['sample_id']} 的 bin 边界与前面样本不一致")
         tracks.append(signal.astype(np.float32))
+        validity.append(valid)
         records.append(
             {
                 "sample_id": row["sample_id"],
@@ -126,6 +130,7 @@ def main() -> None:
         starts=reference_starts,
         ends=reference_ends,
         signals=np.stack(tracks),
+        valid=np.stack(validity),
         sample_id=np.asarray(samples["sample_id"].astype(str).tolist(), dtype=str),
         condition=np.asarray(samples["condition"].astype(str).tolist(), dtype=str),
         replicate=samples["replicate"].astype(np.int64).to_numpy(),

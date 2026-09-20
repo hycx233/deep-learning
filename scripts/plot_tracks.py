@@ -73,7 +73,7 @@ def load_tracks(path: Path) -> dict[str, np.ndarray]:
     if not path.is_file():
         raise FileNotFoundError(f"找不到轨道数组：{path}")
     with np.load(path) as arrays:
-        required = {"starts", "ends", "signals", "sample_id", "condition", "replicate"}
+        required = {"starts", "ends", "signals", "valid", "sample_id", "condition", "replicate"}
         missing = sorted(required - set(arrays.files))
         if missing:
             raise ValueError(f"轨道数组缺少键 {missing}")
@@ -84,6 +84,8 @@ def load_tracks(path: Path) -> dict[str, np.ndarray]:
         raise ValueError("signals 样本数与 sample_id 不一致")
     if result["signals"].shape[1] != len(result["starts"]):
         raise ValueError("signals bin 数与 starts 不一致")
+    if result["valid"].shape != result["signals"].shape:
+        raise ValueError("valid 形状必须与 signals 一致")
     return result
 
 
@@ -106,6 +108,7 @@ def plot_interval(
     starts = tracks["starts"].astype(np.int64)
     ends = tracks["ends"].astype(np.int64)
     signals = tracks["signals"].astype(np.float64)
+    valid = tracks["valid"].astype(bool)
     sample_ids = tracks["sample_id"].astype(str)
     sample_conditions = tracks["condition"].astype(str)
     replicates = tracks["replicate"].astype(int)
@@ -113,9 +116,10 @@ def plot_interval(
     if not bin_mask.any():
         raise ValueError(f"区间 [{start}, {end}) 没有轨道 bin")
     x = (starts[bin_mask] + ends[bin_mask]) / 2.0
-    display_signals = np.sqrt(signals) if sqrt_display else signals
+    display_signals = np.sqrt(signals) if sqrt_display else signals.copy()
+    display_signals = np.where(valid, display_signals, np.nan)
     means = condition_mean_signals(display_signals, sample_conditions, conditions)
-    baseline = float(np.median(display_signals))
+    baseline = float(np.nanmedian(display_signals))
 
     figure, axes = plt.subplots(
         4,

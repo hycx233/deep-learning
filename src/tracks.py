@@ -43,7 +43,7 @@ def aggregate_signal(
 def cached_marginal_track(
     state: dict,
     target_bin_bp: int = 100,
-) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """直接复用 #2 缓存的边际信号和全局深度因子生成轨道。"""
     metadata = state["metadata"]
     native_bin_bp = int(metadata["bin_size"])
@@ -55,12 +55,15 @@ def cached_marginal_track(
     if not np.isfinite(depth_factor) or depth_factor <= 0:
         raise ValueError(f"depth_factor 必须为正数，实际为 {depth_factor}")
     normalized = np.where(valid, marginal * depth_factor, 0.0)
-    return aggregate_signal(
+    starts, ends, signal = aggregate_signal(
         normalized,
         native_bin_bp,
         target_bin_bp,
         int(metadata["genome_length"]),
     )
+    target_index = (np.arange(len(valid)) * native_bin_bp) // target_bin_bp
+    valid_count = np.bincount(target_index, weights=valid, minlength=len(starts))
+    return starts, ends, signal, valid_count > 0
 
 
 def condition_mean_signals(
@@ -76,7 +79,14 @@ def condition_mean_signals(
         mask = conditions == condition
         if not mask.any():
             raise ValueError(f"条件 {condition!r} 没有样本")
-        result[condition] = signals[mask].mean(axis=0)
+        selected = signals[mask]
+        finite = np.isfinite(selected)
+        result[condition] = np.divide(
+            np.nansum(selected, axis=0),
+            finite.sum(axis=0),
+            out=np.full(selected.shape[1], np.nan, dtype=np.float64),
+            where=finite.sum(axis=0) > 0,
+        )
     return result
 
 

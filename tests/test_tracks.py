@@ -30,11 +30,12 @@ class TrackTests(unittest.TestCase):
             "depth_factor": np.array(2.0),
         }
 
-        starts, ends, signal = cached_marginal_track(state, target_bin_bp=200)
+        starts, ends, signal, valid = cached_marginal_track(state, target_bin_bp=200)
 
         self.assertEqual(starts.tolist(), [0, 200])
         self.assertEqual(ends.tolist(), [200, 400])
         self.assertEqual(signal.tolist(), [6.0, 8.0])
+        self.assertEqual(valid.tolist(), [True, True])
 
     def test_aggregate_signal_rejects_nonmultiple_resolution(self) -> None:
         with self.assertRaisesRegex(ValueError, "整数倍"):
@@ -54,6 +55,7 @@ class TrackTests(unittest.TestCase):
             "starts": starts,
             "ends": ends,
             "signals": np.stack([x + index for index in range(6)]),
+            "valid": np.ones((6, len(starts)), dtype=bool),
             "sample_id": np.array(["WT1", "WT2", "D1", "D2", "H1", "H2"]),
             "condition": np.array(["WT", "WT", "DstpA", "DstpA", "DhnsDstpA", "DhnsDstpA"]),
             "replicate": np.array([1, 2, 1, 2, 1, 2]),
@@ -88,6 +90,7 @@ class TrackTests(unittest.TestCase):
                 starts=np.array([0]),
                 ends=np.array([100]),
                 signals=np.ones((1, 1), dtype=np.float32),
+                valid=np.ones((1, 1), dtype=bool),
                 sample_id=np.asarray(["WT_rep1"], dtype=str),
                 condition=np.asarray(["WT"], dtype=str),
                 replicate=np.array([1], dtype=np.int64),
