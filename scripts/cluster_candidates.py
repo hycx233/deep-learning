@@ -119,6 +119,7 @@ def classification_check(
         "accuracy": float(accuracy_score(labels, predicted)),
         "balanced_accuracy": float(balanced_accuracy_score(labels, predicted)),
         "majority_accuracy": float(counts.max() / counts.sum()),
+        "majority_balanced_accuracy": float(1.0 / len(counts)),
         "note": "该分层交叉验证只检查 32 维表征是否含已知类别信息，不是最终分类模型指标。",
     }
 

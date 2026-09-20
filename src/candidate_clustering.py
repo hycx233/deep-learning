@@ -75,6 +75,18 @@ def summarize_clusters(members: pd.DataFrame) -> pd.DataFrame:
                 "suspected_new_cluster": bool(is_suspected_new),
             }
         )
+    if not rows:
+        return pd.DataFrame(
+            columns=[
+                "cluster",
+                "members",
+                "candidate_windows",
+                "independent_candidate_loci",
+                "known_reference_members",
+                "known_overlapping_candidates",
+                "suspected_new_cluster",
+            ]
+        )
     return pd.DataFrame(rows).sort_values("cluster").reset_index(drop=True)
 
 

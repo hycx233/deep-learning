@@ -31,6 +31,9 @@ class CandidateClusteringTests(unittest.TestCase):
         summary = summarize_clusters(members)
         self.assertEqual(summary["cluster"].tolist(), [0])
 
+        all_noise = members.assign(cluster=-1)
+        self.assertTrue(summarize_clusters(all_noise).empty)
+
     def test_new_cluster_rule_requires_five_clean_independent_loci(self) -> None:
         members = pd.DataFrame(
             {
