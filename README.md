@@ -2,7 +2,7 @@
 
 深度学习综合实践三人课程项目。完成已知结构识别、新结构候选发现、多轨道可视化，并选做不同实验条件下的结构差异定位。
 
-**当前状态：三人按 GitHub issue 分工推进。** 已实现标注整理、六样本准备、共享归一化、环状切窗和空间分组，可向分类与发现模块提供真实模型输入。LaTeX 报告骨架已经建立，模型正式训练与后续分析仍按各自 issue 推进。
+**当前状态：三人按 GitHub issue 分工推进。** 已实现标注整理、六样本准备、共享归一化、环状切窗和空间分组，可向分类与发现模块提供真实模型输入。已完成 344 个已知结构的两条件差异分析、8 个代表案例及对应 LaTeX 章节；分类、候选发现与验证按各自 issue 推进。
 
 | 成员 | 角色与主责 |
 | --- | --- |
@@ -21,6 +21,7 @@
 - [数据说明](data/README.md)：原始矩阵的获取与放置方式。
 - [数据准备与 CPU 交接样例](docs/数据准备说明.md)：运行方法、坐标依据、表字段与已验证结果。
 - [共享预处理说明](docs/共享预处理说明.md)：六样本归一化、环状窗口、正式分组和下游数据接口。
+- [条件差异分析](docs/条件差异分析.md)：已知结构的强度比较、重复参照、688 条结果及 8 个案例。
 - [LaTeX 报告协作说明](docs/report/README.md)：章节负责人、编译方法与当前骨架状态。
 - [课程标注 Excel](data/标注数据.xlsx)
 
@@ -64,6 +65,15 @@ OPENBLAS_NUM_THREADS=1 python scripts/prepare_data.py
 
 分类模块接入 `outputs/preprocessing/default/classification/windows.csv` 与同目录 `windows.npz`，包含 WT 两个重复的 688 个窗口。共享划分为 482/102/104 个训练/验证/测试窗口，重叠窗口以及同一结构的重复均不跨集合。使用已有 `split`，不要自行重新按 ID 随机划分。完整命令与其他模块接口见共享预处理说明。
 
+共享缓存准备完成后，可直接在 CPU 上运行已知结构的条件差异分析：
+
+```bash
+OPENBLAS_NUM_THREADS=1 python scripts/compare_conditions.py
+```
+
+输出位于 `outputs/differences/known_structures/`，已检查的结果与代表图见
+[`docs/results/differences/`](docs/results/differences/)。此步骤不依赖模型训练；变化标签为描述性参照，不能作为统计显著性或单因子因果结论。
+
 - 从 `main` 创建任务分支，如 `feat/12-classifier`，数字使用实际 issue 号。
 - 每个普通任务提交一个 PR，写明实现内容、运行命令与代表结果；找一名其他成员审核后合并。
 - PR 用 `Closes #编号` 关联普通任务。共同报告的分段 PR 用 `Refs #编号`，最后统一关闭任务。
@@ -90,7 +100,8 @@ OPENBLAS_NUM_THREADS=1 python scripts/prepare_data.py
 │   ├── prepare_annotations.py
 │   ├── prepare_samples.py
 │   ├── preview_structures.py
-│   └── prepare_data.py
+│   ├── prepare_data.py
+│   └── compare_conditions.py
 ├── src/                       # 共用归一化、切窗与分组函数
 ├── tests/                     # 计数、环状坐标与防泄漏检查
 ├── 基于深度学习的接触矩阵处理实践方案.pdf
@@ -108,6 +119,7 @@ OPENBLAS_NUM_THREADS=1 python scripts/prepare_data.py
     ├── GitHub任务清单.md
     ├── 数据准备说明.md
     ├── 共享预处理说明.md
+    ├── 条件差异分析.md
     ├── report/                # 分章节 LaTeX 报告骨架
     └── results/               # 已检查的代表图、分组与验证记录
 ```

@@ -1,10 +1,131 @@
 % 负责人：A / hycx233，对应 #8。
 \section{不同条件下的结构差异定位}
-\textbf{共享预处理已完成，待 A 完成任务 \#8 后补充。}
 本节比较 $\Delta stpA$、$\Delta hns\Delta stpA$ 相对 WT 的结构信号变化。
-需说明结构内信号汇总方式、深度归一化、伪计数与对数倍数变化的定义，
-报告两个重复各自的数值和方向，并以 WT 重复间变化作为参照。
+本轮范围为 344 条已知结构和两个条件比较；发现模块的候选待复核后再补充。
+分析复用共享的 100 bp 工作矩阵，不需要训练模型或使用 GPU。
 
-从差异表选择代表案例，给出同尺度的 WT 与突变条件热图及坐标。
-结论区分观察到的条件差异与因果解释，
-不能把双缺失条件下的全部变化归因于其中一个因子。
+\subsection{结构内部强度与重复一致性}
+统计区域采用标注的原始半开区间，而不是完整的 24 kb 上下文窗口。
+记第 $i$ 个 bin 与结构区间的相交长度除以 100 bp 为 $a_i$，像素面积比例权重为
+$w_{ij}=a_i a_j$。在六个样本有效强度掩码的交集 $M$ 中，
+只保留 $i<j$ 的非对角接触，样本 $s$ 的结构强度定义为
+\begin{equation}
+  S_s=\frac{\sum_{(i,j)\in M,\,i<j}w_{ij}I^{(s)}_{ij}}
+                {\sum_{(i,j)\in M,\,i<j}w_{ij}},
+  \qquad I^{(s)}_{ij}=\frac{10^6 C^{(s)}_{ij}}{T_s}.
+\end{equation}
+其中 $C^{(s)}$ 为原始接触计数，$T_s$ 为该样本全基因组上三角唯一接触总数。
+这个量表示结构内部的平均深度归一化强度，非整百边界按实际覆盖面积计权。
+共享无效 bin 及无效像素不计入分子、分母，不用填零值表示接触减弱。
+
+先对每个条件的两个重复强度取算术均值，再计算
+\begin{equation}
+  F_c=\log_2\frac{(S_{c,1}+S_{c,2})/2}
+                       {(S_{\mathrm{WT},1}+S_{\mathrm{WT},2})/2}.
+\end{equation}
+同时保留两个突变重复分别相对 WT 均值的对数比，以及
+$R_{\mathrm{WT}}=\log_2(S_{\mathrm{WT},2}/S_{\mathrm{WT},1})$。
+不加入伪计数；零强度或没有公共有效像素对时记录对应状态，不强行判断变化。
+
+采用固定的描述性参照带
+\begin{equation}
+  b=\max\{\log_2(1.25),\,|R_{\mathrm{WT}}|\}.
+\end{equation}
+两个突变重复的对数比均大于 $b$ 才记为一致增强，均小于 $-b$ 才记为一致减弱；
+均处于 $[-b,b]$ 时记为参照带内，其余记为边界组合。
+这些标签用于描述效应大小与重复一致性，不是显著性检验或统计置信区间。
+
+\subsection{形态对照与解释范围}
+另在结构区域内的六样本公共形态掩码下，计算
+$|\log(1+\overline{\mathrm{OE}}_c)-\log(1+\overline{\mathrm{OE}}_{\mathrm{WT}})|$
+的面积加权均值，其中 O/E 先在每个条件内部对两个重复取均值。
+该量描述距离背景校正后的形态差异程度，没有增强或减弱方向，
+不能替代深度归一化强度的倍数变化。
+
+每个代表案例展示 WT 和当前突变条件的四个重复、两条件的均值强度与 O/E，
+分别统一该例强度面板和 O/E 面板的色标。强度展示取 $\log(1+I)$，
+O/E 展示沿用固定截断变换，计算倍数与形态差的原数据不做该展示截断。
+案例从公共有效权重比例至少 0.8 的可比较结构中选择，与完整差异表配套，
+保留参照带内和重复不一致的结果，不只展示变化最大的区域。
+双缺失条件下的观察不能全部归因于某一个因子。
+
+\subsection{已知结构的实际比较结果}
+2026 年 9 月 20 日，使用六个真实样本完成 344 条已知结构的两种条件比较，
+共得到 688 行结果，均有可计算的公共有效接触对和正强度，
+并选出 8 个代表案例。表~\ref{tab:condition-differences} 汇总固定规则下的描述标签。
+
+\begin{table}[htbp]
+\centering
+\caption{已知结构的条件差异标签。每个条件均比较 344 个结构；这些计数不是显著差异检验结果。}
+\label{tab:condition-differences}
+\begin{tabular}{lrrrr}
+\toprule
+条件 & 一致增强 & 一致减弱 & 参照带内 & 不一致或边界 \\
+\midrule
+$\Delta stpA$ & 217 & 6 & 94 & 27 \\
+$\Delta hns\Delta stpA$ & 182 & 10 & 92 & 60 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+两条件下分别有 338、320 个结构的两个重复相对 WT 方向同号，
+但同号不等于同时越过参照带，因此不能用同号数量代替一致变化数量。
+强度均按每百万接触归一化，观察到的相对增强不等于细胞内绝对接触总量增加。
+
+共有 12 个结构的公共有效权重比例低于 80\%，最低为
+CHIN\_171 的 24.32\%。这些结构的 24 行比较保留在完整表中，
+其结果仅描述共同有效区域，不能将“可计算”理解为整个结构都有效。
+代表案例均具有 100\% 公共有效权重，表~\ref{tab:difference-cases} 列出实际数值。
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{八个代表案例。两个重复的对数比均以 WT 均值为参照，
+本表各案例的描述性参照带均为 $\pm0.322$（四舍五入）。}
+\label{tab:difference-cases}
+\begin{tabular}{llrrrl}
+\toprule
+结构 & 条件 & 条件 $F_c$ & 重复 1 & 重复 2 & 标签 \\
+\midrule
+CHIN\_126 & $\Delta stpA$ & 1.324 & 1.306 & 1.342 & 增强 \\
+OPCID\_53 & $\Delta stpA$ & -1.204 & -1.197 & -1.212 & 减弱 \\
+OPCID\_5 & $\Delta stpA$ & 0.003 & -0.009 & 0.016 & 带内 \\
+OPCID\_4 & $\Delta stpA$ & 0.596 & 0.883 & 0.239 & 边界 \\
+CHIN\_53 & $\Delta hns\Delta stpA$ & 1.580 & 1.628 & 1.529 & 增强 \\
+OPCID\_57 & $\Delta hns\Delta stpA$ & -1.227 & -1.145 & -1.314 & 减弱 \\
+OPCID\_19 & $\Delta hns\Delta stpA$ & 0.002 & 0.067 & -0.066 & 带内 \\
+CHIN\_231 & $\Delta hns\Delta stpA$ & 0.400 & 0.477 & 0.320 & 边界 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+在 $\Delta stpA$ 条件下，CHIN\_126 的结构强度约为 WT 的 2.504 倍，
+两个重复均越过参照带（图~\ref{fig:chin126-difference}）；
+OPCID\_53 约为 WT 的 0.434 倍，且重复方向一致（图~\ref{fig:opcid53-difference}）。
+OPCID\_4 虽然均值约为 WT 的 1.512 倍，但只有重复 1 越过上参照线；
+双缺失条件下 CHIN\_231 的重复 2 对数比约为 0.320，略低于 0.322 的门槛，
+两例都保留为边界组合。OPCID\_5、OPCID\_19 的重复轻微异号，
+但都在参照带内，均值也接近 WT，不解释为明显的相反变化。
+完整数值、有效比例、运行记录和案例图保存在
+\texttt{docs/results/differences/}，本节没有纳入尚待复核的发现候选。
+
+\clearpage
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth]{../results/differences/figures/CHIN_126_DstpA.png}
+\caption{CHIN\_126 在 $\Delta stpA$ 条件下的一致增强。
+青色框为量化区间 $[2{,}172{,}240,2{,}175{,}080)$，其余部分提供 24 kb 上下文。
+上排为四个重复，下排为两条件的均值强度和 O/E。
+同一例的强度面板共用色标，灰色为公共无效区域。}
+\label{fig:chin126-difference}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth]{../results/differences/figures/OPCID_53_DstpA.png}
+\caption{OPCID\_53 在 $\Delta stpA$ 条件下的一致减弱，
+量化区间为 $[3{,}269{,}380,3{,}278{,}780)$，条件均值约为 WT 的 0.434 倍。
+图内强度面板共用色标；不同案例图的强度色标不用于比较绝对值。}
+\label{fig:opcid53-difference}
+\end{figure}
+\clearpage
