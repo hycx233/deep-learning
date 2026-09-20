@@ -1,7 +1,8 @@
 """任务一的数据接入层：只约定输入格式，不重复实现矩阵读取与归一化。
 
 共享的窗口读取、归一化与分组由 #2 提供，本模块负责把它的产物变成分类器能吃的张量。
-#2 交付后，只需要改动本文件的 ``load_dataset``，训练与推理入口不用动。
+#2 的输出（``outputs/preprocessing/default/classification/windows.csv`` 与同目录
+``windows.npz``）已按本模块的约定生成，``load_dataset`` 可原样读取，训练与推理入口不用动。
 
 约定的两份输入
 --------------
@@ -87,7 +88,7 @@ def load_dataset(
     if not arrays_npz.is_file():
         raise FileNotFoundError(
             f"找不到数组文件：{arrays_npz}；先用 scripts/make_sample_windows.py 生成样例，"
-            "或等 #2 交付真实窗口"
+            "或指定 #2 的分类输入 outputs/preprocessing/default/classification/windows.npz"
         )
 
     meta = pd.read_csv(windows_csv)
@@ -134,14 +135,16 @@ def load_dataset(
 
 
 def assign_region_ids(meta: pd.DataFrame) -> np.ndarray:
-    """给出"不能跨集合"的窗口分组。
+    """兜底用的窗口分组：同一结构的窗口归为一组。
 
-    按结构身份分组，而不是按坐标重叠做传递合并：本项目用 24 kb 窗口覆盖 4.64 Mb
-    基因组上的 344 条结构，相邻结构的窗口本来就会互相重叠，按重叠传递合并会把整条
-    染色体并成一组，训练/验证/测试就完全无法划分。同一结构的重复与平移窗口共享
-    ``structure_id``，因此仍能保证它们落在同一集合里。
+    正式划分一律沿用 #2 给出的 ``split`` 列；只有在窗口表缺 ``split`` 时才走到这里，
+    以免训练入口完全无法启动。这里按结构身份分组，是因为重叠连通分量的划分属于 #2 的
+    共享实现（``src/window_splits.py``），本模块不复制一份。
 
-    若 #2 后续给出的窗口表没有结构身份列，请补上该列或直接给出 ``split`` 列。
+    早期版本曾判断"按坐标重叠传递合并会把整条染色体并成一组，所以只能按结构身份分组"。
+    该结论来自合成样例的均匀间距（13,454 bp），不成立：真实坐标下 344 条结构的 24 kb
+    窗口只形成 59 个连通分量（最大 20 条），相邻间距有 16.9% 超过 24 kb，正是这些断点
+    把基因组切开。详见 docs/分类模块说明.md。
     """
     column = next(
         (name for name in GROUP_COLUMN_CANDIDATES if name in meta.columns), None
