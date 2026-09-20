@@ -26,6 +26,7 @@ __pycache__/
 /data/*.7z
 /data/*.7z.*
 /data/raw/
+/data/parts/
 /data/cache/
 
 # 训练权重、缓存与批量输出
