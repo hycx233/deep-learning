@@ -1,8 +1,9 @@
 from pathlib import Path
+import tempfile
+import unittest
 
 import numpy as np
 import pandas as pd
-import pytest
 
 from src.discovery_data import (
     DiscoveryDataError,
@@ -37,32 +38,37 @@ def write_dataset(tmp_path: Path) -> tuple[Path, Path]:
     return windows, arrays
 
 
-def test_load_and_select_background(tmp_path: Path) -> None:
-    windows, arrays = write_dataset(tmp_path)
+class DiscoveryDataTests(unittest.TestCase):
+    def test_load_and_select_background(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            windows, arrays = write_dataset(Path(directory))
+            matrices, meta, intensity = load_discovery_dataset(windows, arrays)
+            rows = select_background_rows(meta)
+            train_rows, val_rows = split_background_rows(meta, rows)
 
-    matrices, meta, intensity = load_discovery_dataset(windows, arrays)
-    rows = select_background_rows(meta)
-    train_rows, val_rows = split_background_rows(meta, rows)
+        self.assertEqual(matrices.shape, (3, 128, 128))
+        self.assertEqual(intensity.tolist(), [0.0, 1.0, 2.0])
+        self.assertEqual(train_rows.tolist(), [0])
+        self.assertEqual(val_rows.tolist(), [1])
 
-    assert matrices.shape == (3, 128, 128)
-    assert intensity.tolist() == [0.0, 1.0, 2.0]
-    assert train_rows.tolist() == [0]
-    assert val_rows.tolist() == [1]
+    def test_formal_input_requires_comparable_intensity(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            windows, arrays = write_dataset(Path(directory))
+            with np.load(arrays) as data:
+                matrices = data["X"].copy()
+            np.savez_compressed(arrays, X=matrices)
+
+            with self.assertRaisesRegex(DiscoveryDataError, "强度分数"):
+                load_discovery_dataset(windows, arrays)
+
+    def test_background_selection_requires_known_relation(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            windows, _ = write_dataset(Path(directory))
+            meta = pd.read_csv(windows).drop(columns="known_overlap")
+
+            with self.assertRaisesRegex(DiscoveryDataError, "known_overlap"):
+                select_background_rows(meta)
 
 
-def test_formal_input_requires_comparable_intensity(tmp_path: Path) -> None:
-    windows, arrays = write_dataset(tmp_path)
-    with np.load(arrays) as data:
-        matrices = data["X"].copy()
-    np.savez_compressed(arrays, X=matrices)
-
-    with pytest.raises(DiscoveryDataError, match="强度分数"):
-        load_discovery_dataset(windows, arrays)
-
-
-def test_background_selection_requires_known_relation(tmp_path: Path) -> None:
-    windows, arrays = write_dataset(tmp_path)
-    meta = pd.read_csv(windows).drop(columns="known_overlap")
-
-    with pytest.raises(DiscoveryDataError, match="known_overlap"):
-        select_background_rows(meta)
+if __name__ == "__main__":
+    unittest.main()

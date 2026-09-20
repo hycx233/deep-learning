@@ -88,17 +88,32 @@ def known_recall_summary(scores: pd.DataFrame) -> dict:
         "candidate_windows": int(known["is_candidate"].sum()),
         "window_recall": float(known["is_candidate"].mean()),
     }
-    if "structure_id" in known.columns:
+    if "known_structure_ids" in known.columns:
+        exploded = known.assign(
+            known_structure_ids=known["known_structure_ids"].fillna("").astype(str).str.split(";")
+        ).explode("known_structure_ids")
+        exploded = exploded[exploded["known_structure_ids"].ne("")]
+        if not exploded.empty:
+            by_structure = exploded.groupby("known_structure_ids")["is_candidate"].max()
+            result["known_structures"] = int(len(by_structure))
+            result["recalled_structures"] = int(by_structure.sum())
+            result["structure_recall"] = float(by_structure.mean())
+    elif "structure_id" in known.columns:
         valid = known[known["structure_id"].notna()].copy()
         if not valid.empty:
             by_structure = valid.groupby("structure_id")["is_candidate"].max()
             result["known_structures"] = int(len(by_structure))
             result["recalled_structures"] = int(by_structure.sum())
             result["structure_recall"] = float(by_structure.mean())
-    type_column = next(
-        (name for name in ("type", "known_type", "label") if name in known.columns), None
-    )
-    if type_column:
+    type_column = next((name for name in ("known_types", "type", "known_type", "label") if name in known.columns), None)
+    if type_column == "known_types":
+        split_types = known[type_column].fillna("").str.split(";")
+        result["per_type_window_recall"] = {
+            name: float(known.loc[split_types.map(lambda values: name in values), "is_candidate"].mean())
+            for name in ("OPCID", "CHIN", "CHID")
+            if split_types.map(lambda values: name in values).any()
+        }
+    elif type_column:
         result["per_type_window_recall"] = {
             str(name): float(value)
             for name, value in known.groupby(type_column)["is_candidate"].mean().items()
