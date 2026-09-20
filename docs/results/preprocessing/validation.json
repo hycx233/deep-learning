@@ -1,0 +1,122 @@
+{
+  "date": "2026-09-20",
+  "device": "CPU",
+  "samples": [
+    {
+      "sample_id": "WT_rep1",
+      "total_counts": 368695972,
+      "depth_factor": 0.0027122617981842232,
+      "n_bins": 46417,
+      "valid_bin_count": 45739,
+      "invalid_bin_count": 678
+    },
+    {
+      "sample_id": "WT_rep2",
+      "total_counts": 358452621,
+      "depth_factor": 0.0027897689720059265,
+      "n_bins": 46417,
+      "valid_bin_count": 45734,
+      "invalid_bin_count": 683
+    },
+    {
+      "sample_id": "DstpA_rep1",
+      "total_counts": 108552379,
+      "depth_factor": 0.00921214264682306,
+      "n_bins": 46417,
+      "valid_bin_count": 45712,
+      "invalid_bin_count": 705
+    },
+    {
+      "sample_id": "DstpA_rep2",
+      "total_counts": 109486541,
+      "depth_factor": 0.009133542724671519,
+      "n_bins": 46417,
+      "valid_bin_count": 45715,
+      "invalid_bin_count": 702
+    },
+    {
+      "sample_id": "DhnsDstpA_rep1",
+      "total_counts": 141567539,
+      "depth_factor": 0.007063766221153283,
+      "n_bins": 46417,
+      "valid_bin_count": 45702,
+      "invalid_bin_count": 715
+    },
+    {
+      "sample_id": "DhnsDstpA_rep2",
+      "total_counts": 185894502,
+      "depth_factor": 0.0053793952442982955,
+      "n_bins": 46417,
+      "valid_bin_count": 45714,
+      "invalid_bin_count": 703
+    }
+  ],
+  "datasets": {
+    "classification": {
+      "windows": 688,
+      "shape": [
+        688,
+        128,
+        128
+      ],
+      "split_counts": {
+        "test": 104,
+        "train": 482,
+        "val": 102
+      }
+    },
+    "background": {
+      "windows": 48,
+      "shape": [
+        48,
+        128,
+        128
+      ],
+      "split_counts": {
+        "train": 34,
+        "test": 6,
+        "val": 8
+      }
+    },
+    "examples": {
+      "windows": 24,
+      "shape": [
+        24,
+        128,
+        128
+      ],
+      "split_counts": {
+        "test": 18,
+        "probe": 6
+      }
+    }
+  },
+  "cross_split_shared_100bp_bins": 0,
+  "classification_handoff": {
+    "reference_pr": 13,
+    "reference_commit": "48e79fb2b8fbb3f22624d878c2826b220d209068",
+    "load_dataset": "passed",
+    "provided_splits_preserved": true
+  },
+  "targeted_unittests": 9,
+  "first_cache_runtime_seconds": 253.02,
+  "export_with_existing_cache_seconds": 23.0,
+  "model_training_executed": false,
+  "seed": 20260918,
+  "normalization_source_sha256": {
+    "src/preprocessing.py": "a07c5460f02f82f9a9d2a8167c4ed758c2a3fad777468b79b11f4e79b732e105",
+    "src/window_splits.py": "13de39b109703a778bbde695594adca12d7da4fcd2ea9d60fc899ae7320cad2b"
+  },
+  "preview_plot_checked": true,
+  "raw_window_checks": {
+    "sample_id": "WT_rep1",
+    "centers": [
+      54800,
+      84660,
+      153480,
+      0,
+      4641651
+    ],
+    "comparison": "independent 10 bp upper-triangle aggregation equals 100 bp window counts"
+  }
+}
