@@ -118,7 +118,13 @@ def plot_interval(
     x = (starts[bin_mask] + ends[bin_mask]) / 2.0
     display_signals = np.sqrt(signals) if sqrt_display else signals.copy()
     display_signals = np.where(valid, display_signals, np.nan)
-    means = condition_mean_signals(display_signals, sample_conditions, conditions)
+    # 条件比较使用所选重复的共同有效位置，先在线性强度上平均，再做显示变换。
+    selected = np.isin(sample_conditions, conditions)
+    common_valid = np.all(valid[selected] & np.isfinite(signals[selected]), axis=0)
+    comparable_signals = np.where(common_valid, signals, np.nan)
+    means = condition_mean_signals(comparable_signals, sample_conditions, conditions)
+    if sqrt_display:
+        means = {condition: np.sqrt(mean) for condition, mean in means.items()}
     baseline = float(np.nanmedian(display_signals))
 
     figure, axes = plt.subplots(

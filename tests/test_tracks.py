@@ -1,7 +1,9 @@
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
@@ -15,6 +17,47 @@ from src.tracks import (
 
 
 class TrackTests(unittest.TestCase):
+    def _plotted_signals(self, valid, *, sqrt_display):
+        signals = np.array([[1., 4.], [9., 16.], [4., 9.], [16., 25.], [9., 16.], [25., 36.]])
+        tracks = {
+            "starts": np.array([0, 100]), "ends": np.array([100, 200]),
+            "signals": signals, "valid": valid,
+            "sample_id": np.array(["WT1", "WT2", "D1", "D2", "H1", "H2"]),
+            "condition": np.array(["WT", "WT", "DstpA", "DstpA", "DhnsDstpA", "DhnsDstpA"]),
+            "replicate": np.array([1, 2, 1, 2, 1, 2]),
+        }
+        genes = pd.DataFrame(columns=["start", "end", "name", "strand"])
+        structures = pd.DataFrame(columns=["ID", "type", "start", "end"])
+        with tempfile.TemporaryDirectory() as directory, patch("scripts.plot_tracks.plt.close"):
+            plot_interval(
+                tracks, genes, structures, ["WT", "DstpA", "DhnsDstpA"],
+                0, 200, Path(directory) / "tracks.png", sqrt_display=sqrt_display, dpi=60,
+            )
+            figure = plt.gcf()
+            replicates = [line.get_ydata().copy() for line in figure.axes[0].lines[:6]]
+            means = [line.get_ydata().copy() for line in figure.axes[1].lines]
+        plt.close(figure)
+        return replicates, means
+
+    def test_condition_mean_is_linear_before_sqrt_display(self) -> None:
+        replicates, means = self._plotted_signals(np.ones((6, 2), dtype=bool), sqrt_display=True)
+
+        np.testing.assert_allclose(replicates[0], [1., 2.])
+        np.testing.assert_allclose(means[0], np.sqrt([5., 10.]))
+        np.testing.assert_allclose(means[1], np.sqrt([10., 17.]))
+        np.testing.assert_allclose(means[2], np.sqrt([17., 26.]))
+
+    def test_missing_replicate_masks_all_condition_means(self) -> None:
+        valid = np.ones((6, 2), dtype=bool)
+        valid[1, 0] = False
+        replicates, means = self._plotted_signals(valid, sqrt_display=False)
+
+        self.assertEqual(replicates[0][0], 1.)
+        self.assertTrue(np.isnan(replicates[1][0]))
+        self.assertEqual(replicates[2][0], 4.)
+        self.assertTrue(all(np.isnan(mean[0]) for mean in means))
+        np.testing.assert_allclose([mean[1] for mean in means], [10., 17., 26.])
+
     def test_genome_segments_include_short_final_interval(self) -> None:
         segments = genome_segments(4_641_652, 10_000)
 
