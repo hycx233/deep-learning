@@ -24,7 +24,7 @@ GSM8950763_DhnsDstpA_rep1.MG1655.mapq_30.10.cool.gz
 GSM8950764_DhnsDstpA_rep2.MG1655.mapq_30.10.cool.gz
 ```
 
-这四份分别为 ΔstpA、ΔhnsΔstpA 的两个重复。运行 `python scripts/prepare_samples.py` 会仅解压这四份到 `data/raw/`，核对六个实际文件，并生成 `data/samples.csv`；已准备的文件会复用。正式归一化在 #2 完成。
+这四份分别为 ΔstpA、ΔhnsΔstpA 的两个重复。运行 `python scripts/prepare_samples.py` 会仅解压这四份到 `data/raw/`，核对六个实际文件，并生成 `data/samples.csv`；已准备的文件会复用。随后运行 `python scripts/prepare_data.py` 生成六个样本的 100 bp 工作缓存、归一化背景与分组窗口，详见[共享预处理说明](../docs/共享预处理说明.md)。
 
 ## 标注文件
 

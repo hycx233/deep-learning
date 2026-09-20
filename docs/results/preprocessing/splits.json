@@ -1,0 +1,53 @@
+{
+  "strategy": "overlap_connected_components",
+  "seed": 20260918,
+  "genome_length": 4641652,
+  "window_bp": 24000,
+  "overlap_bin_size": 100,
+  "target_ratios": {
+    "train": 0.7,
+    "val": 0.15,
+    "test": 0.15
+  },
+  "known_structures": 344,
+  "component_count": 59,
+  "largest_component": 20,
+  "known_counts": {
+    "train": {
+      "OPCID": 48,
+      "CHIN": 175,
+      "CHID": 18
+    },
+    "val": {
+      "OPCID": 10,
+      "CHIN": 37,
+      "CHID": 4
+    },
+    "test": {
+      "OPCID": 10,
+      "CHIN": 38,
+      "CHID": 4
+    }
+  },
+  "known_split_totals": {
+    "test": 52,
+    "train": 241,
+    "val": 51
+  },
+  "known_excluded": [],
+  "background_requested": 24,
+  "background_generated": 24,
+  "background_counts": {
+    "train": 17,
+    "val": 4,
+    "test": 3
+  },
+  "background_attempts": 184,
+  "background_rejections": {
+    "overlaps_known_structure": 136,
+    "bridges_existing_groups": 8,
+    "split_background_quota_filled": 16
+  },
+  "background_usage": "discovery_and_preview_only",
+  "cross_split_overlap_pairs": 0
+}
