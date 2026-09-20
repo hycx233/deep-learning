@@ -1,0 +1,24 @@
+{
+  "command": "plot_tracks.py --tracks-npz outputs/tracks/contact_signal/contact_tracks.npz --genes-csv data/genes.csv --structures-csv data/structures.csv --segment-bp 10000 --sqrt-display --out-dir outputs/tracks/all",
+  "code_version": "379bb4c49573aff800743faad074ed2b75464ab9",
+  "tracks_npz": "outputs\\tracks\\contact_signal\\contact_tracks.npz",
+  "genes_snapshot": "genes_used.csv",
+  "structures_snapshot": "structures_used.csv",
+  "conditions": [
+    "WT",
+    "DstpA",
+    "DhnsDstpA"
+  ],
+  "segment_bp": 10000,
+  "sqrt_display": true,
+  "figure_count": 465,
+  "first_interval": [
+    0,
+    10000
+  ],
+  "last_interval": [
+    4640000,
+    4641652
+  ],
+  "dpi": 160
+}
