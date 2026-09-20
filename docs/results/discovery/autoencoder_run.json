@@ -1,0 +1,36 @@
+{
+  "command": "train_autoencoder.py --windows-csv outputs/preprocessing/default/background/windows.csv --arrays-npz outputs/preprocessing/default/background/windows.npz --out-dir outputs/discovery/autoencoder --sample-id WT_rep1 --epochs 30 --batch-size 8 --device cpu",
+  "code_version": "931fef3dc86f24a2b5f10013a70b09fd76194e61",
+  "seed": 20260918,
+  "device": "cpu",
+  "data": {
+    "windows_csv": "outputs\\preprocessing\\default\\background\\windows.csv",
+    "arrays_npz": "outputs\\preprocessing\\default\\background\\windows.npz",
+    "sample_id": "WT_rep1",
+    "background_windows": 24,
+    "train_windows": 17,
+    "val_windows": 4
+  },
+  "model": {
+    "name": "ConvAutoencoder",
+    "latent_dim": 32,
+    "parameters": 1129553,
+    "diagonal_exclusion": 1
+  },
+  "training": {
+    "epochs_requested": 30,
+    "epochs_run": 29,
+    "best_epoch": 23,
+    "best_val_loss": 0.026670310646295547,
+    "batch_size": 8,
+    "lr": 0.001,
+    "weight_decay": 1e-05,
+    "patience": 6,
+    "seconds": 2.8
+  },
+  "outputs": {
+    "checkpoint": "best.pt",
+    "history": "train_log.csv",
+    "training_windows": "training_windows.csv"
+  }
+}
