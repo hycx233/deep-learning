@@ -15,30 +15,6 @@ def genome_segments(genome_length: int, segment_bp: int = 10_000) -> list[tuple[
     ]
 
 
-def add_symmetric_upper_counts(
-    signal: np.ndarray,
-    bin1: np.ndarray,
-    bin2: np.ndarray,
-    counts: np.ndarray,
-) -> None:
-    """把 symmetric-upper 像素转为每个 bin 的有效接触总量。
-
-    非对角像素分别累加到两个端点；对角像素只累加一次。
-    """
-    if not (len(bin1) == len(bin2) == len(counts)):
-        raise ValueError("bin1、bin2 与 counts 长度必须一致")
-    n_bins = len(signal)
-    if len(bin1) == 0:
-        return
-    if bin1.min() < 0 or bin2.min() < 0 or bin1.max() >= n_bins or bin2.max() >= n_bins:
-        raise ValueError("像素 bin 编号超出 signal 范围")
-    signal += np.bincount(bin1, weights=counts, minlength=n_bins)
-    off_diagonal = bin1 != bin2
-    signal += np.bincount(
-        bin2[off_diagonal], weights=counts[off_diagonal], minlength=n_bins
-    )
-
-
 def aggregate_signal(
     native_signal: np.ndarray,
     native_bin_bp: int,
@@ -64,11 +40,27 @@ def aggregate_signal(
     return starts, ends, aggregated
 
 
-def normalize_per_sample(signal: np.ndarray, scale: float = 1_000_000.0) -> tuple[np.ndarray, float]:
-    total = float(np.sum(signal, dtype=np.float64))
-    if not np.isfinite(total) or total <= 0:
-        raise ValueError(f"样本有效接触总量必须为正数，实际为 {total}")
-    return signal.astype(np.float64) / total * scale, total
+def cached_marginal_track(
+    state: dict,
+    target_bin_bp: int = 100,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """直接复用 #2 缓存的边际信号和全局深度因子生成轨道。"""
+    metadata = state["metadata"]
+    native_bin_bp = int(metadata["bin_size"])
+    marginal = np.asarray(state["marginal"], dtype=np.float64)
+    valid = np.asarray(state["valid_bins"], dtype=bool)
+    if marginal.shape != valid.shape:
+        raise ValueError("marginal 与 valid_bins 形状不一致")
+    depth_factor = float(state["depth_factor"])
+    if not np.isfinite(depth_factor) or depth_factor <= 0:
+        raise ValueError(f"depth_factor 必须为正数，实际为 {depth_factor}")
+    normalized = np.where(valid, marginal * depth_factor, 0.0)
+    return aggregate_signal(
+        normalized,
+        native_bin_bp,
+        target_bin_bp,
+        int(metadata["genome_length"]),
+    )
 
 
 def condition_mean_signals(

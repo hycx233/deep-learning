@@ -1,4 +1,4 @@
-"""从六个 Cooler 样本构建可比较的全基因组接触强度轨道。"""
+"""复用 #2 的六样本缓存，构建可比较的全基因组接触强度轨道。"""
 
 from __future__ import annotations
 
@@ -9,7 +9,6 @@ import sys
 import time
 from pathlib import Path
 
-import h5py
 import numpy as np
 import pandas as pd
 
@@ -17,11 +16,8 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from src.tracks import (  # noqa: E402
-    add_symmetric_upper_counts,
-    aggregate_signal,
-    normalize_per_sample,
-)
+from src.preprocessing import load_sample  # noqa: E402
+from src.tracks import cached_marginal_track  # noqa: E402
 
 DEFAULT_CONDITIONS = ("WT", "DstpA", "DhnsDstpA")
 
@@ -49,56 +45,32 @@ def code_version() -> str:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="构建三条件全基因组接触强度轨道")
     parser.add_argument("--samples-csv", type=Path, default=Path("data/samples.csv"))
+    parser.add_argument("--cache-dir", type=Path, default=Path("data/cache/100bp"))
     parser.add_argument(
         "--out-dir", type=Path, default=Path("outputs/tracks/contact_signal")
     )
     parser.add_argument("--conditions", nargs="+", default=list(DEFAULT_CONDITIONS))
     parser.add_argument("--track-bin-bp", type=int, default=100)
-    parser.add_argument("--scale", type=float, default=1_000_000.0)
-    parser.add_argument("--pixel-chunk", type=int, default=5_000_000)
     return parser.parse_args()
 
 
 def sample_track(
-    path: Path,
+    cache_dir: Path,
+    sample_id: str,
     track_bin_bp: int,
-    scale: float,
-    pixel_chunk: int,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict]:
-    with h5py.File(path, "r") as handle:
-        chrom_names = [
-            value.decode("utf-8") if isinstance(value, bytes) else str(value)
-            for value in handle["chroms/name"][:]
-        ]
-        if len(chrom_names) != 1:
-            raise ValueError(f"{path} 应只有一条染色体，实际为 {chrom_names}")
-        native_bin_bp = int(handle.attrs["bin-size"])
-        genome_length = int(handle["chroms/length"][0])
-        n_bins = int(handle["bins/start"].shape[0])
-        n_pixels = int(handle["pixels/bin1_id"].shape[0])
-        native_signal = np.zeros(n_bins, dtype=np.float64)
-        for pixel_start in range(0, n_pixels, pixel_chunk):
-            pixel_end = min(pixel_start + pixel_chunk, n_pixels)
-            bin1 = handle["pixels/bin1_id"][pixel_start:pixel_end]
-            bin2 = handle["pixels/bin2_id"][pixel_start:pixel_end]
-            counts = handle["pixels/count"][pixel_start:pixel_end].astype(np.float64)
-            add_symmetric_upper_counts(native_signal, bin1, bin2, counts)
-            print(
-                f"  pixels {pixel_end:,}/{n_pixels:,}", end="\r", flush=True
-            )
-        print()
-
-    normalized_native, effective_total = normalize_per_sample(native_signal, scale)
-    starts, ends, aggregated = aggregate_signal(
-        normalized_native, native_bin_bp, track_bin_bp, genome_length
-    )
+    state = load_sample(cache_dir, sample_id)
+    metadata = state["metadata"]
+    starts, ends, aggregated = cached_marginal_track(state, track_bin_bp)
     info = {
-        "chrom": chrom_names[0],
-        "genome_length": genome_length,
-        "native_bin_bp": native_bin_bp,
+        "chrom": metadata["chrom"],
+        "genome_length": int(metadata["genome_length"]),
+        "native_bin_bp": int(metadata["bin_size"]),
         "track_bin_bp": track_bin_bp,
-        "n_pixels": n_pixels,
-        "effective_contact_total": effective_total,
+        "n_pixels": int(metadata["n_pixels"]),
+        "total_unique_counts": int(metadata["total_counts"]),
+        "depth_factor": float(metadata["depth_factor"]),
+        "valid_bin_count": int(metadata["valid_bin_count"]),
         "normalized_sum": float(aggregated.sum()),
     }
     return starts, ends, aggregated, info
@@ -106,8 +78,8 @@ def sample_track(
 
 def main() -> None:
     args = parse_args()
-    if args.track_bin_bp <= 0 or args.pixel_chunk <= 0 or args.scale <= 0:
-        raise SystemExit("track-bin-bp、pixel-chunk 和 scale 必须为正数")
+    if args.track_bin_bp <= 0:
+        raise SystemExit("track-bin-bp 必须为正数")
     if not args.samples_csv.is_file():
         raise SystemExit(f"找不到 {args.samples_csv}；等待 #1 合入或显式指定样本表")
 
@@ -129,15 +101,9 @@ def main() -> None:
     reference_ends: np.ndarray | None = None
     started = time.time()
     for _, row in samples.iterrows():
-        path = Path(str(row["path"]))
-        if not path.is_absolute():
-            path = REPO_ROOT / path
-        if not path.is_file():
-            raise SystemExit(f"找不到样本 {row['sample_id']}：{path}")
-        print(f"处理 {row['sample_id']}：{path}")
-        starts, ends, signal, info = sample_track(
-            path, args.track_bin_bp, args.scale, args.pixel_chunk
-        )
+        sample_id = str(row["sample_id"])
+        print(f"处理 {sample_id}：{args.cache_dir}")
+        starts, ends, signal, info = sample_track(args.cache_dir, sample_id, args.track_bin_bp)
         if reference_starts is None:
             reference_starts, reference_ends = starts, ends
         elif not np.array_equal(starts, reference_starts) or not np.array_equal(ends, reference_ends):
@@ -148,7 +114,7 @@ def main() -> None:
                 "sample_id": row["sample_id"],
                 "condition": row["condition"],
                 "replicate": int(row["replicate"]),
-                "path": str(path),
+                "cache_dir": str(args.cache_dir),
                 **info,
             }
         )
@@ -171,15 +137,14 @@ def main() -> None:
         "command": " ".join([Path(sys.argv[0]).name, *sys.argv[1:]]),
         "code_version": code_version(),
         "samples_csv": str(args.samples_csv),
+        "cache_dir": str(args.cache_dir),
         "samples_manifest_snapshot": "samples_used.csv",
         "conditions": args.conditions,
         "track_bin_bp": args.track_bin_bp,
-        "scale": args.scale,
-        "pixel_chunk": args.pixel_chunk,
         "seconds": round(time.time() - started, 2),
         "normalization": (
-            "symmetric-upper 非对角 counts 累加到两个端点、对角一次；"
-            "每个重复除以自身有效接触总量后乘 scale，再按条件取均值"
+            "复用 #2 缓存 marginal（对角一次、非对角每端点一次）；"
+            "每个重复乘以 1,000,000 / 上三角唯一 counts 总量，再按条件取均值"
         ),
         "outputs": {
             "tracks": "contact_tracks.npz",
