@@ -1,0 +1,65 @@
+{
+  "command": "plot_tracks.py --tracks-npz /tmp/dl-pr17-61c0b9c-bpuz2l0w/review/contact/contact_tracks.npz --genes-csv data/genes.csv --structures-csv data/structures.csv --segment-bp 10000 --sqrt-display --out-dir outputs/tracks/all",
+  "code_version": "61c0b9ccd0957b88a2b7b8954e1b601b3359758c",
+  "tracks_npz": "/tmp/dl-pr17-61c0b9c-bpuz2l0w/review/contact/contact_tracks.npz",
+  "genes_snapshot": "genes_used.csv",
+  "structures_snapshot": "structures_used.csv",
+  "conditions": [
+    "WT",
+    "DstpA",
+    "DhnsDstpA"
+  ],
+  "segment_bp": 10000,
+  "sqrt_display": true,
+  "figure_count": 465,
+  "first_interval": [
+    0,
+    10000
+  ],
+  "last_interval": [
+    4640000,
+    4641652
+  ],
+  "dpi": 160,
+  "git_dirty": true,
+  "source_sha256": {
+    "scripts/plot_tracks.py": "8c1d00599b12eac5349cff034dcca96e86ec7b59ab525143a9280953cfa00db3",
+    "src/tracks.py": "c6000ab999b7c825ceeef1c5241b1311316991cd3f0e8818d89be111cf61d5da"
+  },
+  "replicate_display": "Each replicate uses its own valid mask; sqrt is applied only for display.",
+  "condition_mean": "All six selected replicates share the intersection of valid finite bins; arithmetic means are computed from linear normalized signals, then sqrt is applied for display. A missing replicate masks every condition at that bin.",
+  "tracks_npz_sha256": "1d5f881b48f20978aeeafc509994b863e53a428a01f34647d23379c0c5bd8548",
+  "verification": {
+    "figure_count": 465,
+    "contiguous_coverage": [
+      0,
+      4641652
+    ],
+    "visually_checked_intervals": [
+      [
+        0,
+        10000
+      ],
+      [
+        4640000,
+        4641652
+      ],
+      [
+        50000,
+        60000
+      ],
+      [
+        1210000,
+        1220000
+      ],
+      [
+        2480000,
+        2490000
+      ],
+      [
+        3800000,
+        3810000
+      ]
+    ]
+  }
+}
