@@ -40,6 +40,49 @@ def assign_independent_loci(candidates: pd.DataFrame) -> pd.Series:
     return result
 
 
+def assign_spatial_groups(windows: pd.DataFrame) -> pd.Series:
+    """按完整窗口的重叠连通分量分组，防止空间重叠跨验证折。"""
+    required = {"chrom", "start", "end"}
+    missing = required.difference(windows.columns)
+    if missing:
+        raise ValueError(f"窗口表缺少字段：{sorted(missing)}")
+    if (windows["end"] <= windows["start"]).any():
+        raise ValueError("窗口区间必须满足 end > start")
+
+    groups = pd.Series(index=windows.index, dtype="object")
+    group_number = 0
+    for chrom, chrom_windows in windows.sort_values(
+        ["chrom", "start", "end"]
+    ).groupby("chrom", sort=False):
+        current_end: int | None = None
+        for index, row in chrom_windows.iterrows():
+            start = int(row["start"])
+            end = int(row["end"])
+            if current_end is None or start >= current_end:
+                group_number += 1
+                current_end = end
+            else:
+                current_end = max(current_end, end)
+            groups.loc[index] = f"{chrom}:group_{group_number:04d}"
+    return groups
+
+
+def select_pure_background_rows(
+    scores: pd.DataFrame,
+    candidate_rows: set[int],
+    known_reference_rows: set[int],
+) -> list[int]:
+    """返回不属于候选/已知参考且不与任何已知结构重叠的 latent_row。"""
+    required = {"latent_row", "known_overlap"}
+    missing = required.difference(scores.columns)
+    if missing:
+        raise ValueError(f"分数表缺少字段：{sorted(missing)}")
+    eligible = set(
+        scores.loc[~as_bool(scores["known_overlap"]), "latent_row"].astype(int)
+    )
+    return sorted(eligible - candidate_rows - known_reference_rows)
+
+
 def summarize_clusters(members: pd.DataFrame) -> pd.DataFrame:
     """汇总 DBSCAN 非噪声簇并应用课程项目的新簇规则。"""
     required = {

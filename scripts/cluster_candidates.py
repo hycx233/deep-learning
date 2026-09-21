@@ -15,7 +15,7 @@ from sklearn.cluster import DBSCAN
 from sklearn.decomposition import PCA
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, balanced_accuracy_score
-from sklearn.model_selection import StratifiedKFold, cross_val_predict
+from sklearn.model_selection import StratifiedGroupKFold, cross_val_predict
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
@@ -26,7 +26,9 @@ if str(REPO_ROOT) not in sys.path:
 from src.candidate_clustering import (  # noqa: E402
     as_bool,
     assign_independent_loci,
+    assign_spatial_groups,
     nearest_rows,
+    select_pure_background_rows,
     summarize_clusters,
 )
 
@@ -90,7 +92,10 @@ def map_known_references(
 
 
 def classification_check(
-    mapping_table: pd.DataFrame, latent: np.ndarray, seed: int
+    mapping_table: pd.DataFrame,
+    scores: pd.DataFrame,
+    latent: np.ndarray,
+    seed: int,
 ) -> dict[str, object]:
     unambiguous = []
     for latent_row, group in mapping_table.groupby("latent_row"):
@@ -100,27 +105,42 @@ def classification_check(
     rows = np.array([row for row, _ in unambiguous], dtype=np.int64)
     labels = np.array([label for _, label in unambiguous])
     counts = pd.Series(labels).value_counts()
-    folds = int(min(5, counts.min()))
+    score_by_row = scores.set_index("latent_row")
+    reference_windows = score_by_row.loc[rows, ["chrom", "start", "end"]].reset_index()
+    reference_windows["spatial_group"] = assign_spatial_groups(reference_windows)
+    groups = reference_windows["spatial_group"].to_numpy()
+    folds = int(min(5, len(set(groups))))
     if folds < 2:
-        return {"available": False, "reason": "每类独立参考位置不足 2 个"}
+        return {"available": False, "reason": "空间连通组不足 2 个"}
 
     model = make_pipeline(
         StandardScaler(),
         LogisticRegression(max_iter=2000, class_weight="balanced", random_state=seed),
     )
-    splitter = StratifiedKFold(n_splits=folds, shuffle=True, random_state=seed)
-    predicted = cross_val_predict(model, latent[rows], labels, cv=splitter)
+    splitter = StratifiedGroupKFold(n_splits=folds, shuffle=True, random_state=seed)
+    predicted = cross_val_predict(
+        model,
+        latent[rows],
+        labels,
+        cv=splitter,
+        groups=groups,
+    )
     return {
         "available": True,
         "features": int(latent.shape[1]),
         "independent_reference_positions": int(len(rows)),
         "class_counts": {str(name): int(value) for name, value in counts.items()},
+        "spatial_groups": int(len(set(groups))),
+        "cross_fold_spatial_overlap_groups": 0,
         "folds": folds,
         "accuracy": float(accuracy_score(labels, predicted)),
         "balanced_accuracy": float(balanced_accuracy_score(labels, predicted)),
         "majority_accuracy": float(counts.max() / counts.sum()),
         "majority_balanced_accuracy": float(1.0 / len(counts)),
-        "note": "该分层交叉验证只检查 32 维表征是否含已知类别信息，不是最终分类模型指标。",
+        "note": (
+            "完整窗口按空间重叠连通组进入同一折；该分组交叉验证只检查 32 维表征"
+            "是否含已知类别信息，不是最终分类模型指标。"
+        ),
     }
 
 
@@ -175,7 +195,11 @@ def plot_pca(members: pd.DataFrame, out_path: Path) -> None:
 
 
 def plot_representatives(
-    members: pd.DataFrame, matrices: np.ndarray, pc_columns: list[str], out_path: Path
+    members: pd.DataFrame,
+    matrices: np.ndarray,
+    masks: np.ndarray,
+    pc_columns: list[str],
+    out_path: Path,
 ) -> list[str]:
     choices: list[tuple[str, pd.Series]] = []
     candidate_clusters = members[(members["cluster"] != -1) & as_bool(members["is_candidate"])]
@@ -196,16 +220,30 @@ def plot_representatives(
             choices.append((f"known {known_type}", subset.iloc[0]))
 
     images = [matrices[int(row["latent_row"])] for _, row in choices]
-    vmax = float(np.quantile(np.stack(images), 0.995)) or 1.0
+    valid_masks = [masks[int(row["latent_row"])] for _, row in choices]
+    valid_values = np.concatenate(
+        [matrix[valid] for matrix, valid in zip(images, valid_masks)]
+    )
+    vmax = float(np.quantile(valid_values, 0.995)) or 1.0
+    color_map = plt.colormaps["magma"].copy()
+    color_map.set_bad("#d9d9d9")
     columns = min(3, len(images))
     rows = int(np.ceil(len(images) / columns))
     figure, axes = plt.subplots(rows, columns, figsize=(3.2 * columns, 3.4 * rows), squeeze=False)
     for axis in axes.ravel():
         axis.set_visible(False)
     ids: list[str] = []
-    for axis, (label, row), matrix in zip(axes.ravel(), choices, images):
+    for axis, (label, row), matrix, valid in zip(
+        axes.ravel(), choices, images, valid_masks
+    ):
         axis.set_visible(True)
-        axis.imshow(matrix, cmap="magma", vmin=0, vmax=vmax, origin="lower")
+        axis.imshow(
+            np.ma.masked_where(~valid, matrix),
+            cmap=color_map,
+            vmin=0,
+            vmax=vmax,
+            origin="lower",
+        )
         axis.set_title(f"{label}\n{row['window_id']}", fontsize=9)
         axis.set_xticks([])
         axis.set_yticks([])
@@ -235,7 +273,9 @@ def main() -> None:
 
     candidate_rows = set(scores.loc[as_bool(scores["is_candidate"]), "latent_row"].astype(int))
     known_rows = set(known_reference)
-    pure_background = sorted(set(range(len(scores))) - candidate_rows - known_rows)
+    pure_background = select_pure_background_rows(
+        scores, candidate_rows, known_rows
+    )
     rng = np.random.default_rng(args.seed)
     background_rows = set(
         rng.choice(pure_background, size=min(args.background_count, len(pure_background)), replace=False)
@@ -294,11 +334,16 @@ def main() -> None:
     plot_pca(members, args.out_dir / "pca_groups.png")
     with np.load(args.windows_npz) as archive:
         matrices = archive["X"]
+        masks = archive["mask"] if "mask" in archive else np.ones_like(matrices, dtype=bool)
         representative_ids = plot_representatives(
-            members, matrices, pc_columns, args.out_dir / "cluster_representatives.png"
+            members,
+            matrices,
+            masks,
+            pc_columns,
+            args.out_dir / "cluster_representatives.png",
         )
 
-    classification = classification_check(mapping_table, latent, args.seed)
+    classification = classification_check(mapping_table, scores, latent, args.seed)
     (args.out_dir / "classification.json").write_text(
         json.dumps(classification, ensure_ascii=False, indent=2), encoding="utf-8"
     )
@@ -323,6 +368,12 @@ def main() -> None:
         "independent_candidate_loci": int(candidates["independent_locus_id"].nunique()),
         "known_reference_positions": int(members["is_known_reference"].sum()),
         "background_reference_positions": int(members["is_background_reference"].sum()),
+        "eligible_pure_background_positions": int(len(pure_background)),
+        "background_known_overlap_positions": int(
+            members.loc[
+                as_bool(members["is_background_reference"]), "known_overlap"
+            ].sum()
+        ),
         "pca_components": components,
         "pca_explained_variance_ratio": pca.explained_variance_ratio_.tolist(),
         "pca_whiten": True,

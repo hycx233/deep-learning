@@ -2,7 +2,12 @@ import unittest
 
 import pandas as pd
 
-from src.candidate_clustering import assign_independent_loci, summarize_clusters
+from src.candidate_clustering import (
+    assign_independent_loci,
+    assign_spatial_groups,
+    select_pure_background_rows,
+    summarize_clusters,
+)
 
 
 class CandidateClusteringTests(unittest.TestCase):
@@ -17,6 +22,28 @@ class CandidateClusteringTests(unittest.TestCase):
         loci = assign_independent_loci(candidates)
         self.assertEqual(loci.nunique(), 2)
         self.assertEqual(loci.iloc[0], loci.iloc[1])
+
+    def test_spatial_groups_use_overlap_connected_components(self) -> None:
+        windows = pd.DataFrame(
+            {
+                "chrom": ["chr", "chr", "chr"],
+                "start": [0, 400, 1000],
+                "end": [500, 900, 1200],
+            }
+        )
+        groups = assign_spatial_groups(windows)
+        self.assertEqual(groups.nunique(), 2)
+        self.assertEqual(groups.iloc[0], groups.iloc[1])
+
+    def test_pure_background_excludes_known_overlap(self) -> None:
+        scores = pd.DataFrame(
+            {
+                "latent_row": [0, 1, 2, 3],
+                "known_overlap": [False, True, False, False],
+            }
+        )
+        rows = select_pure_background_rows(scores, {2}, {3})
+        self.assertEqual(rows, [0])
 
     def test_noise_is_not_summarized_as_a_cluster(self) -> None:
         members = pd.DataFrame(
