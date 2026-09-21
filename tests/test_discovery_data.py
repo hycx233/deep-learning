@@ -33,6 +33,7 @@ def write_dataset(tmp_path: Path) -> tuple[Path, Path]:
     np.savez_compressed(
         arrays,
         X=np.zeros((3, 128, 128), dtype=np.float32),
+        mask=np.ones((3, 128, 128), dtype=bool),
         intensity_scores=np.arange(3, dtype=np.float64),
     )
     return windows, arrays
@@ -42,11 +43,13 @@ class DiscoveryDataTests(unittest.TestCase):
     def test_load_and_select_background(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             windows, arrays = write_dataset(Path(directory))
-            matrices, meta, intensity = load_discovery_dataset(windows, arrays)
+            matrices, masks, meta, intensity = load_discovery_dataset(windows, arrays)
             rows = select_background_rows(meta)
             train_rows, val_rows = split_background_rows(meta, rows)
 
         self.assertEqual(matrices.shape, (3, 128, 128))
+        self.assertEqual(masks.shape, matrices.shape)
+        self.assertTrue(masks.all())
         self.assertEqual(intensity.tolist(), [0.0, 1.0, 2.0])
         self.assertEqual(train_rows.tolist(), [0])
         self.assertEqual(val_rows.tolist(), [1])

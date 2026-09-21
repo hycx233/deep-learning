@@ -70,10 +70,17 @@ def code_version() -> str:
     return f"{head}{' (dirty)' if run('status', '--porcelain') else ''}"
 
 
-def make_loader(matrices: np.ndarray, rows: np.ndarray, batch_size: int, shuffle: bool) -> DataLoader:
+def make_loader(
+    matrices: np.ndarray,
+    masks: np.ndarray,
+    rows: np.ndarray,
+    batch_size: int,
+    shuffle: bool,
+) -> DataLoader:
     tensors = torch.from_numpy(matrices[rows]).unsqueeze(1)
+    mask_tensors = torch.from_numpy(masks[rows])
     return DataLoader(
-        TensorDataset(tensors),
+        TensorDataset(tensors, mask_tensors),
         batch_size=batch_size,
         shuffle=shuffle,
         num_workers=0,
@@ -92,10 +99,11 @@ def run_epoch(
     weighted_loss = 0.0
     samples = 0
     with torch.set_grad_enabled(training):
-        for (features,) in loader:
+        for features, sample_mask in loader:
             features = features.to(device)
+            sample_mask = sample_mask.to(device)
             reconstruction = model(features)
-            loss = masked_mse(reconstruction, features, mask)
+            loss = masked_mse(reconstruction, features, sample_mask & mask)
             if training:
                 optimizer.zero_grad(set_to_none=True)
                 loss.backward()
@@ -116,7 +124,7 @@ def main() -> None:
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
 
-    matrices, meta, _ = load_discovery_dataset(
+    matrices, masks, meta, _ = load_discovery_dataset(
         args.windows_csv, args.arrays_npz, require_intensity=False
     )
     background_rows = select_background_rows(meta, args.sample_id)
@@ -129,8 +137,8 @@ def main() -> None:
     optimizer = torch.optim.Adam(
         model.parameters(), lr=args.lr, weight_decay=args.weight_decay
     )
-    train_loader = make_loader(matrices, train_rows, args.batch_size, True)
-    val_loader = make_loader(matrices, val_rows, args.batch_size, False)
+    train_loader = make_loader(matrices, masks, train_rows, args.batch_size, True)
+    val_loader = make_loader(matrices, masks, val_rows, args.batch_size, False)
 
     args.out_dir.mkdir(parents=True, exist_ok=True)
     selected = meta.iloc[np.concatenate([train_rows, val_rows])].copy()
@@ -199,6 +207,7 @@ def main() -> None:
             "latent_dim": args.latent_dim,
             "parameters": sum(p.numel() for p in model.parameters()),
             "diagonal_exclusion": args.diagonal_exclusion,
+            "loss_mask": "逐窗口有效 mask 与固定上三角 mask 的交集；每个窗口单独按有效像素数求均值",
         },
         "training": {
             "epochs_requested": args.epochs,

@@ -27,6 +27,18 @@ class AutoencoderTests(unittest.TestCase):
 
         self.assertTrue(np.isclose(float(error[0]), 4.0 / 6.0))
 
+    def test_masked_mse_ignores_invalid_pixels_per_window(self) -> None:
+        target = torch.zeros(2, 1, 4, 4)
+        prediction = target.clone()
+        prediction[1, 0, 0, 3] = 1.0
+        sample_mask = torch.ones(2, 4, 4, dtype=torch.bool)
+        sample_mask[1, 0, 3] = False
+        loss_mask = sample_mask & upper_triangle_mask(4, diagonal_exclusion=0)
+
+        error = masked_mse(prediction, target, loss_mask, reduction="none")
+
+        self.assertEqual(error.tolist(), [0.0, 0.0])
+
 
 if __name__ == "__main__":
     unittest.main()

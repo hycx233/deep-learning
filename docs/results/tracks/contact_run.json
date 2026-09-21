@@ -1,0 +1,20 @@
+{
+  "command": "build_contact_tracks.py --samples-csv data/samples.csv --cache-dir data/cache/100bp --out-dir outputs/tracks/contact_signal",
+  "code_version": "379bb4c49573aff800743faad074ed2b75464ab9",
+  "samples_csv": "data\\samples.csv",
+  "cache_dir": "data\\cache\\100bp",
+  "samples_manifest_snapshot": "samples_used.csv",
+  "conditions": [
+    "WT",
+    "DstpA",
+    "DhnsDstpA"
+  ],
+  "track_bin_bp": 100,
+  "seconds": 0.21,
+  "normalization": "复用 #2 缓存 marginal（对角一次、非对角每端点一次）；每个重复乘以 1,000,000 / 上三角唯一 counts 总量，再按条件取均值",
+  "outputs": {
+    "tracks": "contact_tracks.npz",
+    "sample_summary": "sample_summary.csv",
+    "samples_manifest_snapshot": "samples_used.csv"
+  }
+}

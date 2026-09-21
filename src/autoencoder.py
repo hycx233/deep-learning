@@ -75,10 +75,26 @@ def masked_mse(
         )
     if prediction.ndim != 4 or prediction.shape[1] != 1:
         raise ValueError(f"输入应为 N×1×H×W，实际为 {prediction.shape}")
-    if mask.shape != prediction.shape[-2:]:
-        raise ValueError(f"mask 形状 {mask.shape} 与矩阵形状 {prediction.shape[-2:]} 不一致")
-
-    per_window = (prediction - target).square()[:, 0, mask].mean(dim=1)
+    if mask.ndim == 2:
+        if mask.shape != prediction.shape[-2:]:
+            raise ValueError(
+                f"mask 形状 {mask.shape} 与矩阵形状 {prediction.shape[-2:]} 不一致"
+            )
+        window_mask = mask.unsqueeze(0).expand(len(prediction), -1, -1)
+    elif mask.ndim == 3:
+        if mask.shape != (len(prediction), *prediction.shape[-2:]):
+            raise ValueError(
+                f"逐窗口 mask 应为 N×H×W，实际为 {mask.shape}，输入为 {prediction.shape}"
+            )
+        window_mask = mask
+    else:
+        raise ValueError(f"mask 应为 H×W 或 N×H×W，实际为 {mask.shape}")
+    valid_counts = window_mask.sum(dim=(1, 2))
+    if torch.any(valid_counts == 0):
+        bad_rows = torch.nonzero(valid_counts == 0, as_tuple=False).flatten().tolist()
+        raise ValueError(f"mask 在 loss 区域内没有有效像素，批内行号：{bad_rows}")
+    squared_error = (prediction - target).square()[:, 0]
+    per_window = (squared_error * window_mask).sum(dim=(1, 2)) / valid_counts
     if reduction == "none":
         return per_window
     if reduction == "mean":
