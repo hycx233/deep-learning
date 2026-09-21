@@ -83,6 +83,32 @@ def select_pure_background_rows(
     return sorted(eligible - candidate_rows - known_reference_rows)
 
 
+def count_cross_fold_overlaps(windows: pd.DataFrame, folds: np.ndarray) -> int:
+    """计算完整窗口在不同验证折之间的空间重叠对数。"""
+    required = {"chrom", "start", "end"}
+    missing = required.difference(windows.columns)
+    if missing:
+        raise ValueError(f"窗口表缺少字段：{sorted(missing)}")
+    if len(windows) != len(folds):
+        raise ValueError("folds 长度必须与窗口表一致")
+
+    table = windows.reset_index(drop=True).copy()
+    table["fold"] = np.asarray(folds, dtype=np.int64)
+    pairs = 0
+    for _, group in table.sort_values(["chrom", "start", "end"]).groupby(
+        "chrom", sort=False
+    ):
+        records = group[["start", "end", "fold"]].to_numpy(dtype=np.int64)
+        for left in range(len(records)):
+            left_end = records[left, 1]
+            for right in range(left + 1, len(records)):
+                if records[right, 0] >= left_end:
+                    break
+                if records[left, 2] != records[right, 2]:
+                    pairs += 1
+    return pairs
+
+
 def summarize_clusters(members: pd.DataFrame) -> pd.DataFrame:
     """汇总 DBSCAN 非噪声簇并应用课程项目的新簇规则。"""
     required = {

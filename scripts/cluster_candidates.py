@@ -27,6 +27,7 @@ from src.candidate_clustering import (  # noqa: E402
     as_bool,
     assign_independent_loci,
     assign_spatial_groups,
+    count_cross_fold_overlaps,
     nearest_rows,
     select_pure_background_rows,
     summarize_clusters,
@@ -118,12 +119,27 @@ def classification_check(
         LogisticRegression(max_iter=2000, class_weight="balanced", random_state=seed),
     )
     splitter = StratifiedGroupKFold(n_splits=folds, shuffle=True, random_state=seed)
+    splits = list(splitter.split(latent[rows], labels, groups=groups))
+    fold_assignments = np.full(len(rows), -1, dtype=np.int64)
+    for fold, (_, test_rows) in enumerate(splits):
+        fold_assignments[test_rows] = fold
+    if (fold_assignments < 0).any():
+        raise RuntimeError("空间分组交叉验证没有覆盖全部参考窗口")
+    group_fold_counts = (
+        pd.DataFrame({"group": groups, "fold": fold_assignments})
+        .groupby("group")["fold"]
+        .nunique()
+    )
+    if int(group_fold_counts.max()) != 1:
+        raise RuntimeError("同一空间连通组被拆到了不同验证折")
+    cross_fold_overlaps = count_cross_fold_overlaps(
+        reference_windows, fold_assignments
+    )
     predicted = cross_val_predict(
         model,
         latent[rows],
         labels,
-        cv=splitter,
-        groups=groups,
+        cv=splits,
     )
     return {
         "available": True,
@@ -131,7 +147,10 @@ def classification_check(
         "independent_reference_positions": int(len(rows)),
         "class_counts": {str(name): int(value) for name, value in counts.items()},
         "spatial_groups": int(len(set(groups))),
-        "cross_fold_spatial_overlap_groups": 0,
+        "cross_fold_spatial_overlap_pairs": int(cross_fold_overlaps),
+        "fold_sizes": {
+            str(fold): int((fold_assignments == fold).sum()) for fold in range(folds)
+        },
         "folds": folds,
         "accuracy": float(accuracy_score(labels, predicted)),
         "balanced_accuracy": float(balanced_accuracy_score(labels, predicted)),

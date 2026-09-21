@@ -1,10 +1,12 @@
 import unittest
 
+import numpy as np
 import pandas as pd
 
 from src.candidate_clustering import (
     assign_independent_loci,
     assign_spatial_groups,
+    count_cross_fold_overlaps,
     select_pure_background_rows,
     summarize_clusters,
 )
@@ -44,6 +46,17 @@ class CandidateClusteringTests(unittest.TestCase):
         )
         rows = select_pure_background_rows(scores, {2}, {3})
         self.assertEqual(rows, [0])
+
+    def test_cross_fold_overlap_counter(self) -> None:
+        windows = pd.DataFrame(
+            {
+                "chrom": ["chr", "chr", "chr"],
+                "start": [0, 5, 20],
+                "end": [10, 15, 30],
+            }
+        )
+        self.assertEqual(count_cross_fold_overlaps(windows, np.array([0, 1, 1])), 1)
+        self.assertEqual(count_cross_fold_overlaps(windows, np.array([0, 0, 1])), 0)
 
     def test_noise_is_not_summarized_as_a_cluster(self) -> None:
         members = pd.DataFrame(
