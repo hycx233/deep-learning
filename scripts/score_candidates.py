@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -19,6 +20,17 @@ if str(REPO_ROOT) not in sys.path:
 
 from src.autoencoder import ConvAutoencoder, masked_mse, upper_triangle_mask  # noqa: E402
 from src.discovery_data import load_discovery_dataset  # noqa: E402
+
+
+def code_version() -> str:
+    result = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    return result.stdout.strip() if result.returncode == 0 else "unknown"
 
 
 def parse_args() -> argparse.Namespace:
@@ -156,6 +168,7 @@ def score_intensity_summary(errors: np.ndarray, intensity: np.ndarray) -> dict:
 def plot_examples(
     model: ConvAutoencoder,
     matrices: np.ndarray,
+    masks: np.ndarray,
     scores: pd.DataFrame,
     count: int,
     device: torch.device,
@@ -200,18 +213,46 @@ def plot_examples(
     with torch.no_grad():
         reconstructions = model(inputs.to(device)).cpu().numpy()[:, 0]
     originals = inputs.numpy()[:, 0]
-    vmax = float(np.quantile(originals, 0.995)) or 1.0
-    error_max = float(np.quantile(np.abs(originals - reconstructions), 0.995)) or 1.0
+    valid_masks = np.stack([masks[array_row] for _, _, array_row in chosen])
+    valid_originals = np.concatenate(
+        [matrix[valid] for matrix, valid in zip(originals, valid_masks)]
+    )
+    valid_errors = np.concatenate(
+        [
+            np.abs(original - reconstruction)[valid]
+            for original, reconstruction, valid in zip(
+                originals, reconstructions, valid_masks
+            )
+        ]
+    )
+    vmax = float(np.quantile(valid_originals, 0.995)) or 1.0
+    error_max = float(np.quantile(valid_errors, 0.995)) or 1.0
+    signal_cmap = plt.colormaps["magma"].copy()
+    error_cmap = plt.colormaps["viridis"].copy()
+    signal_cmap.set_bad("#d9d9d9")
+    error_cmap.set_bad("#d9d9d9")
 
     figure, axes = plt.subplots(len(chosen), 3, figsize=(9, 3 * len(chosen)), squeeze=False)
-    for row, ((group, index, _), original, reconstruction) in enumerate(
-        zip(chosen, originals, reconstructions)
+    for row, ((group, index, _), original, reconstruction, valid) in enumerate(
+        zip(chosen, originals, reconstructions, valid_masks)
     ):
-        axes[row, 0].imshow(original, cmap="magma", vmin=0, vmax=vmax, origin="lower")
-        axes[row, 1].imshow(reconstruction, cmap="magma", vmin=0, vmax=vmax, origin="lower")
+        axes[row, 0].imshow(
+            np.ma.masked_where(~valid, original),
+            cmap=signal_cmap,
+            vmin=0,
+            vmax=vmax,
+            origin="lower",
+        )
+        axes[row, 1].imshow(
+            np.ma.masked_where(~valid, reconstruction),
+            cmap=signal_cmap,
+            vmin=0,
+            vmax=vmax,
+            origin="lower",
+        )
         axes[row, 2].imshow(
-            np.abs(original - reconstruction),
-            cmap="viridis",
+            np.ma.masked_where(~valid, np.abs(original - reconstruction)),
+            cmap=error_cmap,
             vmin=0,
             vmax=error_max,
             origin="lower",
@@ -277,6 +318,7 @@ def main() -> None:
     plot_examples(
         model,
         matrices,
+        masks,
         scores.reset_index(drop=True),
         args.plot_per_group,
         device,
@@ -284,6 +326,7 @@ def main() -> None:
     )
 
     summary = {
+        "code_version": code_version(),
         "checkpoint": str(args.checkpoint),
         "windows_csv": str(args.windows_csv),
         "arrays_npz": str(args.arrays_npz),
