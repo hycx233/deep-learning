@@ -49,12 +49,16 @@ def pick_device(requested: str) -> torch.device:
 def score_all(
     model: ConvAutoencoder,
     matrices: np.ndarray,
+    masks: np.ndarray,
     mask: torch.Tensor,
     batch_size: int,
     device: torch.device,
 ) -> tuple[np.ndarray, np.ndarray]:
     loader = DataLoader(
-        TensorDataset(torch.from_numpy(matrices).unsqueeze(1)),
+        TensorDataset(
+            torch.from_numpy(matrices).unsqueeze(1),
+            torch.from_numpy(masks),
+        ),
         batch_size=batch_size,
         shuffle=False,
         num_workers=0,
@@ -63,11 +67,17 @@ def score_all(
     latents: list[np.ndarray] = []
     model.eval()
     with torch.no_grad():
-        for (features,) in loader:
+        for features, sample_mask in loader:
             features = features.to(device)
+            sample_mask = sample_mask.to(device)
             reconstruction = model(features)
             errors.append(
-                masked_mse(reconstruction, features, mask, reduction="none")
+                masked_mse(
+                    reconstruction,
+                    features,
+                    sample_mask & mask,
+                    reduction="none",
+                )
                 .cpu()
                 .numpy()
             )
@@ -227,7 +237,7 @@ def main() -> None:
     if not args.checkpoint.is_file():
         raise SystemExit(f"找不到权重文件：{args.checkpoint}")
 
-    matrices, meta, intensity = load_discovery_dataset(
+    matrices, masks, meta, intensity = load_discovery_dataset(
         args.windows_csv, args.arrays_npz, require_intensity=True
     )
     device = pick_device(args.device)
@@ -241,7 +251,9 @@ def main() -> None:
     mask = upper_triangle_mask(
         matrices.shape[-1], int(checkpoint["diagonal_exclusion"]), device=device
     )
-    errors, latents = score_all(model, matrices, mask, args.batch_size, device)
+    errors, latents = score_all(
+        model, matrices, masks, mask, args.batch_size, device
+    )
     threshold = float(np.quantile(errors, args.candidate_quantile))
 
     scores = meta.copy()
@@ -278,6 +290,7 @@ def main() -> None:
         "windows": int(len(scores)),
         "candidate_quantile": args.candidate_quantile,
         "candidate_threshold": threshold,
+        "loss_mask": "逐窗口有效 mask 与固定上三角 mask 的交集；每个窗口单独按有效像素数求均值",
         "candidates": int(len(candidates)),
         "error_intensity_relation": score_intensity_summary(errors, intensity),
         "known_recall": known_recall_summary(scores),

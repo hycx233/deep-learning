@@ -46,8 +46,8 @@ def load_discovery_dataset(
     arrays_npz: str | Path,
     *,
     require_intensity: bool = True,
-) -> tuple[np.ndarray, pd.DataFrame, np.ndarray | None]:
-    """读取 #2 产出的形态窗口、元数据和可比较的强度分数。"""
+) -> tuple[np.ndarray, np.ndarray, pd.DataFrame, np.ndarray | None]:
+    """读取 #2 产出的形态窗口、逐窗口有效掩码、元数据和强度分数。"""
     windows_path = Path(windows_csv)
     arrays_path = Path(arrays_npz)
     if not windows_path.is_file():
@@ -67,6 +67,11 @@ def load_discovery_dataset(
         if "X" not in arrays:
             raise DiscoveryDataError(f"数组文件缺少 X；实际键为 {list(arrays.files)}")
         matrices = np.asarray(arrays["X"], dtype=np.float32)
+        masks = (
+            np.asarray(arrays["mask"], dtype=bool)
+            if "mask" in arrays
+            else np.ones_like(matrices, dtype=bool)
+        )
         intensity = (
             np.asarray(arrays["intensity_scores"], dtype=np.float64)
             if "intensity_scores" in arrays
@@ -81,6 +86,13 @@ def load_discovery_dataset(
         raise DiscoveryDataError(
             f"X 有 {len(matrices)} 个窗口，窗口表有 {len(meta)} 行，两者必须一致"
         )
+    if masks.shape != matrices.shape:
+        raise DiscoveryDataError(
+            f"mask 应与 X 形状一致，实际为 {masks.shape} 和 {matrices.shape}"
+        )
+    if (~masks.reshape(len(masks), -1).any(axis=1)).any():
+        bad_rows = np.flatnonzero(~masks.reshape(len(masks), -1).any(axis=1))[:5].tolist()
+        raise DiscoveryDataError(f"mask 存在完全无效的窗口，行号示例：{bad_rows}")
     bad = int(np.count_nonzero(~np.isfinite(matrices)))
     if bad:
         raise DiscoveryDataError(f"X 含 {bad} 个 NaN/Inf，请回查 #2 的归一化与无效像素处理")
@@ -105,7 +117,7 @@ def load_discovery_dataset(
     meta = meta.copy()
     if "known_overlap" in meta.columns:
         meta["known_overlap"] = _parse_bool_series(meta["known_overlap"], "known_overlap")
-    return matrices, meta, intensity
+    return matrices, masks, meta, intensity
 
 
 def select_background_rows(meta: pd.DataFrame, sample_id: str = "WT_rep1") -> np.ndarray:
