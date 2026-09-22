@@ -81,6 +81,27 @@ OPENBLAS_NUM_THREADS=1 python scripts/prepare_data.py
 
 仓库已有简短的 issue 与 PR 模板，不额外搭建服务或复杂 CI。
 
+## 已实现的模块
+
+任务一已在 688 个真实窗口上完成首轮固定参数训练：CPU 用时约 36 秒，验证集 Macro-F1 为 0.5861；测试集评价留给 #4。用法、输入格式和交接结果见 [分类模块说明](docs/分类模块说明.md)。自编码器发现、候选聚类和轨道图也已实现，候选跨重复验证由 #9 接续。
+
+```bash
+pip install -r requirements.txt
+OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 \
+python scripts/train_classifier.py \
+    --windows-csv outputs/preprocessing/default/classification/windows.csv \
+    --arrays-npz outputs/preprocessing/default/classification/windows.npz \
+    --out-dir outputs/classifier/real_seed20260918 --device cpu --seed 20260918
+python scripts/predict_classifier.py \
+    --checkpoint outputs/classifier/real_seed20260918/best.pt \
+    --windows-csv outputs/preprocessing/default/classification/windows.csv \
+    --arrays-npz outputs/preprocessing/default/classification/windows.npz \
+    --split val --device cpu \
+    --out-csv outputs/classifier/real_seed20260918/predictions_val.csv
+```
+
+先运行上文的共享预处理生成真实窗口。模型权重保留本地，运行记录与验证结果见 `docs/results/classifier/`；这些验证指标用于选择轮次，不是最终测试性能。
+
 ## 目录
 
 ```text

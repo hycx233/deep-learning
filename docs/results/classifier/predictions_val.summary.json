@@ -1,0 +1,31 @@
+{
+  "checkpoint": "outputs/review/classifier_real_seed20260918/best.pt",
+  "checkpoint_epoch": 13,
+  "split": "val",
+  "samples": 102,
+  "accuracy": 0.6961,
+  "macro_f1": 0.5861,
+  "per_class_f1": {
+    "OPCID": 0.6512,
+    "CHIN": 0.7737,
+    "CHID": 0.3333
+  },
+  "confusion_matrix": [
+    [
+      14,
+      6,
+      0
+    ],
+    [
+      9,
+      53,
+      12
+    ],
+    [
+      0,
+      4,
+      4
+    ]
+  ],
+  "predictions_csv": "outputs/review/classifier_real_seed20260918/predictions_val.csv"
+}

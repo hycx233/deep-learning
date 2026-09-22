@@ -1,0 +1,27 @@
+{
+  "cwd": "/tmp/deep-learning-review13-20260922",
+  "code_version": "8639e81df3ec702879146f049277c50bde687dbf",
+  "train_command": "/home/hycx233/Courses/deep-learning/.venv/bin/python scripts/train_classifier.py --windows-csv /home/hycx233/Courses/deep-learning/outputs/preprocessing/default/classification/windows.csv --arrays-npz /home/hycx233/Courses/deep-learning/outputs/preprocessing/default/classification/windows.npz --epochs 30 --patience 8 --seed 20260918 --device cpu --out-dir outputs/review/classifier_real_seed20260918",
+  "train_loop_seconds": 35.7,
+  "prediction_command": "/home/hycx233/Courses/deep-learning/.venv/bin/python scripts/predict_classifier.py --checkpoint outputs/review/classifier_real_seed20260918/best.pt --windows-csv /home/hycx233/Courses/deep-learning/outputs/preprocessing/default/classification/windows.csv --arrays-npz /home/hycx233/Courses/deep-learning/outputs/preprocessing/default/classification/windows.npz --split val --splits-csv outputs/review/classifier_real_seed20260918/splits.csv --device cpu --out-csv outputs/review/classifier_real_seed20260918/predictions_val.csv",
+  "prediction_started": "2026-09-22T15:54:28.381425+08:00",
+  "prediction_finished": "2026-09-22T15:54:29.535888+08:00",
+  "prediction_wall_seconds": 1.154,
+  "environment": {
+    "python_executable": "/home/hycx233/Courses/deep-learning/.venv/bin/python",
+    "python": "3.12.14",
+    "torch": "2.14.0+cpu",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "platform": "Linux-7.2.6-arch2-1-x86_64-with-glibc2.44",
+    "device": "cpu",
+    "torch_intraop_threads": 2,
+    "variables": {
+      "OMP_NUM_THREADS": "2",
+      "MKL_NUM_THREADS": "2",
+      "OPENBLAS_NUM_THREADS": "2",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    }
+  },
+  "test_inference_or_evaluation": false
+}
