@@ -1,0 +1,66 @@
+{
+  "command": "cluster_candidates.py --scores-csv outputs\\discovery\\candidates\\window_scores.csv --latents-npz outputs\\discovery\\candidates\\latents.npz --windows-npz outputs\\discovery\\scan_1kb\\windows.npz --structures-csv data\\structures.csv --pca-components 10 --eps 3.0 --min-samples 5 --background-count 200 --seed 20260920 --out-dir outputs\\discovery\\clustering",
+  "code_version": "aa18d461656cbf82e8528df35a5e84b1cb566480",
+  "latent_dimension": 32,
+  "selected_members": 564,
+  "candidate_windows": 47,
+  "independent_candidate_loci": 10,
+  "known_reference_positions": 320,
+  "background_reference_positions": 200,
+  "eligible_pure_background_positions": 1075,
+  "background_known_overlap_positions": 0,
+  "pca_components": 10,
+  "pca_explained_variance_ratio": [
+    0.5954337247904514,
+    0.22761592359369875,
+    0.12359348784015876,
+    0.034125935682224315,
+    0.016027705884916643,
+    0.002534866434310652,
+    0.0003775866080689893,
+    9.994764580608393e-05,
+    6.402702942149759e-05,
+    4.1212781956601376e-05
+  ],
+  "pca_whiten": true,
+  "dbscan": {
+    "eps": 3.0,
+    "min_samples": 5
+  },
+  "non_noise_clusters": 1,
+  "noise_members": 68,
+  "suspected_new_clusters": [],
+  "new_cluster_rule": "至少 5 个互不重叠的独立候选位置；簇内没有已知参考成员；所有候选区间均不与已知结构重叠；DBSCAN 噪声 -1 不成簇。",
+  "representative_window_ids": [
+    "WT_rep1__scan_4173000",
+    "WT_rep1__scan_0055000",
+    "WT_rep1__scan_0059000",
+    "WT_rep1__scan_0153000"
+  ],
+  "classification": {
+    "available": true,
+    "features": 32,
+    "independent_reference_positions": 306,
+    "class_counts": {
+      "CHIN": 226,
+      "OPCID": 68,
+      "CHID": 12
+    },
+    "spatial_groups": 60,
+    "cross_fold_spatial_overlap_pairs": 0,
+    "fold_sizes": {
+      "0": 61,
+      "1": 61,
+      "2": 61,
+      "3": 62,
+      "4": 61
+    },
+    "folds": 5,
+    "accuracy": 0.49673202614379086,
+    "balanced_accuracy": 0.5178870958412863,
+    "majority_accuracy": 0.738562091503268,
+    "majority_balanced_accuracy": 0.3333333333333333,
+    "note": "完整窗口按空间重叠连通组进入同一折；该分组交叉验证只检查 32 维表征是否含已知类别信息，不是最终分类模型指标。"
+  },
+  "conclusion": "没有簇满足本组疑似新簇规则；不宣称发现新结构。"
+}

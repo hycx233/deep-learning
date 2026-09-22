@@ -1,0 +1,15 @@
+{
+  "command": "prepare_discovery_scan.py --sample-id WT_rep1 --cache-dir data/cache/100bp --structures-csv data/structures.csv --out-dir outputs/discovery/scan_1kb",
+  "code_version": "931fef3dc86f24a2b5f10013a70b09fd76194e61",
+  "sample_id": "WT_rep1",
+  "cache_dir": "data\\cache\\100bp",
+  "structures_csv": "data\\structures.csv",
+  "genome_length": 4641652,
+  "step_bp": 1000,
+  "window_bp": 24000,
+  "image_size": 128,
+  "windows": 4642,
+  "known_overlap_windows": 3556,
+  "seconds": 492.85,
+  "intensity_rule": "mean upper-triangle off-diagonal depth-normalized counts over valid pixels"
+}

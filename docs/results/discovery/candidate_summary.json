@@ -1,0 +1,31 @@
+{
+  "code_version": "dc0325bb8656266146f85b89bc1fcf4db86790cb",
+  "checkpoint": "outputs\\discovery\\autoencoder\\best.pt",
+  "windows_csv": "outputs\\discovery\\scan_1kb\\windows.csv",
+  "arrays_npz": "outputs\\discovery\\scan_1kb\\windows.npz",
+  "windows": 4642,
+  "candidate_quantile": 0.99,
+  "candidate_threshold": 0.04633597284555435,
+  "loss_mask": "逐窗口有效 mask 与固定上三角 mask 的交集；每个窗口单独按有效像素数求均值",
+  "candidates": 47,
+  "error_intensity_relation": {
+    "pearson": 0.8284522493247193,
+    "spearman": 0.7645023775495523,
+    "interpretation": "相关系数接近 1 时，高重建误差可能主要反映接触强度；正式结论还需查看统一色标热图与已知/背景对照。"
+  },
+  "known_recall": {
+    "available": true,
+    "known_windows": 3556,
+    "candidate_windows": 36,
+    "window_recall": 0.010123734533183352,
+    "known_structures": 344,
+    "recalled_structures": 21,
+    "structure_recall": 0.061046511627906974,
+    "per_type_window_recall": {
+      "OPCID": 0.020072992700729927,
+      "CHIN": 0.006143838091796169,
+      "CHID": 0.007462686567164179
+    }
+  },
+  "note": "candidate_quantile 是本次运行筛选规则；正式阈值需结合已知结构和随机背景对照固定。"
+}

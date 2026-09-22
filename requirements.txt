@@ -4,4 +4,6 @@ h5py==3.16.0         # Cooler 元数据核对
 cooler==0.10.4       # 局部接触矩阵读取
 numpy==2.5.3         # 局部窗口聚合与数组保存
 matplotlib==3.11.2   # 真实窗口预览
-# 模型训练依赖由分类/发现模块补充；数据准备不需要 PyTorch 或 CUDA。
+pandas==3.0.6        # 窗口表、候选表与运行结果
+torch==2.14.0        # 轻量 CNN 和卷积自编码器；CPU 也可运行
+scikit-learn==1.9.1 # PCA、DBSCAN 与简单线性分类对照

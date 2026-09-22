@@ -1,0 +1,25 @@
+{
+  "available": true,
+  "features": 32,
+  "independent_reference_positions": 306,
+  "class_counts": {
+    "CHIN": 226,
+    "OPCID": 68,
+    "CHID": 12
+  },
+  "spatial_groups": 60,
+  "cross_fold_spatial_overlap_pairs": 0,
+  "fold_sizes": {
+    "0": 61,
+    "1": 61,
+    "2": 61,
+    "3": 62,
+    "4": 61
+  },
+  "folds": 5,
+  "accuracy": 0.49673202614379086,
+  "balanced_accuracy": 0.5178870958412863,
+  "majority_accuracy": 0.738562091503268,
+  "majority_balanced_accuracy": 0.3333333333333333,
+  "note": "完整窗口按空间重叠连通组进入同一折；该分组交叉验证只检查 32 维表征是否含已知类别信息，不是最终分类模型指标。"
+}
