@@ -1,0 +1,5 @@
+file,start,end,selection_reason,status
+tracks_0050000_0060000.png,50000,60000,包含 OPCID_1 与 CHIN_1 且三条件曲线清楚,真实六样本正式归一化轨道
+tracks_1210000_1220000.png,1210000,1220000,多个 CHIN 且 DhnsDstpA 与 WT/DstpA 分离清楚,真实六样本正式归一化轨道
+tracks_2480000_2490000.png,2480000,2490000,多个 CHIN 且 DhnsDstpA 增强区间清楚,真实六样本正式归一化轨道
+tracks_3800000_3810000.png,3800000,3810000,结构密集且 DstpA 与 DhnsDstpA 方向不同,真实六样本正式归一化轨道

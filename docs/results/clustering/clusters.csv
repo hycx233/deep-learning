@@ -1,0 +1,2 @@
+cluster,members,candidate_windows,independent_candidate_loci,known_reference_members,known_overlapping_candidates,suspected_new_cluster,nearest_known_window_id,nearest_known_ids,nearest_known_types,nearest_known_pca_distance,PC1,PC2,PC3,PC4,PC5,PC6,PC7,PC8,PC9,PC10
+0,496,9,4,297,4,False,WT_rep1__scan_4604000,CHIN_249,CHIN,0.8117253208181696,0.26319124196749827,0.008192627614615092,-0.040554425770268486,0.0496974931858382,-0.005008016350479409,-0.003712865007064108,0.06331222269456757,0.07465046238238777,0.04706168582708108,0.07138398813406822

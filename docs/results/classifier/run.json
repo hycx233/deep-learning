@@ -1,0 +1,223 @@
+{
+  "command": "train_classifier.py --windows-csv /home/hycx233/Courses/deep-learning/outputs/preprocessing/default/classification/windows.csv --arrays-npz /home/hycx233/Courses/deep-learning/outputs/preprocessing/default/classification/windows.npz --epochs 30 --patience 8 --seed 20260918 --device cpu --out-dir outputs/review/classifier_real_seed20260918",
+  "code_version": "8639e81df3ec702879146f049277c50bde687dbf",
+  "seed": 20260918,
+  "device": "cpu",
+  "data": {
+    "windows_csv": "/home/hycx233/Courses/deep-learning/outputs/preprocessing/default/classification/windows.csv",
+    "arrays_npz": "/home/hycx233/Courses/deep-learning/outputs/preprocessing/default/classification/windows.npz",
+    "windows": 688,
+    "split_table": {
+      "OPCID": {
+        "train": 96,
+        "val": 20,
+        "test": 20
+      },
+      "CHIN": {
+        "train": 350,
+        "val": 74,
+        "test": 76
+      },
+      "CHID": {
+        "train": 36,
+        "val": 8,
+        "test": 8
+      }
+    },
+    "split_notes": [
+      "有 285 个窗口在坐标上与其它结构的窗口重叠；这类重叠在本项目里是正常的（24 kb 窗口 vs 344 条结构的间距），分组按结构身份而非坐标重叠处理",
+      "沿用 windows 表已有的 split 列，未重新划分"
+    ]
+  },
+  "model": {
+    "name": "SmallCNN",
+    "parameters": 23603,
+    "dropout": 0.3,
+    "class_weighted": true
+  },
+  "training": {
+    "epochs_requested": 30,
+    "best_epoch": 13,
+    "best_val_macro_f1": 0.5861,
+    "batch_size": 32,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "patience": 8,
+    "seconds": 35.7
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 1.0693,
+      "train_accuracy": 0.3838,
+      "val_loss": 1.1223,
+      "val_accuracy": 0.1961,
+      "val_macro_f1": 0.1093
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.9812,
+      "train_accuracy": 0.3444,
+      "val_loss": 1.0178,
+      "val_accuracy": 0.2353,
+      "val_macro_f1": 0.1472
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.9659,
+      "train_accuracy": 0.4461,
+      "val_loss": 0.8339,
+      "val_accuracy": 0.598,
+      "val_macro_f1": 0.4098
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.932,
+      "train_accuracy": 0.4834,
+      "val_loss": 0.7876,
+      "val_accuracy": 0.5294,
+      "val_macro_f1": 0.4764
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.9149,
+      "train_accuracy": 0.39,
+      "val_loss": 0.9617,
+      "val_accuracy": 0.3137,
+      "val_macro_f1": 0.3587
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.8982,
+      "train_accuracy": 0.4232,
+      "val_loss": 0.8556,
+      "val_accuracy": 0.3137,
+      "val_macro_f1": 0.3648
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.922,
+      "train_accuracy": 0.4502,
+      "val_loss": 1.0721,
+      "val_accuracy": 0.549,
+      "val_macro_f1": 0.2409
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.9291,
+      "train_accuracy": 0.4481,
+      "val_loss": 0.7932,
+      "val_accuracy": 0.4314,
+      "val_macro_f1": 0.4093
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.8853,
+      "train_accuracy": 0.444,
+      "val_loss": 0.8112,
+      "val_accuracy": 0.3824,
+      "val_macro_f1": 0.4228
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.8714,
+      "train_accuracy": 0.5207,
+      "val_loss": 0.892,
+      "val_accuracy": 0.598,
+      "val_macro_f1": 0.4849
+    },
+    {
+      "epoch": 11,
+      "train_loss": 0.8647,
+      "train_accuracy": 0.5581,
+      "val_loss": 0.7564,
+      "val_accuracy": 0.6569,
+      "val_macro_f1": 0.5401
+    },
+    {
+      "epoch": 12,
+      "train_loss": 0.875,
+      "train_accuracy": 0.4108,
+      "val_loss": 0.7547,
+      "val_accuracy": 0.6569,
+      "val_macro_f1": 0.5556
+    },
+    {
+      "epoch": 13,
+      "train_loss": 0.8548,
+      "train_accuracy": 0.529,
+      "val_loss": 0.8011,
+      "val_accuracy": 0.6961,
+      "val_macro_f1": 0.5861
+    },
+    {
+      "epoch": 14,
+      "train_loss": 0.8329,
+      "train_accuracy": 0.5311,
+      "val_loss": 0.8445,
+      "val_accuracy": 0.5294,
+      "val_macro_f1": 0.4703
+    },
+    {
+      "epoch": 15,
+      "train_loss": 0.8306,
+      "train_accuracy": 0.5145,
+      "val_loss": 0.7978,
+      "val_accuracy": 0.5588,
+      "val_macro_f1": 0.5015
+    },
+    {
+      "epoch": 16,
+      "train_loss": 0.8448,
+      "train_accuracy": 0.5,
+      "val_loss": 0.7805,
+      "val_accuracy": 0.4608,
+      "val_macro_f1": 0.4471
+    },
+    {
+      "epoch": 17,
+      "train_loss": 0.8123,
+      "train_accuracy": 0.5187,
+      "val_loss": 0.8,
+      "val_accuracy": 0.5686,
+      "val_macro_f1": 0.5033
+    },
+    {
+      "epoch": 18,
+      "train_loss": 0.8422,
+      "train_accuracy": 0.4212,
+      "val_loss": 0.7595,
+      "val_accuracy": 0.6275,
+      "val_macro_f1": 0.5444
+    },
+    {
+      "epoch": 19,
+      "train_loss": 0.8476,
+      "train_accuracy": 0.4772,
+      "val_loss": 1.0451,
+      "val_accuracy": 0.549,
+      "val_macro_f1": 0.2782
+    },
+    {
+      "epoch": 20,
+      "train_loss": 0.838,
+      "train_accuracy": 0.5747,
+      "val_loss": 0.7695,
+      "val_accuracy": 0.451,
+      "val_macro_f1": 0.4266
+    },
+    {
+      "epoch": 21,
+      "train_loss": 0.7751,
+      "train_accuracy": 0.5788,
+      "val_loss": 0.7472,
+      "val_accuracy": 0.5392,
+      "val_macro_f1": 0.4873
+    }
+  ],
+  "outputs": {
+    "checkpoint": "best.pt",
+    "log": "train_log.txt",
+    "splits": "splits.csv"
+  }
+}

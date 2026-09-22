@@ -1,6 +1,6 @@
 # 项目依赖。只记录实际验证过的版本，并注明用途；新增依赖请补一行说明。
 # 已验证环境：数据准备与预处理在 Linux / Python 3.12.14 / CPU；
-# 分类模块在 macOS arm64 / Python 3.14.6 / CPU 与 MPS。
+# 分类模块在 Linux / Python 3.12.14 / torch 2.14.0+cpu，以及 macOS arm64 / Python 3.14.6 / MPS。
 openpyxl==3.1.5      # 只读课程标注 Excel
 h5py==3.16.0         # Cooler 元数据核对
 cooler==0.10.4       # 局部接触矩阵读取与缓存
@@ -8,4 +8,4 @@ numpy==2.5.3         # 窗口聚合、数组与坐标运算
 pandas==3.0.6        # 窗口表、结构表与结果表读写
 matplotlib==3.11.2   # 代表图、混淆矩阵与轨道图
 torch==2.14.0        # 任务一、任务二模型训练与推理
-scikit-learn==1.9.1  # #4 起：多数类基线、聚类对照
+scikit-learn==1.9.1  # PCA、DBSCAN、简单线性分类与基线对照

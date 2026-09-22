@@ -1,0 +1,37 @@
+{
+  "command": "train_autoencoder.py --windows-csv outputs/preprocessing/default/background/windows.csv --arrays-npz outputs/preprocessing/default/background/windows.npz --out-dir outputs/discovery/autoencoder --sample-id WT_rep1 --epochs 30 --batch-size 8 --device cpu",
+  "code_version": "883803ac05970fdc94fb529eee86a1987e668cf7",
+  "seed": 20260918,
+  "device": "cpu",
+  "data": {
+    "windows_csv": "outputs\\preprocessing\\default\\background\\windows.csv",
+    "arrays_npz": "outputs\\preprocessing\\default\\background\\windows.npz",
+    "sample_id": "WT_rep1",
+    "background_windows": 24,
+    "train_windows": 17,
+    "val_windows": 4
+  },
+  "model": {
+    "name": "ConvAutoencoder",
+    "latent_dim": 32,
+    "parameters": 1129553,
+    "diagonal_exclusion": 1,
+    "loss_mask": "逐窗口有效 mask 与固定上三角 mask 的交集；每个窗口单独按有效像素数求均值"
+  },
+  "training": {
+    "epochs_requested": 30,
+    "epochs_run": 30,
+    "best_epoch": 25,
+    "best_val_loss": 0.022306593134999275,
+    "batch_size": 8,
+    "lr": 0.001,
+    "weight_decay": 1e-05,
+    "patience": 6,
+    "seconds": 4.19
+  },
+  "outputs": {
+    "checkpoint": "best.pt",
+    "history": "train_log.csv",
+    "training_windows": "training_windows.csv"
+  }
+}

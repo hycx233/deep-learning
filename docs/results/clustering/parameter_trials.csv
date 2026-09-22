@@ -1,0 +1,5 @@
+eps,min_samples,non_noise_clusters,noise_members,candidate_windows_in_cluster,independent_candidate_loci_in_cluster,known_reference_members,known_overlapping_candidates,background_known_overlap,suspected_new_clusters,decision
+2.5,5,1,109,0,0,272,0,0,0,过严：47/47 个候选为噪声
+3.0,5,1,68,9,4,297,4,0,0,正式参数：在过严与大簇吸收之间取中间值
+3.5,5,1,35,29,8,307,19,0,0,更多候选被已知参考主导的大簇吸收
+4.0,5,1,21,38,10,311,27,0,0,多数候选被已知参考主导的大簇吸收

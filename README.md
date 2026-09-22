@@ -21,6 +21,7 @@
 - [数据说明](data/README.md)：原始矩阵的获取与放置方式。
 - [数据准备与 CPU 交接样例](docs/数据准备说明.md)：运行方法、坐标依据、表字段与已验证结果。
 - [共享预处理说明](docs/共享预处理说明.md)：六样本归一化、环状窗口、正式分组和下游数据接口。
+- [候选聚类说明](docs/候选聚类说明.md)：统一表征上的 PCA、DBSCAN、独立位置统计与候选表。
 - [LaTeX 报告协作说明](docs/report/README.md)：章节负责人、编译方法与当前骨架状态。
 - [课程标注 Excel](data/标注数据.xlsx)
 
@@ -72,22 +73,34 @@ OPENBLAS_NUM_THREADS=1 python scripts/prepare_data.py
 
 最终报告采用 **LaTeX**：`docs/report/main.tex` 作为主文件，各成员在 `sections/` 下分章节编辑，提交编译后的 PDF 并保留源文件。演示文稿可用 **LaTeX Beamer 或 PPT**，9/26 统一选一种格式和模板，不重复制作；讲解视频由各成员片段合成。具体交付见三人共同的 [#11 文稿任务](https://github.com/hycx233/deep-learning/issues/11)，章节骨架可提前建立，无需等待所有实验结束。
 
+任务二的自编码器、1 kb 全基因组扫描、候选打分与强度对照见
+[发现模块说明](docs/发现模块说明.md)。正式输出使用 #2 的共享归一化和空间分组。
+
+任务三的接触强度定义、轨道构建和 10 kb 分段出图命令见
+[轨道图模块说明](docs/轨道图模块说明.md)。
+
 仓库已有简短的 issue 与 PR 模板，不额外搭建服务或复杂 CI。
 
 ## 已实现的模块
 
-任务一（已知结构分类）已有训练与推理入口，可先用合成样例窗口跑通；用法、输入格式与当前状态见 [分类模块说明](docs/分类模块说明.md)。其余任务尚未实现。
+任务一已在 688 个真实窗口上完成首轮固定参数训练：CPU 用时约 36 秒，验证集 Macro-F1 为 0.5861；测试集评价留给 #4。用法、输入格式和交接结果见 [分类模块说明](docs/分类模块说明.md)。自编码器发现、候选聚类和轨道图也已实现，候选跨重复验证由 #9 接续。
 
 ```bash
 pip install -r requirements.txt
-python scripts/make_sample_windows.py   # 合成样例窗口，用于打通流程，不是实验结果
-python scripts/train_classifier.py
+OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 \
+python scripts/train_classifier.py \
+    --windows-csv outputs/preprocessing/default/classification/windows.csv \
+    --arrays-npz outputs/preprocessing/default/classification/windows.npz \
+    --out-dir outputs/classifier/real_seed20260918 --device cpu --seed 20260918
 python scripts/predict_classifier.py \
-    --checkpoint outputs/classifier/skeleton/best.pt \
-    --split test --out-csv outputs/classifier/skeleton/predictions_test.csv
+    --checkpoint outputs/classifier/real_seed20260918/best.pt \
+    --windows-csv outputs/preprocessing/default/classification/windows.csv \
+    --arrays-npz outputs/preprocessing/default/classification/windows.npz \
+    --split val --device cpu \
+    --out-csv outputs/classifier/real_seed20260918/predictions_val.csv
 ```
 
-真实窗口等 [#2 共享数据处理](https://github.com/hycx233/deep-learning/issues/2)交付后接入。
+先运行上文的共享预处理生成真实窗口。模型权重保留本地，运行记录与验证结果见 `docs/results/classifier/`；这些验证指标用于选择轮次，不是最终测试性能。
 
 ## 目录
 
