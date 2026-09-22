@@ -72,6 +72,9 @@ OPENBLAS_NUM_THREADS=1 python scripts/prepare_data.py
 
 最终报告采用 **LaTeX**：`docs/report/main.tex` 作为主文件，各成员在 `sections/` 下分章节编辑，提交编译后的 PDF 并保留源文件。演示文稿可用 **LaTeX Beamer 或 PPT**，9/26 统一选一种格式和模板，不重复制作；讲解视频由各成员片段合成。具体交付见三人共同的 [#11 文稿任务](https://github.com/hycx233/deep-learning/issues/11)，章节骨架可提前建立，无需等待所有实验结束。
 
+任务二的自编码器、1 kb 全基因组扫描、候选打分与强度对照见
+[发现模块说明](docs/发现模块说明.md)。正式输出使用 #2 的共享归一化和空间分组。
+
 任务三的接触强度定义、轨道构建和 10 kb 分段出图命令见
 [轨道图模块说明](docs/轨道图模块说明.md)。
 
