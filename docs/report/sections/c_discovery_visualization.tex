@@ -43,3 +43,26 @@ WT、$\Delta stpA$ 和 $\Delta hns\Delta stpA$ 三条件共六个真实重复被
 bin 留白，没有画成假性零值。首图、末图和 4 张代表图均已人工检查，完整图集位于本地
 \texttt{outputs/tracks/all/}，可提交的运行记录和代表图位于
 \texttt{docs/results/tracks/}。
+
+不同条件下的局部趋势并不一致：$[1{,}210{,}000,1{,}220{,}000)$ 和
+$[2{,}480{,}000,2{,}490{,}000)$ 中双突变条件在多数位置高于其他两组，
+$[3{,}800{,}000,3{,}810{,}000)$ 则主要表现为 $\Delta stpA$ 信号较高。这些图用于展示
+轨道的实际读法与局部差异，不把单个区间的曲线高低当作全基因组显著性结论。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.96\linewidth]{../results/tracks/tracks_1210000_1220000.png}
+  \caption{$[1{,}210{,}000,1{,}220{,}000)$ 的三条件轨道。每个重复先独立归一化，条件均值在线性尺度上计算后再开平方显示。}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.96\linewidth]{../results/tracks/tracks_2480000_2490000.png}
+  \caption{$[2{,}480{,}000,2{,}490{,}000)$ 的三条件轨道。图中同时保留重复曲线、条件均值、基因与已知结构坐标。}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.96\linewidth]{../results/tracks/tracks_3800000_3810000.png}
+  \caption{$[3{,}800{,}000,3{,}810{,}000)$ 的三条件轨道。本区间与前两例呈现不同的条件顺序，说明不应使用单个代表区间概括全基因组。}
+\end{figure}

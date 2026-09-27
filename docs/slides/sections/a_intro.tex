@@ -1,0 +1,47 @@
+% A 开场约 60 秒；不在本文件修改全局主题。
+\begin{frame}{从同一套 Micro-C 数据回答四个问题}
+\large
+\textbf{三种条件：}WT、$\Delta stpA$、$\Delta hns\Delta stpA$，各两个重复。
+\vspace{0.5em}
+
+\begin{block}{共享输入}
+\normalsize 344 条已知结构：OPCID 68、CHIN 250、CHID 26。\\
+统一坐标、归一化、窗口与数据划分，各模块复用。
+\end{block}
+\vspace{0.4em}
+\normalsize
+\begin{tabular}{@{}ll@{}}
+\textbf{分类与解释} & 轻量 CNN，配合基线与解释图评价 \\
+\textbf{候选发现} & 自编码器打分，聚类后核查独立重复 \\
+\textbf{全基因组展示} & 三条件轨道，每 10 kb 输出一张图 \\
+\textbf{选做：条件差异} & 比较两个突变条件相对 WT 的局部变化
+\end{tabular}
+\end{frame}
+
+\begin{frame}{共享处理：形态与强度分别保留}
+\begin{block}{10 bp 稀疏矩阵 $\longrightarrow$ 100 bp 工作数据 $\longrightarrow$ 24 kb 窗口}
+模型统一输入 $128\times128$；环状边界首尾连接，无效区域使用掩码。
+\end{block}
+\vspace{0.5em}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.47\textwidth}
+\textbf{形态：分类与发现}\\[0.4em]
+O/E 去除基因组距离背景；\\
+再用固定变换缩放数值。\\[0.5em]
+\textbf{强度：轨道与条件比较}\\[0.4em]
+每百万接触的深度归一化值；\\
+保留不同条件的相对强弱。
+\end{column}
+\begin{column}{0.47\textwidth}
+\textbf{避免重叠窗口跨集合}\\[0.4em]
+344 个结构组成 59 个空间组。\\
+WT 两重复共 688 个窗口：\\[0.4em]
+\begin{tabular}{lr}
+训练 & 482 \\
+验证 & 102 \\
+测试 & 104
+\end{tabular}\\[0.4em]
+验证选轮次，测试留作最终评价。
+\end{column}
+\end{columns}
+\end{frame}

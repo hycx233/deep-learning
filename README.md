@@ -2,7 +2,7 @@
 
 深度学习综合实践三人课程项目。完成已知结构识别、新结构候选发现、多轨道可视化，并选做不同实验条件下的结构差异定位。
 
-**当前状态：三人按 GitHub issue 分工推进。** 已实现标注整理、六样本准备、共享归一化、环状切窗和空间分组，可向分类与发现模块提供真实模型输入。已完成 344 个已知结构的两条件差异分析、8 个代表案例及对应 LaTeX 章节；分类、候选发现与验证按各自 issue 推进。
+**当前状态（2026-09-27）：进入结果整合与文稿阶段。** 数据准备、共享预处理、分类训练、候选发现、聚类和 465 张轨道图已完成；本分支另含 344 个已知结构的两条件差异分析、8 个代表案例，待 PR #19 审核合入。最终分类评价与解释图（#4）、候选跨重复验证（#9）仍待 B 提交。报告已补入现有结果和阶段讨论，演示统一使用 Beamer，A 的 5 页及讲稿已准备。
 
 | 成员 | 角色与主责 |
 | --- | --- |
@@ -18,12 +18,14 @@
 - [课程实践方案 PDF](基于深度学习的接触矩阵处理实践方案.pdf)
 - [项目完成计划](docs/项目完成计划.md)：范围、分工、技术路线、进度与提交要求。
 - [GitHub 任务与成员分工](docs/GitHub任务清单.md)：12 项任务、负责人、日期和验收条件。
+- [运行与交付清单](docs/运行与交付清单.md)：从数据到四个任务的运行顺序、正式结果、权重交接和剩余工作。
 - [数据说明](data/README.md)：原始矩阵的获取与放置方式。
 - [数据准备与 CPU 交接样例](docs/数据准备说明.md)：运行方法、坐标依据、表字段与已验证结果。
 - [共享预处理说明](docs/共享预处理说明.md)：六样本归一化、环状窗口、正式分组和下游数据接口。
 - [条件差异分析](docs/条件差异分析.md)：已知结构的强度比较、重复参照、688 条结果及 8 个案例。
 - [候选聚类说明](docs/候选聚类说明.md)：统一表征上的 PCA、DBSCAN、独立位置统计与候选表。
 - [LaTeX 报告协作说明](docs/report/README.md)：章节负责人、编译方法与当前骨架状态。
+- [Beamer 演示与讲解交接](docs/slides/README.md)：统一模板、A 的投影片及讲稿、各成员章节与录制顺序。
 - [课程标注 Excel](data/标注数据.xlsx)
 
 ## 项目范围
@@ -35,9 +37,9 @@
 | 必做三：接触频率与结构可视化 | WT、ΔstpA、ΔhnsΔstpA 三条件的全基因组多轨道图 |
 | 选做四：结构变化分析 | 两种突变条件相对 WT 的差异定位 |
 
-按 AI agent 辅助开发安排，每人预计约 13 小时人工投入，模型训练等待时间另算。正式训练主要使用组长的 RTX 2080 Ti，其他成员负责各自模块的开发、结果检查与分析。
+按 AI agent 辅助开发安排，每人预计约 13 小时人工投入，模型训练等待时间另算。当前轻量 CNN 和自编码器均已有 CPU 正式运行记录，现阶段的评价、文稿与整合无需等待 GPU；RTX 2080 Ti 仅按实际需要使用。
 
-日期暂按 2026 年 9 月 18 日开始：9 月 28 日完成可提交版本，9 月 29—30 日作为机动，10 月 1 日为内部提交日。正式截止以课程通知为准。
+课程正式截止已确认为 **2026 年 10 月 18 日**。新的内部安排为：10/5 前补齐结果，10/7 完成整合，10/9 收齐文稿与个人录音，10/11 形成可提交版本，10/15 前检查并提交，10/16—17 留作机动。原先从 9/18 假设两周的日期不再作为截止要求；保持原任务范围与人工预算。
 
 ## 加入后开始协作
 
@@ -81,7 +83,7 @@ OPENBLAS_NUM_THREADS=1 python scripts/compare_conditions.py
 - 原始矩阵、缓存、权重与批量输出保留在本地或共享存储；提交脚本、小配置、小型结果表、报告源文件和代表图。
 - 每人负责自己模块的报告、演示文稿和讲解录音，按已分配的 issue 推进。
 
-最终报告采用 **LaTeX**：`docs/report/main.tex` 作为主文件，各成员在 `sections/` 下分章节编辑，提交编译后的 PDF 并保留源文件。演示文稿可用 **LaTeX Beamer 或 PPT**，9/26 统一选一种格式和模板，不重复制作；讲解视频由各成员片段合成。具体交付见三人共同的 [#11 文稿任务](https://github.com/hycx233/deep-learning/issues/11)，章节骨架可提前建立，无需等待所有实验结束。
+最终报告采用 **LaTeX**：`docs/report/main.tex` 作为主文件，各成员在 `sections/` 下分章节编辑，提交编译后的 PDF 并保留源文件。演示采用 **Beamer + XeLaTeX（16:9）**，模板为 `docs/slides/main.tex`，每人按统一模板制作自己的章节并录制讲解，B 合成为视频。当前演示 PDF 仅为 A 部分预览，最终报告和视频仍需补齐 #4、#9 的结果。具体交付见三人共同的 [#11 文稿任务](https://github.com/hycx233/deep-learning/issues/11)。
 
 任务二的自编码器、1 kb 全基因组扫描、候选打分与强度对照见
 [发现模块说明](docs/发现模块说明.md)。正式输出使用 #2 的共享归一化和空间分组。
@@ -90,6 +92,27 @@ OPENBLAS_NUM_THREADS=1 python scripts/compare_conditions.py
 [轨道图模块说明](docs/轨道图模块说明.md)。
 
 仓库已有简短的 issue 与 PR 模板，不额外搭建服务或复杂 CI。
+
+## 已实现的模块
+
+任务一已在 688 个真实窗口上完成首轮固定参数训练：CPU 用时约 36 秒，验证集 Macro-F1 为 0.5861；测试集评价留给 #4。用法、输入格式和交接结果见 [分类模块说明](docs/分类模块说明.md)。自编码器发现、候选聚类和轨道图也已实现，候选跨重复验证由 #9 接续。
+
+```bash
+pip install -r requirements.txt
+OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 \
+python scripts/train_classifier.py \
+    --windows-csv outputs/preprocessing/default/classification/windows.csv \
+    --arrays-npz outputs/preprocessing/default/classification/windows.npz \
+    --out-dir outputs/classifier/real_seed20260918 --device cpu --seed 20260918
+python scripts/predict_classifier.py \
+    --checkpoint outputs/classifier/real_seed20260918/best.pt \
+    --windows-csv outputs/preprocessing/default/classification/windows.csv \
+    --arrays-npz outputs/preprocessing/default/classification/windows.npz \
+    --split val --device cpu \
+    --out-csv outputs/classifier/real_seed20260918/predictions_val.csv
+```
+
+先运行上文的共享预处理生成真实窗口。模型权重保留本地，运行记录与验证结果见 `docs/results/classifier/`；这些验证指标用于选择轮次，不是最终测试性能。
 
 ## 目录
 

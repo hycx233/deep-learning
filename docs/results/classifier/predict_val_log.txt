@@ -1,0 +1,8 @@
+沿用训练时保存的划分：outputs/review/classifier_real_seed20260918/splits.csv
+val 集 102 个样本，设备 cpu
+accuracy 0.6961  macro_f1 0.5861
+混淆矩阵（行=真实，列=预测，顺序 OPCID/CHIN/CHID）
+  OPCID [14, 6, 0]
+   CHIN [9, 53, 12]
+   CHID [0, 4, 4]
+逐样本结果已写入 outputs/review/classifier_real_seed20260918/predictions_val.csv
