@@ -1,14 +1,13 @@
-% A 差异与收束约 2 分钟；放在 B、C 讲解之后。
-\begin{frame}{条件差异：比较结构内部的相对强度}
-\textbf{344 个结构 $\times$ 2 个突变条件 = 688 行比较。}
+% A 选做与收束约 1 分 50 秒；放在 B、C 讲解之后。
+\begin{frame}{选做模块：复用输入，做可追溯的条件比较}
+\textbf{共用预处理，增加一个分析入口，无需再训练模型。}
 \vspace{0.4em}
 
-同一区间取六样本共同有效像素；条件内先平均两个重复，再与 WT 比较。
+同一区间与有效像素 $\longrightarrow$ 强度均值 $\longrightarrow$ 重复一致性 $\longrightarrow$ 表与图
 \[
-F_c=\log_2\frac{\overline S_c}{\overline S_{\mathrm{WT}}},\qquad
-b=\max\!\left(\log_2 1.25,\left|\log_2\frac{S_{\mathrm{WT},2}}{S_{\mathrm{WT},1}}\right|\right)
+F_c=\log_2\frac{\overline S_c}{\overline S_{\mathrm{WT}}}
 \]
-\small 两个突变重复都越过同一侧参照带才标为一致增强或减弱。
+\small 均值描述幅度；两个重复都越过同一侧参照带才记为一致变化。
 \vspace{0.7em}
 
 \centering
@@ -22,27 +21,28 @@ $\Delta hns\Delta stpA$ & 182 & 10 & 92 & 60 \\
 \end{tabular}
 \vspace{0.6em}
 
-\raggedright\small 描述性参照，不是显著性检验；12 个低覆盖结构留在全表，不用于代表案例。
+\raggedright\small 344 个结构共 688 行比较。这些是描述标签，不是统计显著性结论。\\[0.4em]
+\scriptsize 入口：\texttt{compare\_conditions.py}；共享计算：\texttt{compare\_structure()}。
 \end{frame}
 
-\begin{frame}{实例：CHIN\_126 在 $\Delta stpA$ 下重复一致增强}
+\begin{frame}{结果核查：从表中一行回到对应输入}
 \centering
 \includegraphics[width=0.94\textwidth]{../results/differences/figures/CHIN_126_DstpA_slide.png}\\[0.3em]
-\small 青框为量化区间；灰色为共同无效区域。均值约为 WT 的 \textbf{2.504 倍}。\\[0.4em]
-\small 两重复相对 WT 的 $\log_2$ 比为 1.306、1.342，均高于参照带上界 0.322。
+\small CHIN\_126：青框为量化区间，灰色像素不参与比较，两图使用同一色标。\\[0.4em]
+\small 表中均值比为 \textbf{2.504}；两个重复方向一致，完整对照保存在报告中。
 \end{frame}
 
-\begin{frame}{结论与解释范围}
-\begin{block}{已完成的比较}
-\normalsize 共享流程连接分类、候选发现、465 张轨道图及 688 行条件比较。\\
-同一条件下既有增强也有减弱，代表案例同时保留稳定与边界结果。
+\begin{frame}{这次实现的三个要点}
+\begin{block}{1. 模型与数据规模相称}
+轻量 CNN 做有标签分类，自编码器学习背景重建；输入和预处理共用。
 \end{block}
-\vspace{0.5em}
-\begin{itemize}
-\item 47 个高分候选仅对应 10 个独立位置；目前没有满足规则的疑似新簇。
-\item 深度归一化后的相对增强，不等于细胞内绝对接触总量增加。
-\item 两个重复用于描述性对照，双缺失结果不归因于单个因子。
-\end{itemize}
-\vspace{0.6em}
-\small\textcolor{projectblue}{阶段稿：最终录制前，在 B 的章节补齐分类测试、基线/解释图与跨重复验证结论。}
+\begin{block}{2. 评价要对应实际问题}
+分类要看 Macro-F1、基线与失败案例；候选要看独立位置和跨重复表现。\\
+当前重建误差与强度相关较高，高分并不足以说明学到了新的形态。
+\end{block}
+\begin{block}{3. 每个结果能回到输入与运行记录}
+保留位置、有效掩码、数据划分与固定权重，使用真实结果表和代表图解释输出。
+\end{block}
+\vspace{0.3em}
+\small\textcolor{projectblue}{阶段稿：B 完成最终测试与跨重复验证后，补齐评价结论再录制。}
 \end{frame}
