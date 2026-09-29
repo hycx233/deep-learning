@@ -1,0 +1,96 @@
+% B / onlysonder：分类训练、评价边界与候选验证。
+\begin{frame}{小型 CNN 输出三类分数}
+\large 从共享窗口输入接触图，判断 OPCID、CHIN 或 CHID。
+
+\vspace{0.7em}
+\begin{center}
+\small
+$128\times128$ 窗口 $\;\longrightarrow\;$ 三个卷积模块（16/32/64 通道）\\[0.4em]
+全局平均池化 $\;\longrightarrow\;$ OPCID / CHIN / CHID 三类分数
+\end{center}
+
+\vspace{0.7em}
+\begin{itemize}
+  \item 344 条已知结构使用 23,603 参数轻量 CNN；本项目未比较大型预训练编码器。
+  \item 同一结构的两个重复以及共享划分标记为重叠的窗口不跨集合。
+  \item 688 个窗口对应 344 条结构，不把重复窗口当成独立结构数。
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{训练只用训练集，轮次由验证集决定}
+\large 加权交叉熵提高少数类在训练目标中的权重；Macro-F1 等权检查三类。
+
+\vspace{0.45em}
+\begin{lstlisting}
+logits = model(features)
+loss = criterion(logits, labels)
+if training:
+    optimizer.zero_grad(set_to_none=True)
+    loss.backward()
+    optimizer.step()
+\end{lstlisting}
+
+\small
+Adam，学习率 $10^{-3}$，权重衰减 $10^{-4}$，dropout=0.3；seed=20260918。
+按验证 Macro-F1 保存权重，patience=8。B 的独立 CPU 复跑在第 20 轮早停，最佳轮次为第 12 轮。
+\end{frame}
+
+\begin{frame}{固定测试集：CNN 尚未超过线性基线}
+\large 多数类基线的 Accuracy 较高；展平矩阵的逻辑回归两项指标都高于 CNN。
+
+\vspace{0.2em}
+\begin{center}
+\small
+\begin{tabular}{lrrr}
+\toprule
+固定测试方法 & 样本数 & Accuracy & Macro-F1 \\
+\midrule
+小型 CNN & 104 & 0.5096 & 0.3454 \\
+多数类（CHIN） & 104 & 0.7308 & 0.2815 \\
+逻辑回归 & 104 & 0.8365 & 0.5644 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{0.15em}
+\begin{center}
+\small
+\begin{tabular}{lrrr}
+\toprule
+类别 & 测试样本数 & CNN F1 & 逻辑回归 F1 \\
+\midrule
+OPCID & 20 & 0.4062 & 0.8000 \\
+CHIN & 76 & 0.6299 & 0.8931 \\
+CHID & 8 & 0.0000 & 0.0000 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\small
+测试集为 52 个独立位置、每个两个 WT 重复。CNN 的 Macro-F1 高于多数类基线，
+但两项指标均低于逻辑回归；三个方法都没有识别出 CHID。固定测试混淆矩阵、51 条失败预测及
+每类 3 个独立结构位置的 Grad-CAM 已保存于 \texttt{docs/results/classifier/test\_evaluation/}。
+结果来自 B 的本地复跑 checkpoint，不与组长原权重混写。
+\end{frame}
+
+\begin{frame}{47 个候选窗口合并后只有 10 个位置}
+\large 邻近 1 kb 扫描窗口不能被当作独立复现。
+
+\vspace{0.5em}
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+类别 & 命中结构数（去重） & 已知结构数 & 去重召回 \\
+\midrule
+OPCID & 10 & 68 & 14.71\% \\
+CHIN & 10 & 250 & 4.00\% \\
+CHID & 1 & 26 & 3.85\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{0.4em}
+\small
+当前聚类没有满足既定疑似新簇规则：非噪声簇只有 4 个候选独立位置并含 297 个已知参考；
+其余候选为 DBSCAN 噪声。WT rep2 的 O/E 相关和并排图待 \#9 运行后补入，不放宽规则。
+\end{frame}
