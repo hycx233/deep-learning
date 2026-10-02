@@ -1,0 +1,31 @@
+{
+  "checkpoint": "outputs/classifier/b_retrain_seed20260918/best.pt",
+  "checkpoint_epoch": 12,
+  "split": "val",
+  "samples": 102,
+  "accuracy": 0.6667,
+  "macro_f1": 0.5674,
+  "per_class_f1": {
+    "OPCID": 0.6522,
+    "CHIN": 0.7424,
+    "CHID": 0.3077
+  },
+  "confusion_matrix": [
+    [
+      15,
+      5,
+      0
+    ],
+    [
+      11,
+      49,
+      14
+    ],
+    [
+      0,
+      4,
+      4
+    ]
+  ],
+  "predictions_csv": "outputs/classifier/b_retrain_seed20260918/predictions_val.csv"
+}
