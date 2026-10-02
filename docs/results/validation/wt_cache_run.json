@@ -12,9 +12,9 @@
   },
   "input_sha256": {
     "dist/WT-raw-handoff-20261002/samples-wt.csv": "9709ccb5ca832c626055d994ab7ece10aa0af102332a9d7ede938e0919372830",
-    "/Users/king/Documents/deepseek- harness/deep-learning/data/structures.csv": "05562edb1831e726e576ab67f48c0e577c00d82abc01978656b74804344009c4"
+    "data/structures.csv": "05562edb1831e726e576ab67f48c0e577c00d82abc01978656b74804344009c4"
   },
-  "cache_dir": "/Users/king/Documents/deepseek- harness/deep-learning/data/cache/100bp",
+  "cache_dir": "data/cache/100bp",
   "outdir": "outputs/preprocessing/wt_only",
   "runtime_seconds": 123.48,
   "summary": {
@@ -41,7 +41,7 @@
       "model_rule": "clip(log1p(O/E),0,log(11))/log(11); mask diagonal and zero expected",
       "cache_identity": {
         "cache_version": 1,
-        "source_path": "/Users/king/Documents/deepseek- harness/deep-learning/data/GSE272159_37C_rep1.mapq_30.10.cool",
+        "source_path": "data/GSE272159_37C_rep1.mapq_30.10.cool",
         "source_size": 482254398,
         "source_mtime_ns": 1790919141633808369,
         "bin_size": 100,
@@ -51,9 +51,9 @@
         "numpy": "2.5.3",
         "cooler": "0.10.4"
       },
-      "cool_path": "/Users/king/Documents/deepseek- harness/deep-learning/data/cache/100bp/WT_rep1.cool",
-      "stats_path": "/Users/king/Documents/deepseek- harness/deep-learning/data/cache/100bp/WT_rep1.npz",
-      "metadata_path": "/Users/king/Documents/deepseek- harness/deep-learning/data/cache/100bp/WT_rep1.json"
+      "cool_path": "data/cache/100bp/WT_rep1.cool",
+      "stats_path": "data/cache/100bp/WT_rep1.npz",
+      "metadata_path": "data/cache/100bp/WT_rep1.json"
     },
     "WT_rep2": {
       "sample_id": "WT_rep2",
@@ -78,7 +78,7 @@
       "model_rule": "clip(log1p(O/E),0,log(11))/log(11); mask diagonal and zero expected",
       "cache_identity": {
         "cache_version": 1,
-        "source_path": "/Users/king/Documents/deepseek- harness/deep-learning/data/GSE272159_37C_rep2.mapq_30.10.cool",
+        "source_path": "data/GSE272159_37C_rep2.mapq_30.10.cool",
         "source_size": 468345755,
         "source_mtime_ns": 1790919142768550107,
         "bin_size": 100,
@@ -88,9 +88,9 @@
         "numpy": "2.5.3",
         "cooler": "0.10.4"
       },
-      "cool_path": "/Users/king/Documents/deepseek- harness/deep-learning/data/cache/100bp/WT_rep2.cool",
-      "stats_path": "/Users/king/Documents/deepseek- harness/deep-learning/data/cache/100bp/WT_rep2.npz",
-      "metadata_path": "/Users/king/Documents/deepseek- harness/deep-learning/data/cache/100bp/WT_rep2.json"
+      "cool_path": "data/cache/100bp/WT_rep2.cool",
+      "stats_path": "data/cache/100bp/WT_rep2.npz",
+      "metadata_path": "data/cache/100bp/WT_rep2.json"
     }
   }
 }

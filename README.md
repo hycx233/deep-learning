@@ -2,7 +2,7 @@
 
 深度学习综合实践三人课程项目。完成已知结构识别、新结构候选发现、多轨道可视化，并选做不同实验条件下的结构差异定位。
 
-**当前状态（2026-10-02）：核心实验已具备，正在整合报告与演示。** 数据准备、共享预处理、分类评价、候选发现、聚类和 465 张轨道图已完成。本整合分支包含 PR #19 的 344 个已知结构差异分析与 8 个案例、PR #21 的 C 演示章节，以及 PR #22 的 B 测试评价和报告/演示章节；合入 `main` 的状态以对应 PR 为准。演示已接入 A 5 页、B 4 页、C 4 页，采用 Beamer 编辑，默认使用 PDF 播放录屏。候选跨重复验证（#9）仍待 B 提交，最终报告、录音及打包随后收口。
+**当前状态（2026-10-02）：核心实验已具备，正在整合报告与演示。** 数据准备、共享预处理、分类评价、候选发现、聚类、465 张轨道图及候选跨重复验证（#9）均已有结果；#9 通过 PR #23 提交，等待审阅。该验证将 47 个候选按重叠关系合为 10 个独立位置，只比较每个位置预先固定的一个代表窗口；10 个代表的共同有效区域图形均经审阅，没有可信新结构。报告和演示已纳入这些结果；最终编译复核、成员录音和 #12 打包仍待完成。PR #19、#21、#22 的审阅/合入状态以 GitHub 为准。
 
 | 成员 | 角色与主责 |
 | --- | --- |
@@ -10,7 +10,7 @@
 | [onlysonder](https://github.com/onlysonder)（B） | 已知结构分类、跨重复验证、复跑与打包 |
 | [lanshuheng9-oss](https://github.com/lanshuheng9-oss)（C） | 候选发现、聚类与多轨道可视化 |
 
-已发布 [12 条任务](https://github.com/hycx233/deep-learning/issues)。当前由 B 收尾 [#9 跨重复验证](https://github.com/hycx233/deep-learning/issues/9)，C 向 B 交接发现模块完整产物，A 整合已交付章节；三人随后各自完成讲解录音，由 B 复跑代表流程并合成视频。
+已发布 [12 条任务](https://github.com/hycx233/deep-learning/issues)。B 已通过 [PR #23](https://github.com/hycx233/deep-learning/pull/23) 提交 [#9 跨重复验证](https://github.com/hycx233/deep-learning/issues/9) 的结果，等待审阅；C 与 B 核对发现模块结论，A 整合报告与演示。接下来三人完成讲解录音，由 B 复跑代表流程并合成视频。
 
 ## 项目材料
 
@@ -83,7 +83,7 @@ OPENBLAS_NUM_THREADS=1 python scripts/compare_conditions.py
 - 原始矩阵、缓存、权重与批量输出保留在本地或共享存储；提交脚本、小配置、小型结果表、报告源文件和代表图。
 - 每人负责自己模块的报告、演示文稿和讲解录音，按已分配的 issue 推进。
 
-最终报告采用 **LaTeX**：`docs/report/main.tex` 作为主文件，各成员在 `sections/` 下分章节编辑，提交编译后的 PDF 并保留源文件。演示以 **Beamer + XeLaTeX（16:9）** 为唯一编辑源，模板为 `docs/slides/main.tex`。三人的 13 页已接入，定稿还需 #9 结果。按组长 2026-10-02 的决定，当前默认使用 Beamer PDF 播放录屏，由 B 合成各自讲解；若最终需 PPTX，可用备用导出入口，不维护另一套 PPT 模板。具体编译、检查与录制步骤见[演示说明](docs/slides/README.md)和共同的 [#11 文稿任务](https://github.com/hycx233/deep-learning/issues/11)。
+最终报告采用 **LaTeX**：`docs/report/main.tex` 作为主文件，各成员在 `sections/` 下分章节编辑，提交编译后的 PDF 并保留源文件。演示以 **Beamer + XeLaTeX（16:9）** 为唯一编辑源，模板为 `docs/slides/main.tex`；当前包含 A 5 页、B 5 页、C 4 页，共 14 页，已纳入 #9 结果。按组长 2026-10-02 的决定，当前默认使用 Beamer PDF 播放录屏，由 B 合成各自讲解；若最终需 PPTX，可用备用导出入口，不维护另一套 PPT 模板。具体编译、检查与录制步骤见[演示说明](docs/slides/README.md)和共同的 [#11 文稿任务](https://github.com/hycx233/deep-learning/issues/11)。
 
 仅在需要 PPTX 时运行以下备用命令，PPTX 不作为组内必交项或 PR 合并条件：
 
@@ -107,7 +107,7 @@ python scripts/export_beamer_pptx.py \
 
 任务一已完成 B 的独立 CPU 复跑和 #4 固定测试：104 个测试窗口上，CNN 的 Accuracy/Macro-F1 为 **0.5096/0.3454**，多数类基线为 0.7308/0.2815，逻辑回归为 0.8365/0.5644；三个方法的 CHID F1 均为 0。报告如实保留这一结果及失败分析，不据此扩大调参。正式评价见 [`docs/results/classifier/test_evaluation/`](docs/results/classifier/test_evaluation/)，使用 B 本次的 checkpoint，与组长首轮权重分开记录。
 
-下面保留组长首轮训练与验证的运行示例；该次验证集 Macro-F1=0.5861 不属于 B 的正式测试。B 的当前权重路径、测试及解释命令见[分类模块说明](docs/分类模块说明.md)。自编码器发现、候选聚类和轨道图也已实现，候选跨重复验证由 #9 接续。
+下面保留组长首轮训练与验证的运行示例；该次验证集 Macro-F1=0.5861 不属于 B 的正式测试。B 的当前权重路径、测试及解释命令见[分类模块说明](docs/分类模块说明.md)。自编码器发现、候选聚类、轨道图和 #9 跨重复验证均已有结果；验证范围与限制见[验证记录](docs/results/validation/README.md)。
 
 ```bash
 pip install -r requirements.txt

@@ -145,5 +145,74 @@
     "correlation_not_an_independent_structure_test": true,
     "whole_locus_union_not_tested": true
   },
-  "scope": "#9 only; no branch change, add/commit/push/PR; no A/C/#4/#19/#21/#22 source changes"
+  "scope": "#9 only; no branch change, add/commit/push/PR; no A/C/#4/#19/#21/#22 source changes",
+  "integrated_document_build_review": {
+    "recorded_at_utc": "2026-10-02T14:59:55Z",
+    "branch": "feat/9-cross-replicate-validation",
+    "base_head_sha": "01fe38ea176e64098cb00166e8b2c83c082faa95",
+    "working_tree_changes_included": true,
+    "final_commit_sha": null,
+    "report": {
+      "command": "cd docs/report && xelatex -interaction=nonstopmode -halt-on-error -output-directory=build main.tex",
+      "passes": 2,
+      "exit_codes": [
+        0,
+        0
+      ],
+      "pages": 20,
+      "reviewed_pages": [
+        1,
+        7,
+        8,
+        9,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "visual_renderer": "PDFium (pypdfium2)",
+      "result": "No text or figure clipping observed; second pass has no unresolved references.",
+      "warnings": "Existing math font size substitutions and underfull hbox warnings in the classifier section."
+    },
+    "slides": {
+      "command": "cd docs/slides && xelatex -interaction=nonstopmode -halt-on-error -output-directory=build main.tex",
+      "passes": 2,
+      "exit_codes": [
+        0,
+        0
+      ],
+      "pages": 14,
+      "reviewed_pages": [
+        5,
+        6,
+        7,
+        8,
+        14
+      ],
+      "visual_renderer": "PDFium (pypdfium2)",
+      "result": "No text, figure, or legend clipping observed."
+    },
+    "source_sha256": {
+      "docs/report/main.tex": "5c6343a20226bb5da233f80e31051d5b9b66a626b13378ab65df205da8679e89",
+      "docs/report/sections/a_abstract.tex": "b6904a2fead113f2ed1ff654f2b93a3cbb98cc39aeb4568ba509cf3e180e6c5b",
+      "docs/report/sections/a_difference.tex": "92d2c29ccad054ebc347aee89450f90a85b635894f3a690b43e5f6605247c2e7",
+      "docs/report/sections/a_summary.tex": "2f2f8e381881414c51f3807cf01926477164198cf291929211d66e51bd5a6af6",
+      "docs/report/sections/b_validation.tex": "87ef5b41bc2f049346cbd465e078155a89de6117d41625aeaa669b288d074a94",
+      "docs/report/sections/c_discovery_visualization.tex": "5d77caa4ca308336935bb1afdbebf3d3cdf40c32d21b037b447dc71e6fbada74",
+      "docs/slides/main.tex": "b116807cf00c7ccf342385e471746faa0d9388d4e7f34bf130c38bd1328ea19c",
+      "docs/slides/sections/a_difference.tex": "7f663f4cda5741254edcd70d78a05f59f7605f86e032b7402c8fe1f1cf846e02",
+      "docs/slides/sections/b_classification_validation.tex": "11ecbf9b85e4348f7b7300ea64ca20afefeab2a2b6a1f24867aa403d42e5b645",
+      "docs/slides/b_member_content.md": "51dd24546b6afcb8b2e4250ce901932edd07711093f78ca10868d36aaf4d1625",
+      "docs/slides/c_member_content.md": "16fa0b7cac8bcf948ea75c0cebd1fad299f9afb4bfe8bfd73fa965fc1634dc39"
+    },
+    "output_pdf_sha256": {
+      "docs/report/build/main.pdf": "931731e08c1afed759a00e8d9bdbc989fd954df5216f9b1ec32f446fddd590af",
+      "docs/slides/build/main.pdf": "9dab52848cfa0ea2df173c94c51263fdc266b6e47cf02c2ab8adcb23fb42831c"
+    },
+    "limitations": [
+      "This record describes the uncommitted working tree based on the listed HEAD; no final commit SHA is available.",
+      "No experiments or tests were rerun; only document content and compilation were checked."
+    ]
+  }
 }

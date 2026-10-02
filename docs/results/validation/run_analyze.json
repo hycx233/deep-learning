@@ -83,8 +83,8 @@
   "python_version": "3.14.6 (main, Jun 10 2026, 10:03:53) [Clang 21.0.0 (clang-2100.0.123.102)]",
   "cache_preparation": "separate scripts/prepare_data.py --stage cache; consult its run_cache.json",
   "cache_metadata_sha256": {
-    "/Users/king/Documents/deepseek- harness/deep-learning/data/cache/100bp/WT_rep2.json": "434a33568067fa066b7826785dec11158d7caad4ecfa641d5adf79c803fc6a4c",
-    "/Users/king/Documents/deepseek- harness/deep-learning/data/cache/100bp/WT_rep1.json": "06f1eec6bdf73429d915c81a7c25ba657ab9b8263438036ffae395bd0d716744"
+    "data/cache/100bp/WT_rep2.json": "434a33568067fa066b7826785dec11158d7caad4ecfa641d5adf79c803fc6a4c",
+    "data/cache/100bp/WT_rep1.json": "06f1eec6bdf73429d915c81a7c25ba657ab9b8263438036ffae395bd0d716744"
   },
   "download_attempt_record": "download_attempt.json (historical; no download performed by this script)"
 }
