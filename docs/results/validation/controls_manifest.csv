@@ -1,7 +1,0 @@
-control_id,type,chrom,center,start,end,segments,selection
-OPCID_1,OPCID,NC_000913.3,54800,42800,66800,"[{""start"": 42800, ""end"": 66800}]",first annotation ID per class; fixed before rep2
-CHIN_1,CHIN,NC_000913.3,58840,46840,70840,"[{""start"": 46840, ""end"": 70840}]",first annotation ID per class; fixed before rep2
-CHID_1,CHID,NC_000913.3,153480,141480,165480,"[{""start"": 141480, ""end"": 165480}]",first annotation ID per class; fixed before rep2
-background_01,background,NC_000913.3,2614000,2602000,2626000,"[{""start"": 2602000, ""end"": 2626000}]","1 kb grid, seed=20261002, excludes annotations/candidates/other background"
-background_02,background,NC_000913.3,3144000,3132000,3156000,"[{""start"": 3132000, ""end"": 3156000}]","1 kb grid, seed=20261002, excludes annotations/candidates/other background"
-background_03,background,NC_000913.3,4103000,4091000,4115000,"[{""start"": 4091000, ""end"": 4115000}]","1 kb grid, seed=20261002, excludes annotations/candidates/other background"

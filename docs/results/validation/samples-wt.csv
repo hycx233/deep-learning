@@ -1,3 +1,0 @@
-sample_id,condition,replicate,path,source_archive,source_member,chrom,source_chrom,bin_size,genome_length,n_bins,n_pixels,count_dtype,has_weight,storage_mode,file_size_bytes
-WT_rep1,WT,1,data/GSE272159_37C_rep1.mapq_30.10.cool,,,NC_000913.3,NC_000913.3,10,4641652,464166,257522134,int32,false,symmetric-upper,482254398
-WT_rep2,WT,2,data/GSE272159_37C_rep2.mapq_30.10.cool,,,NC_000913.3,NC_000913.3,10,4641652,464166,249673544,int32,false,symmetric-upper,468345755

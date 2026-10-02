@@ -73,19 +73,14 @@ CHID & 8 & 0.0000 & 0.0000 \\
 结果来自 B 的本地复跑 checkpoint，不与组长原权重混写。
 \end{frame}
 
-\begin{frame}{10 个位置的 WT 跨重复比较已完成}
-\large 共同有效区域的接触图形可重复；完整位置和新结构结论仍有限制。
-\vspace{0.3em}
-\begin{itemize}
-  \item 47 个窗口合为 10 个独立位置，Pearson $r=0.664$--$0.916$，中位数 0.857。
-  \item 每位置 17,578--28,680 个有效上三角像素，排除主对角和共同无效区域。
-  \item 4 个位置仅保留共同有效部分；没有补选相关阈值或修改候选规则。
-  \item 已知对照 $r=0.345$--$0.360$；背景 $r=0.195$--$0.349$，仅作描述性参照。
-\end{itemize}
-\begin{center}\small
+\begin{frame}{47 个候选窗口合并后只有 10 个位置}
+\large 邻近 1 kb 扫描窗口不能被当作独立复现。
+
+\vspace{0.5em}
+\begin{center}
 \begin{tabular}{lrrr}
 \toprule
-类别 & 去重命中 & 已知总数 & 召回 \\
+类别 & 命中结构数（去重） & 已知结构数 & 去重召回 \\
 \midrule
 OPCID & 10 & 68 & 14.71\% \\
 CHIN & 10 & 250 & 4.00\% \\
@@ -93,17 +88,9 @@ CHID & 1 & 26 & 3.85\% \\
 \bottomrule
 \end{tabular}
 \end{center}
-\small
-8 个位置与已知注释重叠；2 个未重叠位置不满足原新簇规则。可信新结构为 0。
-召回指保留位置的注释命中，不是逐条已知结构验证。
-\end{frame}
 
-\begin{frame}{候选 035：缺口之外的图形在两个重复中对应}
-\begin{center}
-\includegraphics[width=0.94\textwidth,height=0.60\textheight,keepaspectratio]{../results/validation/paired_oe/candidate_035.pdf}
-\end{center}
+\vspace{0.4em}
 \small
-$r=0.7402$，共同有效上三角像素 17,578（61.29\%）；灰色为共同无效区域。
-同坐标、共同 mask、固定 O/E 0--10 色标，相关用未截断值。\\
-该位置未与注释相交，但不满足新簇规则；不能把灰色缺口解释为接触降低。
+当前聚类没有满足既定疑似新簇规则：非噪声簇只有 4 个候选独立位置并含 297 个已知参考；
+其余候选为 DBSCAN 噪声。WT rep2 的 O/E 相关和并排图待 \#9 运行后补入，不放宽规则。
 \end{frame}
