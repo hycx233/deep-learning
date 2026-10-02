@@ -1,0 +1,96 @@
+{
+  "created_at": "2026-10-02T05:41:25.615260+00:00",
+  "command": "python scripts/prepare_data.py --samples dist/WT-raw-handoff-20261002/samples-wt.csv --stage cache --outdir outputs/preprocessing/wt_only",
+  "stage": "cache",
+  "seed": 20260918,
+  "git_revision": "72ba0c0c57c4cb04e607257cb6f1e1409e2ac34a",
+  "git_dirty": true,
+  "source_sha256": {
+    "scripts/prepare_data.py": "a0ada27e43ad1145b674cb3301529aef595fe5fe313d32eee567c531c35cab88",
+    "src/preprocessing.py": "a07c5460f02f82f9a9d2a8167c4ed758c2a3fad777468b79b11f4e79b732e105",
+    "src/window_splits.py": "13de39b109703a778bbde695594adca12d7da4fcd2ea9d60fc899ae7320cad2b"
+  },
+  "input_sha256": {
+    "dist/WT-raw-handoff-20261002/samples-wt.csv": "9709ccb5ca832c626055d994ab7ece10aa0af102332a9d7ede938e0919372830",
+    "data/structures.csv": "05562edb1831e726e576ab67f48c0e577c00d82abc01978656b74804344009c4"
+  },
+  "cache_dir": "data/cache/100bp",
+  "outdir": "outputs/preprocessing/wt_only",
+  "runtime_seconds": 123.48,
+  "summary": {
+    "WT_rep1": {
+      "sample_id": "WT_rep1",
+      "condition": "WT",
+      "replicate": 1,
+      "chrom": "NC_000913.3",
+      "source_chrom": "NC_000913.3",
+      "genome_length": 4641652,
+      "bin_size": 100,
+      "n_bins": 46417,
+      "n_pixels": 181170369,
+      "total_counts": 368695972,
+      "depth_factor": 0.0027122617981842232,
+      "valid_bin_count": 45739,
+      "invalid_bin_count": 678,
+      "partial_bin_count": 1,
+      "zero_expected_distance_count": 0,
+      "distance_method": "min(abs(bin1-bin2), n_bins-abs(bin1-bin2))*100 bp; circular approximation",
+      "valid_bin_rule": "positive marginal and full 100 bp width; final partial bin excluded",
+      "marginal_rule": "symmetric row sum; diagonal once, off-diagonal once per endpoint",
+      "expected_rule": "raw upper-triangle counts / all unordered valid bin pairs at distance, including zeros",
+      "model_rule": "clip(log1p(O/E),0,log(11))/log(11); mask diagonal and zero expected",
+      "cache_identity": {
+        "cache_version": 1,
+        "source_path": "data/GSE272159_37C_rep1.mapq_30.10.cool",
+        "source_size": 482254398,
+        "source_mtime_ns": 1790919141633808369,
+        "bin_size": 100,
+        "chunksize": 1000000
+      },
+      "versions": {
+        "numpy": "2.5.3",
+        "cooler": "0.10.4"
+      },
+      "cool_path": "data/cache/100bp/WT_rep1.cool",
+      "stats_path": "data/cache/100bp/WT_rep1.npz",
+      "metadata_path": "data/cache/100bp/WT_rep1.json"
+    },
+    "WT_rep2": {
+      "sample_id": "WT_rep2",
+      "condition": "WT",
+      "replicate": 2,
+      "chrom": "NC_000913.3",
+      "source_chrom": "NC_000913.3",
+      "genome_length": 4641652,
+      "bin_size": 100,
+      "n_bins": 46417,
+      "n_pixels": 175087198,
+      "total_counts": 358452621,
+      "depth_factor": 0.0027897689720059265,
+      "valid_bin_count": 45734,
+      "invalid_bin_count": 683,
+      "partial_bin_count": 1,
+      "zero_expected_distance_count": 0,
+      "distance_method": "min(abs(bin1-bin2), n_bins-abs(bin1-bin2))*100 bp; circular approximation",
+      "valid_bin_rule": "positive marginal and full 100 bp width; final partial bin excluded",
+      "marginal_rule": "symmetric row sum; diagonal once, off-diagonal once per endpoint",
+      "expected_rule": "raw upper-triangle counts / all unordered valid bin pairs at distance, including zeros",
+      "model_rule": "clip(log1p(O/E),0,log(11))/log(11); mask diagonal and zero expected",
+      "cache_identity": {
+        "cache_version": 1,
+        "source_path": "data/GSE272159_37C_rep2.mapq_30.10.cool",
+        "source_size": 468345755,
+        "source_mtime_ns": 1790919142768550107,
+        "bin_size": 100,
+        "chunksize": 1000000
+      },
+      "versions": {
+        "numpy": "2.5.3",
+        "cooler": "0.10.4"
+      },
+      "cool_path": "data/cache/100bp/WT_rep2.cool",
+      "stats_path": "data/cache/100bp/WT_rep2.npz",
+      "metadata_path": "data/cache/100bp/WT_rep2.json"
+    }
+  }
+}

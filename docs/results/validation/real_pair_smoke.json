@@ -1,0 +1,34 @@
+[
+  {
+    "id": "candidate_001",
+    "center": 117000,
+    "oe_shape": [
+      240,
+      240
+    ],
+    "start": 105000,
+    "end": 129000,
+    "correlation_type": "Pearson",
+    "replicate_correlation": 0.6638035500768297,
+    "valid_upper_pixels": 28680,
+    "excluded_upper_pixels": 0,
+    "reproducibility_status": "measured_pending_review",
+    "reason": "已测量；相关系数不是结构存在检验，须结合已知/背景及配对图审阅"
+  },
+  {
+    "id": "OPCID_1",
+    "center": 54800,
+    "oe_shape": [
+      240,
+      240
+    ],
+    "start": 42800,
+    "end": 66800,
+    "correlation_type": "Pearson",
+    "replicate_correlation": 0.3601113625339596,
+    "valid_upper_pixels": 28680,
+    "excluded_upper_pixels": 0,
+    "reproducibility_status": "measured_pending_review",
+    "reason": "已测量；相关系数不是结构存在检验，须结合已知/背景及配对图审阅"
+  }
+]

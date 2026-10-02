@@ -1,0 +1,32 @@
+{
+  "candidate_windows": 47,
+  "independent_loci": 10,
+  "measured_loci": 10,
+  "candidate_pearson_range": [
+    0.6638035500768297,
+    0.9157544529424896
+  ],
+  "candidate_pearson_median": 0.8572257016471554,
+  "valid_upper_pixel_range": [
+    17578,
+    28680
+  ],
+  "retained_contact_patterns": 10,
+  "shared_region_only_loci": 4,
+  "unassessable_loci": 0,
+  "clear_whole_pattern_failure_loci": 0,
+  "known_overlap_loci": 8,
+  "unannotated_loci": 2,
+  "retained_new_structures": 0,
+  "new_structure_exclusion_rule": "original clustering criteria unchanged and not satisfied",
+  "control_pearson": {
+    "OPCID_1": 0.3601113625339596,
+    "CHIN_1": 0.3453188753455947,
+    "CHID_1": 0.35653045303166714,
+    "background_01": 0.19530987239640282,
+    "background_02": 0.34890580219506484,
+    "background_03": 0.241979195577337
+  },
+  "correlation_not_an_independent_structure_test": true,
+  "whole_locus_union_not_tested": true
+}

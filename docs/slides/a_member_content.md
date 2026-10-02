@@ -24,4 +24,4 @@
 
 这个项目的重点是把数据处理、模型训练和结果评价串起来。模型保持轻量，分类和发现分别使用适合各自目标的评价：分类关注不同类别的表现和基线，发现关注候选是否只是高密度区域，以及能否在另一重复复现。本次 CNN 的测试表现没有超过逻辑回归，重建误差也与强度相关较高。这些结果提醒我们，模型的复杂程度不能替代基线比较和独立验证。最后，每个结果都能回到输入位置、数据划分与固定权重，便于解释和复现。
 
-准备时可看 `src/preprocessing.py` 的 `load_sample` / `extract_window`，以及 `src/condition_differences.py` 的 `compare_structure`；讲解时不用逐个念函数名。B 完成 #9 后补齐候选验证结论，去掉阶段提示，再录制 A 的开场与结尾两段。
+准备时可看 `src/preprocessing.py` 的 `load_sample` / `extract_window`，以及 `src/condition_differences.py` 的 `compare_structure`；讲解时不用逐个念函数名。#9 结果已纳入报告和演示，录制前核对其代表窗口范围与覆盖限制，再录制 A 的开场与结尾两段。
