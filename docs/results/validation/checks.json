@@ -1,0 +1,149 @@
+{
+  "created_at_utc": "2026-10-02T06:44:56.642590+00:00",
+  "git_revision": "72ba0c0c57c4cb04e607257cb6f1e1409e2ac34a",
+  "git_branch": "feat/4-classifier-evaluation",
+  "git_staged_diff": "",
+  "git_modified_files": [
+    "docs/report/sections/b_validation.tex",
+    "docs/slides/b_member_content.md",
+    "docs/slides/sections/b_classification_validation.tex"
+  ],
+  "raw_data_verified": 2,
+  "cache_generated": true,
+  "real_windows_executed": true,
+  "candidate_loci_measured": 10,
+  "candidate_loci_shared_region_only": 4,
+  "unassessable_loci": 0,
+  "new_structures_retained": 0,
+  "final_reproducibility_decisions_available": true,
+  "tests": [
+    {
+      "suite": "test_wt_candidate_validation.py",
+      "tests": 4,
+      "passed": true,
+      "rerun_after_changes": true
+    },
+    {
+      "suite": "test_preprocessing.py",
+      "tests": 4,
+      "passed": true,
+      "note": "previous check, shared source unchanged"
+    },
+    {
+      "suite": "test_candidate_clustering.py",
+      "tests": 6,
+      "passed": true,
+      "note": "previous check, shared source unchanged"
+    }
+  ],
+  "tests_total": 14,
+  "real_data_checks": [
+    "one candidate and one annotation executed before full analysis",
+    "candidate_035 centered-dot Pearson independently matches to 1e-12 and valid n=17578",
+    "47 rows map to exactly 10 loci; each correlation explicitly belongs to representative",
+    "retained annotation recall remains 10/68, 10/250, 1/26",
+    "actual analysis input/code SHA-256 match files",
+    "#4 slide content byte-for-byte unchanged",
+    "shared preprocessing and original discovery/clustering/data tables unchanged",
+    "raw files, caches and handoff dist metadata all Git-ignored",
+    "new script/test compile(source) and git diff --check passed"
+  ],
+  "latex": [
+    {
+      "target": "docs/report/main.tex",
+      "passes": 2,
+      "success": true,
+      "pages": 15,
+      "reviewed_pages": [
+        12,
+        13,
+        14
+      ],
+      "warnings": "existing math font size substitutions and underfull hbox; no undefined refs or overfull after second pass"
+    },
+    {
+      "target": "B-only #9 report wrapper",
+      "passes": 2,
+      "success": true,
+      "pages": 3,
+      "reviewed_pages": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "target": "B-only slides wrapper",
+      "passes": 2,
+      "success": true,
+      "pages": 5,
+      "reviewed_pages": [
+        4,
+        5
+      ],
+      "limitation": "shared slides/main.tex absent locally; no claim of whole-group build"
+    }
+  ],
+  "plot_checks": {
+    "individual_pairs": 16,
+    "combined_examples": 1,
+    "all_actual_shared_oe": true,
+    "candidate_and_control_patterns_visually_inspected": true,
+    "pdf_titles_and_rep1_rep2_labels_checked": true,
+    "same_color_scale": true,
+    "rendering": "vector PDF, PNG derived with isolated PDFium; final report and slides PDFium reviewed"
+  },
+  "cache_metadata_sha256": {
+    "WT_rep2.json": "434a33568067fa066b7826785dec11158d7caad4ecfa641d5adf79c803fc6a4c",
+    "WT_rep1.json": "06f1eec6bdf73429d915c81a7c25ba657ab9b8263438036ffae395bd0d716744"
+  },
+  "cache_stats_sha256": {
+    "WT_rep1.npz": "a52e5c94765471c54c5c243ac70c3e8b53e3e0c659d9bff34e3a92568cea6a96",
+    "WT_rep2.npz": "0276fa6302569f6b18866b18d75e89d18644a76e45587a026c0d5dcc15559500"
+  },
+  "cache_matrix_sha256": {
+    "WT_rep2.cool": "4dba436dd7b5156ff036ae065678e2cbc20a1f00097e6f201f2ce269a2840453",
+    "WT_rep1.cool": "8ec790ec2c0ef8472e66e9f17b9328d5442185e312b5a5489ab76adace5e55b8"
+  },
+  "handoff_samples_sha256": "9709ccb5ca832c626055d994ab7ece10aa0af102332a9d7ede938e0919372830",
+  "source_sha256": {
+    "scripts/validate_wt_candidates.py": "3004275156fb8a952be3195bc185435ecf7adfdae56cea27b2372539e1c87a07",
+    "tests/test_wt_candidate_validation.py": "60a6b5cca465ca1252e168865d643ddf1137d12a701648c567b6a32fdb3eedef",
+    "docs/report/sections/b_validation.tex": "87ef5b41bc2f049346cbd465e078155a89de6117d41625aeaa669b288d074a94",
+    "docs/slides/sections/b_classification_validation.tex": "965e9538b840222b573b95ba1cca030ac8d084f45faa8bc7492dd29f94ded063",
+    "docs/slides/b_member_content.md": "d796317a71a95998fd0c141d0072303ff79aed4b786a51c9bca5c792fc6e26fd"
+  },
+  "summary": {
+    "candidate_windows": 47,
+    "independent_loci": 10,
+    "measured_loci": 10,
+    "candidate_pearson_range": [
+      0.6638035500768297,
+      0.9157544529424896
+    ],
+    "candidate_pearson_median": 0.8572257016471554,
+    "valid_upper_pixel_range": [
+      17578,
+      28680
+    ],
+    "retained_contact_patterns": 10,
+    "shared_region_only_loci": 4,
+    "unassessable_loci": 0,
+    "clear_whole_pattern_failure_loci": 0,
+    "known_overlap_loci": 8,
+    "unannotated_loci": 2,
+    "retained_new_structures": 0,
+    "new_structure_exclusion_rule": "original clustering criteria unchanged and not satisfied",
+    "control_pearson": {
+      "OPCID_1": 0.3601113625339596,
+      "CHIN_1": 0.3453188753455947,
+      "CHID_1": 0.35653045303166714,
+      "background_01": 0.19530987239640282,
+      "background_02": 0.34890580219506484,
+      "background_03": 0.241979195577337
+    },
+    "correlation_not_an_independent_structure_test": true,
+    "whole_locus_union_not_tested": true
+  },
+  "scope": "#9 only; no branch change, add/commit/push/PR; no A/C/#4/#19/#21/#22 source changes"
+}
