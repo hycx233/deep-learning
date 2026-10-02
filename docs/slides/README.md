@@ -1,6 +1,6 @@
 # 演示文稿与讲解交接
 
-本组采用 **Beamer + XeLaTeX，16:9**，复用报告环境，只维护这一种格式。`main.tex` 是共享模板；当前编译结果只含 A 的 5 页，供排版和讲解练习，**不是最终全组演示或视频**。B、C 分别参考 [B 内容底稿](b_member_content.md) 和 [C 内容底稿](c_member_content.md)。
+本组采用 **Beamer + XeLaTeX，16:9**，复用报告环境，只维护这一种格式。`main.tex` 是共享模板；当前源文件包含 A 的 5 页和 C 的 4 页，B 的章节仍待加入，因此**不是最终全组演示或视频**。B、C 的讲稿分别见 [B 内容底稿](b_member_content.md) 和 [C 内容底稿](c_member_content.md)。
 
 ## 演示重点
 
@@ -27,9 +27,9 @@ A 的案例页使用双条件均值热图以保持标签可读，完整重复与
 | --- | --- | --- |
 | A | `sections/a_intro.tex`、`sections/a_difference.tex`，讲稿 `a_member_content.md` | 学习任务、共享输入、选做实现与结果核查，5 页约 3 分钟 |
 | B | 按 `b_member_content.md` 新增 `sections/b_classification_validation.tex` | CNN 选型与训练、测试/基线/解释、跨重复评价，约 3–4 分钟；负责最终合并 |
-| C | 按 `c_member_content.md` 新增 `sections/c_discovery_visualization.tex` | 自编码器重建、masked loss、候选筛选与轨道实现，4 页约 3 分钟 |
+| C | `sections/c_discovery_visualization.tex`，讲稿 `c_member_content.md` | 自编码器重建、masked loss、候选筛选与轨道实现，4 页约 3 分钟 |
 
-各章节只写 `frame`，不写 `documentclass` 或 `begin{document}`。B 合并时将 `main.tex` 的顺序改为 A 开场 → B 分类与验证 → C 发现与轨道 → A 差异与结尾，并将页脚的“A 部分预览”改为组名。每个人的页面用相同模板，不重复加封面；图引用 `../results/` 的实际结果。
+各章节只写 `frame`，不写 `documentclass` 或 `begin{document}`。B 合并时将 `main.tex` 的顺序改为 A 开场 → B 分类与验证 → C 发现与轨道 → A 差异与结尾，并将阶段预览页脚改为组名。每个人的页面用相同模板，不重复加封面；图引用 `../results/` 的实际结果。
 
 每页保留一个主句与少量数字；讲稿放 Markdown，投影片不贴长段文字。C 的高图不要整张缩得难以辨认，应只取相应对照或分开展示，保留色标与标签。引用正式结果时区分 CNN 测试、CNN 验证集和隐向量交叉验证三种指标。
 
