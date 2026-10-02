@@ -1,0 +1,221 @@
+{
+  "input_archive": "classification-inputs-20260929.zip",
+  "input_archive_sha256": "ef745cf550a11b618a789ec12e63609d2cddb6cb652e6e26f1575fc4f08e2b1d",
+  "windows_csv_sha256": "e99bec15982043e31b84065433b27c4facd1ebf30af017b18fbbe88e57146d1c",
+  "windows_npz_sha256": "41a345d87c1317ee3a0a6e9786d317f22c25e7d749ae124b0ccbcb1a0351d831",
+  "official_split_match": "all window_id -> split assignments match docs/results/classifier/splits.csv",
+  "overlap_split_validation": "passed; 344 physical positions; no cross-split overlapping position pairs",
+  "training": {
+    "epochs_requested": 30,
+    "best_epoch": 12,
+    "best_val_macro_f1": 0.5674,
+    "batch_size": 32,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "patience": 8,
+    "seconds": 29.9
+  },
+  "training_source_sha256": {
+    "scripts/train_classifier.py": "4a13b92cfa4f3aaf7b39dfd72a10c100ee1684a7c812605d9a17e6662a4e9e23",
+    "src/classifier_data.py": "41cccbc2aac0f7b7f47608b3f3e35b1d8bb9cf93ec084a9b88d4951062249926",
+    "src/cnn.py": "2707d181b9f43c3a62c0d95ac371b414f410c0190f69a9bdf3e085a794ef0945",
+    "src/metrics.py": "d02bae9ac1ced4df34e9eff7a0aa60a0079965c117c56440812cbabddd67f1f5",
+    "src/window_splits.py": "13de39b109703a778bbde695594adca12d7da4fcd2ea9d60fc899ae7320cad2b"
+  },
+  "checkpoint_sha256": "bcf8f3ebaa0c816be9353f13a072a19780ec67b807e6b68345ca14c40d5bede1",
+  "checkpoint_in_git": false,
+  "analysis": {
+    "checkpoint": "outputs/classifier/b_retrain_seed20260918/best.pt",
+    "checkpoint_sha256": "bcf8f3ebaa0c816be9353f13a072a19780ec67b807e6b68345ca14c40d5bede1",
+    "checkpoint_epoch": 12,
+    "training_seed": 20260918,
+    "linear_baseline_seed": 20260918,
+    "split": "test",
+    "split_file": "outputs/classifier/b_retrain_seed20260918/splits.csv",
+    "split_file_sha256": "d813c5ef415a44fe49662b763d6b626d6c3350c48ada601c4a41800d78280415",
+    "windows_csv_sha256": "e99bec15982043e31b84065433b27c4facd1ebf30af017b18fbbe88e57146d1c",
+    "arrays_npz_sha256": "41a345d87c1317ee3a0a6e9786d317f22c25e7d749ae124b0ccbcb1a0351d831",
+    "predictions_csv_sha256": "26ab582ff942221537ae9e1bdff39910db2c1aec4454073fcc1db442f3ac2218",
+    "class_order": [
+      "OPCID",
+      "CHIN",
+      "CHID"
+    ],
+    "train_samples_by_class": {
+      "OPCID": 96,
+      "CHIN": 350,
+      "CHID": 36
+    },
+    "test_metrics": {
+      "cnn": {
+        "samples": 104,
+        "accuracy": 0.5096,
+        "macro_f1": 0.3454,
+        "per_class": {
+          "OPCID": {
+            "support": 20,
+            "predicted": 44,
+            "precision": 0.2955,
+            "recall": 0.65,
+            "f1": 0.4062
+          },
+          "CHIN": {
+            "support": 76,
+            "predicted": 51,
+            "precision": 0.7843,
+            "recall": 0.5263,
+            "f1": 0.6299
+          },
+          "CHID": {
+            "support": 8,
+            "predicted": 9,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            13,
+            7,
+            0
+          ],
+          [
+            27,
+            40,
+            9
+          ],
+          [
+            4,
+            4,
+            0
+          ]
+        ]
+      },
+      "majority_baseline": {
+        "samples": 104,
+        "accuracy": 0.7308,
+        "macro_f1": 0.2815,
+        "per_class": {
+          "OPCID": {
+            "support": 20,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "CHIN": {
+            "support": 76,
+            "predicted": 104,
+            "precision": 0.7308,
+            "recall": 1.0,
+            "f1": 0.8444
+          },
+          "CHID": {
+            "support": 8,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            0,
+            20,
+            0
+          ],
+          [
+            0,
+            76,
+            0
+          ],
+          [
+            0,
+            8,
+            0
+          ]
+        ]
+      },
+      "linear_logistic_baseline": {
+        "samples": 104,
+        "accuracy": 0.8365,
+        "macro_f1": 0.5644,
+        "per_class": {
+          "OPCID": {
+            "support": 20,
+            "predicted": 20,
+            "precision": 0.8,
+            "recall": 0.8,
+            "f1": 0.8
+          },
+          "CHIN": {
+            "support": 76,
+            "predicted": 83,
+            "precision": 0.8554,
+            "recall": 0.9342,
+            "f1": 0.8931
+          },
+          "CHID": {
+            "support": 8,
+            "predicted": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            16,
+            4,
+            0
+          ],
+          [
+            4,
+            71,
+            1
+          ],
+          [
+            0,
+            8,
+            0
+          ]
+        ]
+      }
+    },
+    "cnn_prediction_counts": {
+      "OPCID": 44,
+      "CHIN": 51,
+      "CHID": 9
+    },
+    "cnn_true_counts": {
+      "OPCID": 20,
+      "CHIN": 76,
+      "CHID": 8
+    },
+    "chin_bias_check": {
+      "chin_is_most_predicted_class": true,
+      "predicted_chin_count": 51,
+      "true_chin_count": 76
+    },
+    "majority_class_from_train": "CHIN",
+    "linear_baseline": {
+      "model": "LogisticRegression(l2, class_weight=balanced)",
+      "max_iter": 1000,
+      "random_state": 20260918,
+      "convergence_warnings": []
+    },
+    "gradcam_examples": 9,
+    "command": "python scripts/analyze_classifier.py --checkpoint outputs/classifier/b_retrain_seed20260918/best.pt --predictions-csv outputs/classifier/b_retrain_seed20260918/predictions_test.csv --windows-csv outputs/preprocessing/default/classification/windows.csv --arrays-npz outputs/preprocessing/default/classification/windows.npz --splits-csv outputs/classifier/b_retrain_seed20260918/splits.csv --out-dir outputs/classifier/b_retrain_seed20260918/evaluation --device cpu",
+    "device": "cpu",
+    "python": "3.12.14",
+    "source_sha256": {
+      "scripts/analyze_classifier.py": "fd7a770e0d9d0c941202618dba2b201eef3704e89a6ebaa9a997276e9a3d5e22",
+      "scripts/predict_classifier.py": "b0f69c28c08b07888ed80479d0b18615837f6997d9e66b67eaeb3f0a32f192d4",
+      "src/classifier_data.py": "41cccbc2aac0f7b7f47608b3f3e35b1d8bb9cf93ec084a9b88d4951062249926",
+      "src/cnn.py": "2707d181b9f43c3a62c0d95ac371b414f410c0190f69a9bdf3e085a794ef0945",
+      "src/metrics.py": "d02bae9ac1ced4df34e9eff7a0aa60a0079965c117c56440812cbabddd67f1f5"
+    },
+    "runtime_seconds": 2.17
+  }
+}

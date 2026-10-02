@@ -1,0 +1,34 @@
+# 训练开始 2026-09-29 16:19:36
+# 数据 outputs/preprocessing/default/classification/windows.csv / outputs/preprocessing/default/classification/windows.npz
+# 划分
+label_name  OPCID  CHIN  CHID
+split                        
+train          96   350    36
+val            20    74     8
+test           20    76     8
+# 注意：有 285 个窗口在坐标上与其它结构的窗口重叠；该数量仅记录坐标关系，本次集合归属沿用窗口表的 split 列
+# 注意：沿用 windows 表已有的 split 列，未重新划分
+epoch   1 train_loss 1.0693 train_acc 0.384 val_loss 1.1223 val_acc 0.196 val_macro_f1 0.1093
+epoch   2 train_loss 0.9812 train_acc 0.344 val_loss 1.0180 val_acc 0.235 val_macro_f1 0.1472
+epoch   3 train_loss 0.9659 train_acc 0.446 val_loss 0.8338 val_acc 0.598 val_macro_f1 0.4098
+epoch   4 train_loss 0.9320 train_acc 0.483 val_loss 0.7873 val_acc 0.529 val_macro_f1 0.4764
+epoch   5 train_loss 0.9151 train_acc 0.390 val_loss 0.9586 val_acc 0.314 val_macro_f1 0.3587
+epoch   6 train_loss 0.8981 train_acc 0.423 val_loss 0.8567 val_acc 0.314 val_macro_f1 0.3648
+epoch   7 train_loss 0.9220 train_acc 0.448 val_loss 1.0597 val_acc 0.578 val_macro_f1 0.2719
+epoch   8 train_loss 0.9270 train_acc 0.454 val_loss 0.7936 val_acc 0.441 val_macro_f1 0.4180
+epoch   9 train_loss 0.8843 train_acc 0.446 val_loss 0.8107 val_acc 0.412 val_macro_f1 0.4382
+epoch  10 train_loss 0.8698 train_acc 0.514 val_loss 0.9048 val_acc 0.598 val_macro_f1 0.4849
+epoch  11 train_loss 0.8641 train_acc 0.562 val_loss 0.7584 val_acc 0.657 val_macro_f1 0.5585
+epoch  12 train_loss 0.8771 train_acc 0.407 val_loss 0.7511 val_acc 0.667 val_macro_f1 0.5674
+epoch  13 train_loss 0.8559 train_acc 0.523 val_loss 0.7976 val_acc 0.667 val_macro_f1 0.5628
+epoch  14 train_loss 0.8315 train_acc 0.533 val_loss 0.8466 val_acc 0.529 val_macro_f1 0.4703
+epoch  15 train_loss 0.8288 train_acc 0.521 val_loss 0.7994 val_acc 0.578 val_macro_f1 0.5151
+epoch  16 train_loss 0.8434 train_acc 0.496 val_loss 0.7662 val_acc 0.480 val_macro_f1 0.4575
+epoch  17 train_loss 0.8097 train_acc 0.525 val_loss 0.8107 val_acc 0.529 val_macro_f1 0.4746
+epoch  18 train_loss 0.8405 train_acc 0.419 val_loss 0.7468 val_acc 0.627 val_macro_f1 0.5190
+epoch  19 train_loss 0.8412 train_acc 0.488 val_loss 1.1300 val_acc 0.520 val_macro_f1 0.2656
+epoch  20 train_loss 0.8335 train_acc 0.577 val_loss 0.7556 val_acc 0.520 val_macro_f1 0.4661
+# 验证 Macro-F1 连续 8 轮无提升，提前停止
+# 最佳轮次 12，验证 Macro-F1 0.5674
+# 验证逐类 F1 OPCID=0.652, CHIN=0.742, CHID=0.308
+# 用时 29.9s
