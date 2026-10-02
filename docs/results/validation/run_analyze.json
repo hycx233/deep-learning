@@ -1,0 +1,90 @@
+{
+  "created_at_utc": "2026-10-02T06:27:46.341866+00:00",
+  "command": "scripts/validate_wt_candidates.py --stage analyze --samples dist/WT-raw-handoff-20261002/samples-wt.csv",
+  "stage": "analyze",
+  "git_revision": "72ba0c0c57c4cb04e607257cb6f1e1409e2ac34a",
+  "git_status": "M docs/report/sections/b_validation.tex\n M docs/slides/b_member_content.md\n M docs/slides/sections/b_classification_validation.tex\n?? docs/results/validation/\n?? scripts/validate_wt_candidates.py\n?? tests/test_wt_candidate_validation.py",
+  "seed": 20261002,
+  "raw_files": [
+    {
+      "sample_id": "WT_rep1",
+      "path": "data/GSE272159_37C_rep1.mapq_30.10.cool",
+      "expected_size_bytes": 482254398,
+      "expected_sha256": "0256e10da36abfe0238bf16952bc43bc78365f43c201e6e3ba0c49bd243549a8",
+      "observed_size_bytes": 482254398,
+      "observed_sha256": "0256e10da36abfe0238bf16952bc43bc78365f43c201e6e3ba0c49bd243549a8",
+      "status": "verified",
+      "metadata": {
+        "bin_size": 10,
+        "chroms": {
+          "NC_000913.3": 4641652
+        },
+        "storage_mode": "symmetric-upper",
+        "nbins": 464166,
+        "nnz": 257522134,
+        "sum": 368695972,
+        "count_dtype": "int32",
+        "has_weight": false
+      }
+    },
+    {
+      "sample_id": "WT_rep2",
+      "path": "data/GSE272159_37C_rep2.mapq_30.10.cool",
+      "expected_size_bytes": 468345755,
+      "expected_sha256": "ede9b4f7c0c6b40c8f098e43cdd0abbc0a8987f05e8b37051a5e3cbf143ad106",
+      "observed_size_bytes": 468345755,
+      "observed_sha256": "ede9b4f7c0c6b40c8f098e43cdd0abbc0a8987f05e8b37051a5e3cbf143ad106",
+      "status": "verified",
+      "metadata": {
+        "bin_size": 10,
+        "chroms": {
+          "NC_000913.3": 4641652
+        },
+        "storage_mode": "symmetric-upper",
+        "nbins": 464166,
+        "nnz": 249673544,
+        "sum": 358452621,
+        "count_dtype": "int32",
+        "has_weight": false
+      }
+    }
+  ],
+  "analysis_executed": true,
+  "candidate_windows": 47,
+  "independent_loci": 10,
+  "candidate_rule": "rep1 top 1%, threshold=0.04633597284555435; unchanged",
+  "representative_rule": "highest rep1 reconstruction_error per saved locus; stable ID tie-break",
+  "correlation": "Pearson on shared finite native 100 bp O/E pixels, strict upper triangle k=1; no clipping",
+  "oe_rule": "shared preprocessing counts/expected_raw[circular distance], zeros included in background; no pseudocount",
+  "plot_scale": "raw O/E, fixed 0–10, common invalid pixels gray; clipping only for display",
+  "retention_rule": "no numeric pass threshold specified; measurement plus paired review; no new structure claim",
+  "measured_loci": 10,
+  "unassessable_loci": 0,
+  "pending_loci": 0,
+  "source_sha256": {
+    "scripts/validate_wt_candidates.py": "3004275156fb8a952be3195bc185435ecf7adfdae56cea27b2372539e1c87a07",
+    "src/preprocessing.py": "a07c5460f02f82f9a9d2a8167c4ed758c2a3fad777468b79b11f4e79b732e105",
+    "src/window_splits.py": "13de39b109703a778bbde695594adca12d7da4fcd2ea9d60fc899ae7320cad2b",
+    "src/candidate_clustering.py": "88f063d59692c3209faa550f2514f570afae00f202658745c5c542205a04936f"
+  },
+  "input_sha256": {
+    "data/samples.csv": "eb136f4886ba33fbf60097f176aef39f8dd01697dfc1c481add71cf01ab2365e",
+    "data/structures.csv": "05562edb1831e726e576ab67f48c0e577c00d82abc01978656b74804344009c4",
+    "docs/results/discovery/candidates.csv": "8c89c119c8c34098fb2897ff65936ab8ada8e76c6da80794f52d0a1863b4b1f2",
+    "docs/results/clustering/candidate_clusters.csv": "c73b010dde107735118384285826c306cce4690d1ce422b288f6a538c88a88b0"
+  },
+  "versions": {
+    "numpy": "2.5.3",
+    "cooler": "0.10.4",
+    "h5py": "3.16.0",
+    "matplotlib": "3.11.2",
+    "pandas": "3.0.6"
+  },
+  "python_version": "3.14.6 (main, Jun 10 2026, 10:03:53) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "cache_preparation": "separate scripts/prepare_data.py --stage cache; consult its run_cache.json",
+  "cache_metadata_sha256": {
+    "/Users/king/Documents/deepseek- harness/deep-learning/data/cache/100bp/WT_rep2.json": "434a33568067fa066b7826785dec11158d7caad4ecfa641d5adf79c803fc6a4c",
+    "/Users/king/Documents/deepseek- harness/deep-learning/data/cache/100bp/WT_rep1.json": "06f1eec6bdf73429d915c81a7c25ba657ab9b8263438036ffae395bd0d716744"
+  },
+  "download_attempt_record": "download_attempt.json (historical; no download performed by this script)"
+}
