@@ -1,0 +1,48 @@
+% A 选做与收束约 1 分 50 秒；放在 B、C 讲解之后。
+\begin{frame}{选做模块：复用输入，做可追溯的条件比较}
+\textbf{共用预处理，增加一个分析入口，无需再训练模型。}
+\vspace{0.4em}
+
+同一区间与有效像素 $\longrightarrow$ 强度均值 $\longrightarrow$ 重复一致性 $\longrightarrow$ 表与图
+\[
+F_c=\log_2\frac{\overline S_c}{\overline S_{\mathrm{WT}}}
+\]
+\small 均值描述幅度；两个重复都越过同一侧参照带才记为一致变化。
+\vspace{0.7em}
+
+\centering
+\begin{tabular}{lrrrr}
+\toprule
+条件 & 增强 & 减弱 & 带内 & 边界/不一致 \\
+\midrule
+$\Delta stpA$ & 217 & 6 & 94 & 27 \\
+$\Delta hns\Delta stpA$ & 182 & 10 & 92 & 60 \\
+\bottomrule
+\end{tabular}
+\vspace{0.6em}
+
+\raggedright\small 344 个结构共 688 行比较。这些是描述标签，不是统计显著性结论。\\[0.4em]
+\scriptsize 入口：\texttt{compare\_conditions.py}；共享计算：\texttt{compare\_structure()}。
+\end{frame}
+
+\begin{frame}{结果核查：从表中一行回到对应输入}
+\centering
+\includegraphics[width=0.94\textwidth]{../results/differences/figures/CHIN_126_DstpA_slide.png}\\[0.3em]
+\small CHIN\_126：青框为量化区间，灰色像素不参与比较，两图使用同一色标。\\[0.4em]
+\small 表中均值比为 \textbf{2.504}；两个重复方向一致，完整对照保存在报告中。
+\end{frame}
+
+\begin{frame}{这次实现的三个要点}
+\begin{block}{1. 模型与数据规模相称}
+轻量 CNN 做有标签分类，自编码器学习背景重建；输入和预处理共用。
+\end{block}
+\begin{block}{2. 评价要对应实际问题}
+本次 CNN 的测试表现未超过逻辑回归；候选要看独立位置和跨重复表现。\\
+当前重建误差与强度相关较高，高分并不足以说明学到了新的形态。
+\end{block}
+\begin{block}{3. 每个结果能回到输入与运行记录}
+保留位置、有效掩码、数据划分与固定权重，使用真实结果表和代表图解释输出。
+\end{block}
+\vspace{0.3em}
+\small\textcolor{projectblue}{阶段稿：分类测试已完成；补齐候选跨重复验证后录制。}
+\end{frame}

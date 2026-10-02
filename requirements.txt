@@ -9,3 +9,4 @@ pandas==3.0.6        # 窗口表、结构表与结果表读写
 matplotlib==3.11.2   # 代表图、混淆矩阵与轨道图
 torch==2.14.0        # 任务一、任务二模型训练与推理
 scikit-learn==1.9.1  # PCA、DBSCAN、简单线性分类与基线对照
+python-pptx==1.0.2   # 可选：Beamer 页面导出 PPTX；仅 PDF 流程不调用，渲染另需 Poppler

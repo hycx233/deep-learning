@@ -1,0 +1,28 @@
+{
+  "known_structures": 344,
+  "comparisons": 688,
+  "status_counts": {
+    "ok": 688
+  },
+  "conditions": {
+    "DstpA": {
+      "increase_consistent": 217,
+      "inconsistent_or_borderline": 27,
+      "within_reference": 94,
+      "decrease_consistent": 6
+    },
+    "DhnsDstpA": {
+      "within_reference": 92,
+      "inconsistent_or_borderline": 60,
+      "decrease_consistent": 10,
+      "increase_consistent": 182
+    }
+  },
+  "minimum_valid_weight_fraction": 0.24321569626704037,
+  "structures_below_80pct_valid_weight": 12,
+  "comparisons_below_80pct_valid_weight": 24,
+  "min_fold_change": 1.25,
+  "representative_cases": 8,
+  "candidate_analysis": "等待发现/聚类PR修订，仅报告已知结构",
+  "interpretation": "描述性条件差异；标签并非显著性检验，不作单因子因果归因"
+}

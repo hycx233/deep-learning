@@ -1,0 +1,48 @@
+% A 开场约 70 秒；重点是学习任务与输入，不逐行讲代码。
+\begin{frame}{把接触矩阵转化为两个深度学习任务}
+\textbf{输入：}$128\times128$ 的单通道数值窗口，直接送入模型。
+\vspace{0.7em}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.47\textwidth}
+\begin{block}{有标签：已知结构分类}
+已知窗口 $\longrightarrow$ 小型 CNN\\[0.5em]
+输出 OPCID / CHIN / CHID 三类分数。\\[0.6em]
+\textbf{关心：}能否区分形态？\\
+用测试指标、基线和解释图评价。
+\end{block}
+\end{column}
+\begin{column}{0.47\textwidth}
+\begin{block}{无标签训练：候选发现}
+背景窗口 $\longrightarrow$ 自编码器\\[0.5em]
+压缩到 32 维，再重建输入。\\[0.6em]
+\textbf{关心：}哪些窗口难以重建？\\
+高分窗口再用聚类与重复验证核查。
+\end{block}
+\end{column}
+\end{columns}
+\vspace{0.6em}
+\small 数据规模：344 个已知结构，两个 WT 重复共 688 个分类窗口。\\[0.3em]
+三条件轨道与条件比较用于展示和分析结果，复用同一套预处理。
+\end{frame}
+
+\begin{frame}[fragile]{从真实数据到模型输入：共用一个窗口接口}
+\begin{block}{稀疏接触矩阵 $\longrightarrow$ 归一化与切窗 $\longrightarrow$ 模型张量}
+10 bp 聚合到 100 bp，取 24 kb 上下文，统一为 $128\times128$。
+\end{block}
+\vspace{0.4em}
+\begin{lstlisting}
+state = load_sample(cache_dir, "WT_rep1")
+window = extract_window(state, center)
+x = torch.from_numpy(window["model"])
+x = x[None, None]  # (1, 1, 128, 128)
+\end{lstlisting}
+\scriptsize 共享接口调用示意，省略导入；实现见 \texttt{src/preprocessing.py}。\par
+\vspace{0.7em}
+\normalsize
+\textbf{两个关键选择：}
+\begin{itemize}
+\item 模型看 O/E 校正后的形态；强度比较使用另存的深度归一化数据。
+\item 先按空间重叠分组，再划分训练/验证/测试（482/102/104 个窗口）。
+\end{itemize}
+\small 同一结构的重复和重叠窗口不跨集合，避免模型在测试时见过近似输入。
+\end{frame}
