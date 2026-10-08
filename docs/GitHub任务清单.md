@@ -18,14 +18,14 @@
 | P06 | [#6](https://github.com/hycx233/deep-learning/issues/6) | 聚类候选并导出候选表和代表图 | @lanshuheng9-oss | 3 h | 初始计划 9/25，已有产物 | [#5](https://github.com/hycx233/deep-learning/issues/5)；参考 [#3](https://github.com/hycx233/deep-learning/issues/3) 已知类别表征 |
 | P07 | [#7](https://github.com/hycx233/deep-learning/issues/7) | 绘制三条件四面板全基因组轨道图 | @lanshuheng9-oss | 3 h | 初始计划 9/24，已有产物 | [#1](https://github.com/hycx233/deep-learning/issues/1)、[#2](https://github.com/hycx233/deep-learning/issues/2) |
 | P08 | [#8](https://github.com/hycx233/deep-learning/issues/8) | 完成两种突变条件相对 WT 的差异定位 | @hycx233 | 3 h | 10/2 审核收尾；10/5 确认最终范围 | [#2](https://github.com/hycx233/deep-learning/issues/2)；候选补充依据 [#9](https://github.com/hycx233/deep-learning/issues/9) 的最终结果 |
-| P09 | [#9](https://github.com/hycx233/deep-learning/issues/9) | 检查候选的跨重复复现性与已知结构召回 | @onlysonder | 2 h | 10/5 | [#5](https://github.com/hycx233/deep-learning/issues/5)、[#6](https://github.com/hycx233/deep-learning/issues/6) |
+| P09 | [#9](https://github.com/hycx233/deep-learning/issues/9) | 检查候选的跨重复复现性与已知结构召回 | @onlysonder | 2 h | 10/2 已完成，PR #23 待审 | [#5](https://github.com/hycx233/deep-learning/issues/5)、[#6](https://github.com/hycx233/deep-learning/issues/6) |
 | P10 | [#10](https://github.com/hycx233/deep-learning/issues/10) | 串联运行顺序并确认四个任务的最终产物 | @hycx233 | 1 h | 10/7 | [#4](https://github.com/hycx233/deep-learning/issues/4)、[#7](https://github.com/hycx233/deep-learning/issues/7)、[#8](https://github.com/hycx233/deep-learning/issues/8)、[#9](https://github.com/hycx233/deep-learning/issues/9) |
 | P11 | [#11](https://github.com/hycx233/deep-learning/issues/11) | 完成 LaTeX 报告、Beamer 演示文稿和各自讲解片段 | @hycx233、@onlysonder、@lanshuheng9-oss | 每人 3 h | 10/9 | 可随实验起草；定稿需 [#10](https://github.com/hycx233/deep-learning/issues/10) |
 | P12 | [#12](https://github.com/hycx233/deep-learning/issues/12) | 复跑代表流程，打包代码并合成讲解视频 | @onlysonder | 2 h | 10/11 | [#10](https://github.com/hycx233/deep-learning/issues/10)、[#11](https://github.com/hycx233/deep-learning/issues/11)；复跑部分可提前 |
 
 分工复核：A = P01 + P02 + P08 + P10 = 9 h；B = P03 + P04 + P09 + P12 = 9 h；C = P05 + P06 + P07 = 9 h。共同任务另计。最终提交与 A 的协调审核合计计入其 1 h 协作预算，保持提交步骤简单。
 
-表中“初始计划”日期只保留启动时的历史安排，不表示新的催办期限；验收清单保留任务要求，完成与审核状态以对应 issue / PR 为准。共享数据和发现、轨道结果已具备，后续直接复用；B 的 #4 评价已随 PR #22 交付，目前继续推进 #9 跨重复验证；A、C 的现有章节已接入整合分支，不必等待 #9 才整理演示。10/5 冻结结果后以交付整理和实际问题修正为主，不增加实验范围。
+表中“初始计划”日期只保留启动时的历史安排，不表示新的催办期限；验收清单保留任务要求，合入和关闭状态以对应 issue / PR 为准。共享数据、发现、轨道和 #9 跨重复结果已具备，后续直接复用；B 已通过 PR #23 提交 #9，当前等待审阅。A、C 的现有章节已接入整合分支，演示已纳入 #9 结论。10/5 冻结结果后以交付整理和实际问题修正为主，不增加实验范围。
 
 ## Issue 内容
 
@@ -141,16 +141,18 @@
 
 ### P09：检查候选的跨重复复现性与已知结构召回
 
-**负责人 B，10/5 前，约 2 h；依赖 P05、P06。**
+**负责人 B，已于 10/2 完成并通过 PR #23 提交，当前待审；约 2 h，依赖 P05、P06。**
 
-不需要重写发现流程，直接用 C 的 47 个候选窗口（10 个独立位置）和 A 的读取函数，对 WT rep2 做验证。候选坐标与 WT 共享缓存已足以执行，不必等待自编码器权重或全量 latent 交接。C 同期核对候选的已知结构关系与解释，10/5 一起冻结保留/排除结论。
+本任务沿用发现流程。B 使用 C 的 47 个候选窗口（10 个独立位置）和 A 的读取函数，对 WT rep2 完成验证；候选坐标与 WT 共享缓存足以执行，不必等待自编码器权重或全量 latent 交接。实际分析固定每个独立位置预先选定的一个 rep1 代表窗口，不把结果表述为 47 个窗口逐一复现；C 核对了候选的已知结构关系与解释。详见 [#9 结果与审阅记录](results/validation/README.md)。
 
 验收：
 
-- [ ] 最终候选表补充两个重复 O/E 上三角相关性，排除主对角线与无效像素。
-- [ ] 提供代表候选的双重复并排热图，并与已知结构和随机背景参照比较。
-- [ ] 汇总最终逐类召回；说明坐标匹配方法，不能重复计算同一结构。
-- [ ] 写清哪些候选保留、哪些排除及原因；不把 rep2 反复调参后又称为独立验证。
+- [x] 最终候选审阅表记录两个重复 O/E 上三角相关性，排除主对角线与共同无效像素。
+- [x] 提供固定代表候选的双重复并排热图，并与预选已知结构和随机背景参照比较。
+- [x] 汇总逐类去重召回并说明区间匹配方法；明确召回命中不表示逐条结构均完成跨重复检验。
+- [x] 写清位置的保留/排除理由；未根据 rep2 反复调参或改变候选规则。
+
+验证结果为 10 个代表窗口 Pearson $r=0.6638$–$0.9158$、中位数 0.8572；其中 4 个仅能解释共同有效部分。8 个位置与已知注释重叠，另外 2 个不满足预设新簇规则，可信新结构数为 0。验收以已提交的结果表、图和运行记录为准，issue 关闭状态仍由 PR 合入决定。
 
 ### P10：串联运行顺序并确认四个任务的最终产物
 
@@ -166,7 +168,7 @@
 
 **三人共同负责，每人约 3 h，10/9 前；可同步起草，定稿依赖 P10。**
 
-A 做协调人，三人共同 assignee。报告使用 LaTeX：`docs/report/main.tex` 与 `sections/` 章节骨架已建立，各成员继续编辑自己的章节并提交 PR；此准备包含在每人 3 h 预算中。沿用 `ctexart` 与 XeLaTeX，不增加复杂模板或构建系统。演示以 Beamer 为唯一编辑源，当前已接入 A 5 页、B 4 页、C 4 页；按组长 2026-10-02 的决定，当前默认使用 Beamer PDF 播放录屏；若最终需 PPTX，可用 `scripts/export_beamer_pptx.py` 备用入口，不维护第二套模板。PPTX 不作为组内必交项或 PR 合并条件。#9 后补齐结论，10/9 前各自交齐录音。
+A 做协调人，三人共同 assignee。报告使用 LaTeX：`docs/report/main.tex` 与 `sections/` 章节骨架已建立，各成员继续编辑自己的章节并提交 PR；此准备包含在每人 3 h 预算中。沿用 `ctexart` 与 XeLaTeX，不增加复杂模板或构建系统。演示以 Beamer 为唯一编辑源，当前已接入 A 5 页、B 5 页、C 4 页，共 14 页；#9 结论已纳入。按组长 2026-10-02 的决定，当前默认使用 Beamer PDF 播放录屏；若最终需 PPTX，可用 `scripts/export_beamer_pptx.py` 备用入口，不维护第二套模板。PPTX 不作为组内必交项或 PR 合并条件。10/9 前各自交齐录音。
 
 - [ ] A（@hycx233）：主文件与章节骨架、数据处理、总体设计、差异定位、汇总与结论。
 - [ ] B（@onlysonder）：已知结构分类、解释、评价、复现操作说明。
