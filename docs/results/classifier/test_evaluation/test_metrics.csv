@@ -1,0 +1,4 @@
+model,samples,accuracy,macro_f1,f1_OPCID,f1_CHIN,f1_CHID
+SmallCNN,104,0.5096,0.3454,0.4062,0.6299,0.0
+Majority class (CHIN),104,0.7308,0.2815,0.0,0.8444,0.0
+Logistic regression,104,0.8365,0.5644,0.8,0.8931,0.0

@@ -1,0 +1,108 @@
+% B / onlysonder：分类训练、评价边界与候选验证。
+\begin{frame}{小型 CNN 输出三类分数}
+\large 从共享窗口输入接触图，判断 OPCID、CHIN 或 CHID。
+
+\vspace{0.7em}
+\begin{center}
+\small
+$128\times128$ 窗口 $\;\longrightarrow\;$ 三个卷积模块（16/32/64 通道）\\[0.4em]
+全局平均池化 $\;\longrightarrow\;$ OPCID / CHIN / CHID 三类分数
+\end{center}
+
+\vspace{0.7em}
+\begin{itemize}
+  \item 344 条已知结构使用 23,603 参数轻量 CNN；本项目未比较大型预训练编码器。
+  \item 同一结构的两个重复以及共享划分标记为重叠的窗口不跨集合。
+  \item 688 个窗口对应 344 条结构，不把重复窗口当成独立结构数。
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{训练只用训练集，轮次由验证集决定}
+\large 加权交叉熵提高少数类在训练目标中的权重；Macro-F1 等权检查三类。
+
+\vspace{0.45em}
+\begin{lstlisting}
+logits = model(features)
+loss = criterion(logits, labels)
+if training:
+    optimizer.zero_grad(set_to_none=True)
+    loss.backward()
+    optimizer.step()
+\end{lstlisting}
+
+\small
+Adam，学习率 $10^{-3}$，权重衰减 $10^{-4}$，dropout=0.3；seed=20260918。
+按验证 Macro-F1 保存权重，patience=8。B 的独立 CPU 复跑在第 20 轮早停，最佳轮次为第 12 轮。
+\end{frame}
+
+\begin{frame}{固定测试集：CNN 尚未超过线性基线}
+\large 多数类基线的 Accuracy 较高；展平矩阵的逻辑回归两项指标都高于 CNN。
+
+\vspace{0.2em}
+\begin{center}
+\small
+\begin{tabular}{lrrr}
+\toprule
+固定测试方法 & 样本数 & Accuracy & Macro-F1 \\
+\midrule
+小型 CNN & 104 & 0.5096 & 0.3454 \\
+多数类（CHIN） & 104 & 0.7308 & 0.2815 \\
+逻辑回归 & 104 & 0.8365 & 0.5644 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{0.15em}
+\begin{center}
+\small
+\begin{tabular}{lrrr}
+\toprule
+类别 & 测试样本数 & CNN F1 & 逻辑回归 F1 \\
+\midrule
+OPCID & 20 & 0.4062 & 0.8000 \\
+CHIN & 76 & 0.6299 & 0.8931 \\
+CHID & 8 & 0.0000 & 0.0000 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\small
+测试集为 52 个独立位置、每个两个 WT 重复。CNN 的 Macro-F1 高于多数类基线，
+但两项指标均低于逻辑回归；三个方法都没有识别出 CHID。\\[0.3em]
+每类另检查 3 个独立位置的 Grad-CAM；指标使用 B 本次复跑权重。
+\end{frame}
+
+\begin{frame}{10 个位置的 WT 跨重复比较已完成}
+\large 共同有效区域的接触图形可重复；完整位置和新结构结论仍有限制。
+\vspace{0.3em}
+\begin{itemize}
+  \item 47 个窗口合为 10 个独立位置，Pearson $r=0.664$--$0.916$，中位数 0.857。
+  \item 每位置 17,578--28,680 个有效上三角像素，排除主对角和共同无效区域。
+  \item 4 个位置仅保留共同有效部分；没有补选相关阈值或修改候选规则。
+  \item 已知对照 $r=0.345$--$0.360$；背景 $r=0.195$--$0.349$，仅作描述性参照。
+\end{itemize}
+\begin{center}\small
+\begin{tabular}{lrrr}
+\toprule
+类别 & 去重命中 & 已知总数 & 召回 \\
+\midrule
+OPCID & 10 & 68 & 14.71\% \\
+CHIN & 10 & 250 & 4.00\% \\
+CHID & 1 & 26 & 3.85\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+\small
+8 个位置与已知注释重叠；2 个未重叠位置不满足原新簇规则。可信新结构为 0。
+召回指保留位置的注释命中，不是逐条已知结构验证。
+\end{frame}
+
+\begin{frame}{候选 035：缺口之外的图形在两个重复中对应}
+\begin{center}
+\includegraphics[width=0.94\textwidth,height=0.60\textheight,keepaspectratio]{../results/validation/paired_oe/candidate_035.pdf}
+\end{center}
+\small
+$r=0.7402$，共同有效上三角像素 17,578（61.29\%）；灰色为共同无效区域。
+同坐标、共同 mask、固定 O/E 0--10 色标，相关用未截断值。\\
+该位置未与注释相交，但不满足新簇规则；不能把灰色缺口解释为接触降低。
+\end{frame}

@@ -1,0 +1,91 @@
+{
+  "created_at_utc": "2026-10-02T04:54:59.807919+00:00",
+  "git_revision": "72ba0c0c57c4cb04e607257cb6f1e1409e2ac34a",
+  "python_executable": "python (local virtual environment; exact path omitted)",
+  "checks": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 python scripts/validate_wt_candidates.py --stage audit",
+      "result": "passed",
+      "candidate_windows": 47,
+      "independent_loci": 10,
+      "recalled_unique_structures": 21
+    },
+    {
+      "command": "python scripts/prepare_data.py --help",
+      "result": "passed",
+      "note": "--samples/--stage cache/--outdir supported; no cache generation performed"
+    },
+    {
+      "command": "python scripts/validate_wt_candidates.py --stage verify --samples docs/results/validation/samples-wt.csv",
+      "exit_code": 1,
+      "result": "expected_stop_missing_raw",
+      "missing_files": 2
+    },
+    {
+      "command": "python -m unittest discover -s tests -p test_wt_candidate_validation.py -v",
+      "result": "passed",
+      "tests": 4,
+      "note": "synthetic values test logic only; no project metrics"
+    },
+    {
+      "command": "python -m unittest discover -s tests -p test_preprocessing.py -v",
+      "result": "passed",
+      "tests": 4
+    },
+    {
+      "command": "python -m unittest discover -s tests -p test_candidate_clustering.py -v",
+      "result": "passed",
+      "tests": 6
+    },
+    {
+      "command": "compile(source_text, filename, exec) for new script and test",
+      "result": "passed"
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed"
+    },
+    {
+      "command": "xelatex -interaction=nonstopmode -halt-on-error -output-directory=build/issue9 build/issue9/b_preview.tex (docs/report, twice)",
+      "result": "passed",
+      "pages": 2
+    },
+    {
+      "command": "xelatex -interaction=nonstopmode -halt-on-error -output-directory=build/issue9 build/issue9/b_preview.tex (docs/slides, twice)",
+      "result": "passed",
+      "pages": 4,
+      "note": "slides/main.tex missing; B-only build wrapper, no integration claim"
+    },
+    {
+      "command": "xelatex -interaction=nonstopmode -halt-on-error -output-directory=build/issue9 main.tex (docs/report, twice)",
+      "result": "passed",
+      "pages": 14,
+      "warnings": "existing math font size substitutions and underfull hbox; no undefined references after second pass"
+    },
+    {
+      "command": "render and inspect integrated report pages 12–13, B report pages 1–2, B slide page 4",
+      "result": "passed",
+      "renderer": "pypdfium2",
+      "note": "Poppler lacked Adobe-GB1 language mapping; PDFium fallback displayed Chinese correctly; no visible overflow"
+    }
+  ],
+  "tests_total": 14,
+  "raw_data_verified": 0,
+  "cache_generated": false,
+  "real_windows_executed": false,
+  "candidate_loci_measured": 0,
+  "candidate_loci_pending": 10,
+  "candidate_loci_biologically_excluded": 0,
+  "plots_from_raw_generated": 0,
+  "final_reproducibility_decisions_available": false,
+  "scope": "#9 only; original discovery/clustering and A/C sources untouched; no #4/#19/#21/#22 changes",
+  "start_git_status": "clean on feat/4-classifier-evaluation",
+  "git_staged_diff": "",
+  "artifact_sha256": {
+    "scripts/validate_wt_candidates.py": "14060b4e8718f6ba9804b735a7a089cf3b887680b79be3d533ec91b11d1fc31c",
+    "tests/test_wt_candidate_validation.py": "60a6b5cca465ca1252e168865d643ddf1137d12a701648c567b6a32fdb3eedef",
+    "docs/report/sections/b_validation.tex": "93de882e55817586a14961b2a1e37f499daf4b873213801baf84b3dbf0074236",
+    "docs/slides/sections/b_classification_validation.tex": "80d254d2a661d85aa7dbec5471a1119f3559983651655725f9fc93260a11eaa7",
+    "docs/slides/b_member_content.md": "a3f6f31930343fdd972a5c0e17a4605e1af264ff9a9337f493724bac7c90c1a2"
+  }
+}
