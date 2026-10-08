@@ -2,7 +2,7 @@
 
 已于 2026 年 9 月 18 日发布 12 条正式 issue，并设置负责人和里程碑；按下表链接开发和提交 PR。P11 为三人共同任务，每人负责自己的章节与演示部分。
 
-角色：A = `hycx233`（组长），B = `onlysonder`，C = `lanshuheng9-oss`。项目于 2026 年 9 月 18 日启动，**截止按组长于 9 月 27 日在对话中确认的 10 月 18 日执行**。课程 PDF 仅写两周，未载具体日期，目前没有另附教师通知。本清单于 10 月 2 日更新进展，保留 9 月 27 日调整后的内部节点；原按两周估算的 10/1 不再作为截止日期。下面的 P01—P12 保留为计划编号，GitHub 编号以链接为准。
+角色：A = `hycx233`（组长），B = `onlysonder`，C = `lanshuheng9-oss`。项目于 2026 年 9 月 18 日启动，**截止按组长于 9 月 27 日在对话中确认的 10 月 18 日执行**。课程 PDF 仅写两周，未载具体日期，目前没有另附教师通知。本清单于 10 月 8 日更新进展，按组长最新要求优先完成非视频交付；原按两周估算的 10/1 不再作为截止日期。下面的 P01—P12 保留为计划编号，GitHub 编号以链接为准。
 
 这些小时数指 AI agent 辅助下的全程人工投入，包含已完成的工作，不含模型训练或批量处理的等待时间。每人开发与交付 9 h，共同文稿/展示 3 h，协作审核 1 h，合计约 13 h。日期调整不增加模型、实验或任务预算。
 
@@ -13,19 +13,19 @@
 | P01 | [#1](https://github.com/hycx233/deep-learning/issues/1) | 整理结构标注、基因表与六个样本清单 | @hycx233 | 2 h | 初始计划 9/19，已有产物 | 无 |
 | P02 | [#2](https://github.com/hycx233/deep-learning/issues/2) | 实现共享归一化、切窗与数据分组 | @hycx233 | 3 h | 初始计划 9/21，已有产物 | [#1](https://github.com/hycx233/deep-learning/issues/1) |
 | P03 | [#3](https://github.com/hycx233/deep-learning/issues/3) | 训练轻量 CNN 已知结构分类器 | @onlysonder | 3 h | 已完成真实训练，PR #13 已合入 | [#2](https://github.com/hycx233/deep-learning/issues/2) |
-| P04 | [#4](https://github.com/hycx233/deep-learning/issues/4) | 输出分类评价、基线与显著性图 | @onlysonder | 2 h | PR #22 已交付，已接入整合分支 | [#3](https://github.com/hycx233/deep-learning/issues/3) |
+| P04 | [#4](https://github.com/hycx233/deep-learning/issues/4) | 输出分类评价、基线与显著性图 | @onlysonder | 2 h | PR #22 材料已随 #19 合入 main，#4 已关闭 | [#3](https://github.com/hycx233/deep-learning/issues/3) |
 | P05 | [#5](https://github.com/hycx233/deep-learning/issues/5) | 实现自编码器与候选窗口打分 | @lanshuheng9-oss | 3 h | 初始计划 9/23，已有产物 | [#2](https://github.com/hycx233/deep-learning/issues/2) |
 | P06 | [#6](https://github.com/hycx233/deep-learning/issues/6) | 聚类候选并导出候选表和代表图 | @lanshuheng9-oss | 3 h | 初始计划 9/25，已有产物 | [#5](https://github.com/hycx233/deep-learning/issues/5)；参考 [#3](https://github.com/hycx233/deep-learning/issues/3) 已知类别表征 |
 | P07 | [#7](https://github.com/hycx233/deep-learning/issues/7) | 绘制三条件四面板全基因组轨道图 | @lanshuheng9-oss | 3 h | 初始计划 9/24，已有产物 | [#1](https://github.com/hycx233/deep-learning/issues/1)、[#2](https://github.com/hycx233/deep-learning/issues/2) |
-| P08 | [#8](https://github.com/hycx233/deep-learning/issues/8) | 完成两种突变条件相对 WT 的差异定位 | @hycx233 | 3 h | 10/2 审核收尾；10/5 确认最终范围 | [#2](https://github.com/hycx233/deep-learning/issues/2)；候选补充依据 [#9](https://github.com/hycx233/deep-learning/issues/9) 的最终结果 |
-| P09 | [#9](https://github.com/hycx233/deep-learning/issues/9) | 检查候选的跨重复复现性与已知结构召回 | @onlysonder | 2 h | 10/2 已完成，PR #23 待审 | [#5](https://github.com/hycx233/deep-learning/issues/5)、[#6](https://github.com/hycx233/deep-learning/issues/6) |
-| P10 | [#10](https://github.com/hycx233/deep-learning/issues/10) | 串联运行顺序并确认四个任务的最终产物 | @hycx233 | 1 h | 10/7 | [#4](https://github.com/hycx233/deep-learning/issues/4)、[#7](https://github.com/hycx233/deep-learning/issues/7)、[#8](https://github.com/hycx233/deep-learning/issues/8)、[#9](https://github.com/hycx233/deep-learning/issues/9) |
-| P11 | [#11](https://github.com/hycx233/deep-learning/issues/11) | 完成 LaTeX 报告、Beamer 演示文稿和各自讲解片段 | @hycx233、@onlysonder、@lanshuheng9-oss | 每人 3 h | 10/9 | 可随实验起草；定稿需 [#10](https://github.com/hycx233/deep-learning/issues/10) |
-| P12 | [#12](https://github.com/hycx233/deep-learning/issues/12) | 复跑代表流程，打包代码并合成讲解视频 | @onlysonder | 2 h | 10/11 | [#10](https://github.com/hycx233/deep-learning/issues/10)、[#11](https://github.com/hycx233/deep-learning/issues/11)；复跑部分可提前 |
+| P08 | [#8](https://github.com/hycx233/deep-learning/issues/8) | 完成两种突变条件相对 WT 的差异定位 | @hycx233 | 3 h | 10/8 随 #19 合入 main，#8 已关闭 | [#2](https://github.com/hycx233/deep-learning/issues/2)；[#9](https://github.com/hycx233/deep-learning/issues/9) 确认无可信新结构，不扩展候选分析 |
+| P09 | [#9](https://github.com/hycx233/deep-learning/issues/9) | 检查候选的跨重复复现性与已知结构召回 | @onlysonder | 2 h | 10/8 随 #19 合入 main | [#5](https://github.com/hycx233/deep-learning/issues/5)、[#6](https://github.com/hycx233/deep-learning/issues/6) |
+| P10 | [#10](https://github.com/hycx233/deep-learning/issues/10) | 串联运行顺序并确认四个任务的最终产物 | @hycx233 | 1 h | 10/8 起完成交付核对 | [#4](https://github.com/hycx233/deep-learning/issues/4)、[#7](https://github.com/hycx233/deep-learning/issues/7)、[#8](https://github.com/hycx233/deep-learning/issues/8)、[#9](https://github.com/hycx233/deep-learning/issues/9) |
+| P11 | [#11](https://github.com/hycx233/deep-learning/issues/11) | 完成 LaTeX 报告、Beamer 演示文稿和讲稿 | @hycx233、@onlysonder、@lanshuheng9-oss | 每人 3 h | 10/9 | 可随实验起草；定稿需 [#10](https://github.com/hycx233/deep-learning/issues/10) |
+| P12 | [#12](https://github.com/hycx233/deep-learning/issues/12) | 复跑代表流程，打包代码并合成讲解视频 | @onlysonder | 2 h | 10/11 非视频交付；录制另定 | [#10](https://github.com/hycx233/deep-learning/issues/10)、[#11](https://github.com/hycx233/deep-learning/issues/11)；复跑部分可提前 |
 
 分工复核：A = P01 + P02 + P08 + P10 = 9 h；B = P03 + P04 + P09 + P12 = 9 h；C = P05 + P06 + P07 = 9 h。共同任务另计。最终提交与 A 的协调审核合计计入其 1 h 协作预算，保持提交步骤简单。
 
-表中“初始计划”日期只保留启动时的历史安排，不表示新的催办期限；验收清单保留任务要求，合入和关闭状态以对应 issue / PR 为准。共享数据、发现、轨道和 #9 跨重复结果已具备，后续直接复用；B 已通过 PR #23 提交 #9，当前等待审阅。A、C 的现有章节已接入整合分支，演示已纳入 #9 结论。10/5 冻结结果后以交付整理和实际问题修正为主，不增加实验范围。
+表中“初始计划”日期只保留启动时的历史安排，不表示新的催办期限；验收清单保留任务要求，合入和关闭状态以对应 issue / PR 为准。共享数据、分类评价、发现、轨道、差异分析和 #9 跨重复结果已冻结并合入 `main`（`bd039772`）；PR #23 先合入 #19，再由 #19 完成整合。后续只做产物交接、代表流程复跑、文稿与打包核对，不增加实验范围。按组长 10/8 的安排，先完成非视频交付；录制可能由组长统一承担，暂不要求各成员分别录音。
 
 ## Issue 内容
 
@@ -84,7 +84,7 @@
 2026-09-29：验收材料已在 B 的 CPU 独立复跑中完成，含多数类和逻辑回归对照、固定 test、
 数值/图片混淆矩阵、每类 3 个不同结构位置的 Grad-CAM 及失败列表；详见
 [`docs/results/classifier/test_evaluation/`](results/classifier/test_evaluation/) 和报告分类章节。
-该次 checkpoint 与组长原权重不同，结果分开记录。PR #22 的材料已接入本轮整合分支，合入 `main` 的状态以 PR 为准。
+该次 checkpoint 与组长原权重不同，结果分开记录。PR #22 的材料已于 10/8 随 PR #19 合入 `main`，#4 已关闭；正式权重及运行文件仍需按 #12 实际交接。
 
 ### P05：实现自编码器与候选窗口打分
 
@@ -128,9 +128,9 @@
 
 ### P08：完成两种突变条件相对 WT 的差异定位
 
-**负责人 A，10/2 前完成审核收尾，10/5 前确认最终分析范围，约 3 h；依赖 P02。**
+**负责人 A，已于 10/8 随 PR #19 合入 `main`，#8 已关闭；约 3 h，依赖 P02。**
 
-344 个已知结构的 688 条条件比较与 8 个案例已完成，剩余工作为 PR 审核及交付说明。是否补充少量候选依据 P09 最终保留结果决定，不把未经跨重复核对的窗口写成可信新结构，也不因此增加选做方向。
+344 个已知结构的 688 条条件比较与 8 个案例已完成并合入 `main`。P09 确认可信新结构为 0，因此保持已知结构的分析范围，不再补充候选差异实验；结果用于描述条件变化，不作因果结论。
 
 验收：
 
@@ -141,7 +141,7 @@
 
 ### P09：检查候选的跨重复复现性与已知结构召回
 
-**负责人 B，已于 10/2 完成并通过 PR #23 提交，当前待审；约 2 h，依赖 P05、P06。**
+**负责人 B，已于 10/8 通过 PR #23 和整合 PR #19 合入 `main`；约 2 h，依赖 P05、P06。**
 
 本任务沿用发现流程。B 使用 C 的 47 个候选窗口（10 个独立位置）和 A 的读取函数，对 WT rep2 完成验证；候选坐标与 WT 共享缓存足以执行，不必等待自编码器权重或全量 latent 交接。实际分析固定每个独立位置预先选定的一个 rep1 代表窗口，不把结果表述为 47 个窗口逐一复现；C 核对了候选的已知结构关系与解释。详见 [#9 结果与审阅记录](results/validation/README.md)。
 
@@ -152,11 +152,11 @@
 - [x] 汇总逐类去重召回并说明区间匹配方法；明确召回命中不表示逐条结构均完成跨重复检验。
 - [x] 写清位置的保留/排除理由；未根据 rep2 反复调参或改变候选规则。
 
-验证结果为 10 个代表窗口 Pearson $r=0.6638$–$0.9158$、中位数 0.8572；其中 4 个仅能解释共同有效部分。8 个位置与已知注释重叠，另外 2 个不满足预设新簇规则，可信新结构数为 0。验收以已提交的结果表、图和运行记录为准，issue 关闭状态仍由 PR 合入决定。
+验证结果为 10 个代表窗口 Pearson $r=0.6638$–$0.9158$、中位数 0.8572；其中 4 个仅能解释共同有效部分。8 个位置与已知注释重叠，另外 2 个不满足预设新簇规则，可信新结构数为 0。结果表、图和运行记录已合入 `main`；复跑直接沿用这些固定代表窗口与参数。
 
 ### P10：串联运行顺序并确认四个任务的最终产物
 
-**负责人 A，10/7 前，约 1 h；依赖 P04、P07、P08、P09。**
+**负责人 A，原内部节点 10/7，现于 10/8 起完成交付核对；约 1 h，依赖 P04、P07、P08、P09。**
 
 验收：
 
@@ -164,22 +164,22 @@
 - [ ] 四个任务各有结果文件路径，模型权重与报告采用的实验能对应。
 - [ ] 冻结报告要使用的表格和图；未解决的小问题列在 issue，不扩展范围。
 
-### P11：完成 LaTeX 报告、Beamer 演示文稿和各自讲解片段
+### P11：完成 LaTeX 报告、Beamer 演示文稿和讲稿
 
 **三人共同负责，每人约 3 h，10/9 前；可同步起草，定稿依赖 P10。**
 
-A 做协调人，三人共同 assignee。报告使用 LaTeX：`docs/report/main.tex` 与 `sections/` 章节骨架已建立，各成员继续编辑自己的章节并提交 PR；此准备包含在每人 3 h 预算中。沿用 `ctexart` 与 XeLaTeX，不增加复杂模板或构建系统。演示以 Beamer 为唯一编辑源，当前已接入 A 5 页、B 5 页、C 4 页，共 14 页；#9 结论已纳入。按组长 2026-10-02 的决定，当前默认使用 Beamer PDF 播放录屏；若最终需 PPTX，可用 `scripts/export_beamer_pptx.py` 备用入口，不维护第二套模板。PPTX 不作为组内必交项或 PR 合并条件。10/9 前各自交齐录音。
+A 做协调人，三人共同 assignee。报告使用 LaTeX：`docs/report/main.tex` 与 `sections/` 章节骨架已建立，各成员继续编辑自己的章节并提交 PR；此准备包含在每人 3 h 预算中。沿用 `ctexart` 与 XeLaTeX，不增加复杂模板或构建系统。演示以 Beamer 为唯一编辑源，当前已接入 A 5 页、B 5 页、C 4 页，共 14 页；#9 结论已纳入。按组长 2026-10-02 的决定，当前默认使用 Beamer PDF 播放录屏；若最终需 PPTX，可用 `scripts/export_beamer_pptx.py` 备用入口，不维护第二套模板。PPTX 不作为组内必交项或 PR 合并条件。10/9 前完成文稿与讲稿核对；按组长 10/8 的安排，不等待成员录音，录制人员与方式另定。
 
 - [ ] A（@hycx233）：主文件与章节骨架、数据处理、总体设计、差异定位、汇总与结论。
 - [ ] B（@onlysonder）：已知结构分类、解释、评价、复现操作说明。
 - [ ] C（@lanshuheng9-oss）：候选发现、聚类、全基因组可视化与案例。
 - [ ] 保存 `.tex`、所需图片、引用与一条已验证的编译命令，产出可提交 PDF；编译目录为 `docs/report/build/`，检查相关页面的图表、中文和引用显示。
-- [ ] 使用统一 Beamer 模板，各自完成演示部分并录讲解片段，交给 B 合成；视频总长内部目标 8—12 分钟。
-- [ ] 报告有独立的“设计思路”章节，有指标、对照和新结构判定规则；成员分工与贡献百分比合计 100%。
+- [ ] 使用统一 Beamer 模板，完成演示部分与讲稿，供后续统一录制；视频总长内部目标 8—12 分钟，暂不要求成员分别录音。
+- [ ] 报告有独立的“设计思路”章节，有指标、对照和新结构判定规则。公开源稿保留昵称，成员姓名、学号、组号与实际贡献比例留到正式提交前本地填写，不作为本轮非视频交付的等待条件。贡献比例需据实确认，合计 100%。
 
 ### P12：复跑代表流程，打包代码并合成讲解视频
 
-**负责人 B，10/11 前，约 2 h；依赖 P10、P11；复跑部分可提前。**
+**负责人 B，10/11 前完成非视频交付，约 2 h；依赖 P10、P11。视频可能由组长统一录制，录制安排另定。**
 
 验收：
 
@@ -187,8 +187,9 @@ A 做协调人，三人共同 assignee。报告使用 LaTeX：`docs/report/main.
 - [ ] 代码 ZIP 包含可从数据到结果运行的脚本，报告数值能追溯到保存的结果文件。
 - [ ] 按记录的命令编译 LaTeX 报告，确认 PDF 中的图表、引用与中文显示正常，并保留源文件。
 - [ ] 检查最终采用演示格式的页数、图表清晰度与实际播放效果，并保留演示文件；当前默认使用 Beamer PDF，PPTX 导出为可选备用。
-- [ ] 播放演示并录屏，将三人的讲解片段合成为可播放的视频，抽看开头、中间、结尾，声音可听清。
-- [ ] 把代码 ZIP、报告 PDF 和视频三个单独文件交给 A；A 检查并按课程命名要求提交。
+- [ ] 后续按组长确定的安排录制讲解视频，抽看开头、中间、结尾，声音可听清；此项不阻塞非视频交付。
+- [ ] 先把代码 ZIP、报告 PDF 和演示 PDF 交给 A，并附正式权重与完整产物的交接、复跑记录；不能以“已在本机打包”代替收件确认。
+- [ ] 视频完成后按课程要求分别提交代码 ZIP、报告 PDF、视频三个文件；A 检查并命名提交。
 
 ## 最简 Issue / PR 写法
 
@@ -220,4 +221,4 @@ Closes #实际 issue 号
 
 共同报告子 PR 用 `Refs #实际 issue 号`，由最后完成者关闭 issue。审核只找一名其他成员，不把所有 PR 都压给组长；检查重点是能运行、输入输出一致、结论与图表一致。
 
-沿用三个里程碑及其原链接：[9/21 首版跑通（初始计划）](https://github.com/hycx233/deep-learning/milestone/1)、[10/5 结果定稿](https://github.com/hycx233/deep-learning/milestone/2)、[10/11 可提交版本](https://github.com/hycx233/deep-learning/milestone/3)。10/12—10/15 由 A 核验并完成内部提前提交目标，B、C 提交各自报告；10/16—10/17 不预排功能，用作机动；**10/18 为课程正式截止日期**。
+沿用三个里程碑及其原链接：[9/21 首版跑通（初始计划）](https://github.com/hycx233/deep-learning/milestone/1)、[10/5 结果定稿](https://github.com/hycx233/deep-learning/milestone/2)、[10/11 可提交版本](https://github.com/hycx233/deep-learning/milestone/3)。10/11 优先完成非视频交付；视频录制另行安排，10/12—10/15 仍由 A 核验并完成内部提前提交目标，B、C 提交各自报告；10/16—10/17 不预排功能，用作机动；**10/18 为课程正式截止日期**。

@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 import json
 from pathlib import Path
 import shlex
+import shutil
 import subprocess
 import sys
 import time
@@ -128,10 +129,16 @@ def main():
     image_path = args.outdir / "structure_previews.png"
     figure.savefig(image_path, dpi=160)
     plt.close(figure)
+    revision = None
+    if shutil.which("git") is not None:
+        result = subprocess.run(["git", "rev-parse", "HEAD"], cwd=REPO_ROOT,
+                                text=True, capture_output=True, check=False)
+        if result.returncode == 0:
+            revision = result.stdout.strip()
     run = {
         "created_at": datetime.now(timezone.utc).isoformat(),
         "command": shlex.join(["python", *sys.argv]),
-        "git_revision": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=REPO_ROOT, text=True).strip(),
+        "git_revision": revision,
         "sample_ids": list(SAMPLE_IDS), "structure_ids": list(STRUCTURE_IDS),
         "window_bp": WINDOW_BP, "bin_size_bp": BIN_BP,
         "coordinates": "0-based, half-open; window start aligned to 100 bp",

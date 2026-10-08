@@ -1,0 +1,139 @@
+{
+  "date": "2026-10-08",
+  "base_commit": "bd039772fa220677ba223d58bc4db071348c89dc",
+  "source_state": "合并后工作区，含本次交付修订；以下逐文件SHA对应实际检查内容，非声称基线提交已包含全部修订",
+  "source_sha256": {
+    "docs/report/main.tex": "753f804d19c900980292b65ae0146d8ea5960092efef02887ba3e113112eba69",
+    "docs/report/references.tex": "8d12d88b30a29a6ca439e8af0e8bc8fd0d880270e1d9351e8a8696443475c0db",
+    "docs/report/sections/a_abstract.tex": "b6904a2fead113f2ed1ff654f2b93a3cbb98cc39aeb4568ba509cf3e180e6c5b",
+    "docs/report/sections/a_data.tex": "4d0e34087851da6ce6108c5f374fee7f490e2d2826d4e3e9e44c28724f2fbaf0",
+    "docs/report/sections/a_difference.tex": "92d2c29ccad054ebc347aee89450f90a85b635894f3a690b43e5f6605247c2e7",
+    "docs/report/sections/a_overview.tex": "b69d4cf0b53d5bc94128d01674c7a0702cf347381b8e01d81ad2bf9f2a0f1492",
+    "docs/report/sections/a_summary.tex": "5365e37f13b8fbbe7c7b2b0bd1836f7c646c184c6f0c587507e7ca13e58c8747",
+    "docs/report/sections/b_classification.tex": "041f1f7e69d903cfa043274819115a5106dae4c501743c1b79a981839abe7e75",
+    "docs/report/sections/b_validation.tex": "87ef5b41bc2f049346cbd465e078155a89de6117d41625aeaa669b288d074a94",
+    "docs/report/sections/c_discovery_visualization.tex": "5d77caa4ca308336935bb1afdbebf3d3cdf40c32d21b037b447dc71e6fbada74",
+    "docs/slides/main.tex": "add9582d52afa7d88d7604508fe60e98b93624e63334b80f93d68078b56d40b1",
+    "docs/slides/sections/a_difference.tex": "7f663f4cda5741254edcd70d78a05f59f7605f86e032b7402c8fe1f1cf846e02",
+    "docs/slides/sections/a_intro.tex": "f519fea90e90ce1d9e13c88d66f75ac93875d40a1c19f98370976cb963e5c171",
+    "docs/slides/sections/b_classification_validation.tex": "11ecbf9b85e4348f7b7300ea64ca20afefeab2a2b6a1f24867aa403d42e5b645",
+    "docs/slides/sections/c_discovery_visualization.tex": "d62554637ae06650932a8b100b19b728362469a4e923a2c80ade1e50a89eca4d",
+    "scripts/validate_wt_candidates.py": "01b7d2a2be2b94caeff351548296231a9eb380e543429c7d06016a822ea26711",
+    "scripts/preview_structures.py": "a83aaf11bbf6eb9515011ed229ee2bbcebaff8e91d87f31edd851ac63ef1a2ef",
+    "scripts/package_submission.py": "bac07a57b9c40fb0779b281ab0e94ed1b7762c28c9538def7a4587e1c6bc36f5"
+  },
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "torch": "2.14.0+cpu",
+    "cooler": "0.10.4",
+    "matplotlib": "3.11.2"
+  },
+  "tests": {
+    "command": "python -m unittest discover -s tests -v",
+    "passed": 40,
+    "failed": 0
+  },
+  "latex": {
+    "command": "xelatex -interaction=nonstopmode -halt-on-error -output-directory=build main.tex",
+    "passes_each": 2,
+    "report": {
+      "pages": 20,
+      "pdf": "dist/report-20261008.pdf",
+      "sha256": "1e62e679bb9dcbc5d90f9707cf2f18e396b8adf4330f88a24ebee026e1d853f1",
+      "visually_checked_pages": [
+        1,
+        16,
+        17,
+        18,
+        19,
+        20
+      ]
+    },
+    "slides": {
+      "pages": 14,
+      "pdf": "dist/presentation-20261008.pdf",
+      "sha256": "1265ef541bc0da3556386096012624f773ea85920e4243b6e0f07cd19c7dec92",
+      "visually_checked_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ]
+    },
+    "issues": "未见裁切或未解析引用；报告保留原有数学字体替代和长路径Underfull。"
+  },
+  "clean_directory_replay": {
+    "setup": "git archive基线源码，复制本次两个入口修订；目录无.git，使用本机已有Python环境、真实原矩阵及共享100bp缓存，输出全部另存。",
+    "git_metadata_regression": "修复前validate audit因git rev-parse失败；修复后audit/review通过，无仓库Git字段为null。audit缺原矩阵时如实记为待分析。",
+    "real_preview": {
+      "windows": 6,
+      "native_shape": [
+        240,
+        240
+      ],
+      "visual_check": "六面板图已打开，坐标、色标正常"
+    },
+    "wt_validation": {
+      "analyze_executed": true,
+      "candidate_loci_review.csv": {
+        "rows": 10,
+        "max_pearson_absolute_difference": 8.881784197001252e-16,
+        "valid_pixels_match": true
+      },
+      "controls_review.csv": {
+        "rows": 6,
+        "max_pearson_absolute_difference": 5.551115123125783e-16,
+        "valid_pixels_match": true
+      },
+      "visual_check": "candidate_035配对图已打开检查"
+    },
+    "differences": {
+      "structures": 344,
+      "comparisons": 688,
+      "all_csv_fields_match_formal": true,
+      "rendered_cases": 1,
+      "visual_check": "CHIN_126_DstpA代表图已打开检查"
+    },
+    "tracks": {
+      "region_bp": [
+        1210000,
+        1220000
+      ],
+      "figures": 1,
+      "visual_check": "四面板图已打开检查"
+    }
+  },
+  "package_check": {
+    "command": "python scripts/package_submission.py --check-only",
+    "expected_exit_code": 1,
+    "status": "blocked_missing_formal_artifacts",
+    "missing": [
+      "outputs/classifier/b_retrain_seed20260918/best.pt",
+      "outputs/classifier/b_retrain_seed20260918/run.json",
+      "outputs/classifier/b_retrain_seed20260918/splits.csv",
+      "outputs/discovery/autoencoder/best.pt",
+      "outputs/discovery/autoencoder/run.json"
+    ]
+  },
+  "not_done": [
+    "正式CNN/AE权重收件及固定权重推理复跑",
+    "最终代码ZIP创建与解压回验",
+    "完整新环境安装验证",
+    "视频实际播放与录制"
+  ],
+  "deferred_by_user": [
+    "组号、姓名、学号与实际贡献暂不填写；提交前本地补填",
+    "视频录制方式后续决定，可能由组长统一录制"
+  ]
+}
