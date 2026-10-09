@@ -10,6 +10,7 @@ import json
 from pathlib import Path
 import random
 import shlex
+import shutil
 import subprocess
 import sys
 
@@ -24,6 +25,14 @@ EXPECTED = {
                 'ede9b4f7c0c6b40c8f098e43cdd0abbc0a8987f05e8b37051a5e3cbf143ad106', 358452621),
 }
 SEED = 20261002
+
+
+def git_record(*arguments):
+    if shutil.which('git') is None:
+        return None
+    result = subprocess.run(['git', *arguments], cwd=ROOT, text=True,
+                            capture_output=True, check=False)
+    return result.stdout.strip() if result.returncode == 0 else None
 
 
 def read_csv(path):
@@ -298,7 +307,7 @@ def review_results(outdir):
     run = {'created_at_utc': datetime.now(timezone.utc).isoformat(), 'command': shlex.join(sys.argv),
            'source_sha256': sha256(Path(__file__)), 'visual_review_sha256': sha256(outdir / 'visual_review.csv'),
            'analysis_run_sha256': sha256(outdir / 'run_analyze.json'),
-           'git_revision': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
+           'git_revision': git_record('rev-parse', 'HEAD'),
            'review_basis': 'all 10 candidate pairs and 6 preset controls visually inspected; no Pearson pass cutoff',
            'summary': summary}
     (outdir / 'run_review.json').write_text(json.dumps(run, ensure_ascii=False, indent=2) + '\n')
@@ -402,11 +411,9 @@ def main():
             row['representative_candidate_id'] = measured['candidate_id']
             review.append(row)
         write_csv(args.outdir / 'candidate_windows_review.csv', review)
-    def git(*arguments):
-        return subprocess.check_output(['git', *arguments], cwd=ROOT, text=True).strip()
     run = {'created_at_utc': datetime.now(timezone.utc).isoformat(), 'command': shlex.join(sys.argv),
-           'stage': args.stage, 'git_revision': git('rev-parse', 'HEAD'),
-           'git_status': git('status', '--porcelain=v1'), 'seed': SEED,
+           'stage': args.stage, 'git_revision': git_record('rev-parse', 'HEAD'),
+           'git_status': git_record('status', '--porcelain=v1'), 'seed': SEED,
            'raw_files': raw, 'analysis_executed': args.stage == 'analyze' and ready,
            'candidate_windows': 47, 'independent_loci': 10,
            'candidate_rule': 'rep1 top 1%, threshold=0.04633597284555435; unchanged',
