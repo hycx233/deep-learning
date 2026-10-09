@@ -1,0 +1,271 @@
+{
+  "date": "2026-10-09",
+  "tested_source_commit": "f41a6ce48e4feeb57ea72bf80c2ef1c71fade61a",
+  "setup": "候选代码 ZIP 解压到 /tmp 下独立目录，无 .git 且没有 Git 父仓库；使用本机既有 Python 环境、已核验真实输入与固定权重，所有复跑输出另存。未重新训练或调参。",
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "torch": "2.14.0+cpu",
+    "scikit_learn": "1.9.1",
+    "device": "cpu",
+    "OMP_NUM_THREADS": 2,
+    "OPENBLAS_NUM_THREADS": 1,
+    "MKL_NUM_THREADS": 2
+  },
+  "received_by": "A / hycx233",
+  "handoff_archives": {
+    "B-classifier-handoff-20261009.zip": {
+      "bytes": 114486,
+      "sha256": "b0e4b785c90051882c6aca3ff02b3e521f0c22b5721dc11f681c30fad9eb1e79",
+      "payload_hashes_verified": 11
+    },
+    "c-discovery-handoff-20261002.zip": {
+      "bytes": 192093513,
+      "sha256": "39e9f745c52f7f68e846a4a8ff7f6cd5f929c11b4d33ed6e2ff649e57b37f67d",
+      "payload_hashes_verified": 21
+    },
+    "c-tracks-handoff-20261002.zip": {
+      "bytes": 143602257,
+      "sha256": "d4cf48d3cb05aa447f3bb1cffe5b6f64af22709234c60be80f6d20f58eb10705",
+      "payload_hashes_verified": 472
+    }
+  },
+  "source_sha256": {
+    "scripts/analyze_classifier.py": "fd7a770e0d9d0c941202618dba2b201eef3704e89a6ebaa9a997276e9a3d5e22",
+    "scripts/build_contact_tracks.py": "d6ee9fafe691ca834bac51e73cf161e8ff59de10c8ab6dd07f653236e0add3c7",
+    "scripts/cluster_candidates.py": "8257465b4963e772c41823fee85620530a28abbada1f1c5b609cd647837e979d",
+    "scripts/compare_conditions.py": "385f54284bae9ae25aab1aa9600ce6d8cfcf72d7dd754a82a54ec46325823b3e",
+    "scripts/export_beamer_pptx.py": "96915357ea907274b663dad72f1126db35d2c7157a75b721b0a20623baf0a2e0",
+    "scripts/make_discovery_smoke_windows.py": "1d6f8550a9c08db519ba3044d329754ac47f17702349e9c76e822768c212f029",
+    "scripts/make_sample_windows.py": "f442eb60020ac09b4dcbae437bad28d741b34f9571e7a91acb72cb2b2be6d002",
+    "scripts/package_submission.py": "bac07a57b9c40fb0779b281ab0e94ed1b7762c28c9538def7a4587e1c6bc36f5",
+    "scripts/plot_difference_slide.py": "ba9eb87eb1ecc74f56e709bbd67ee2e71c93923a3a7182b9b50713ba460d3cf6",
+    "scripts/plot_track_slide.py": "2d7b150073d93060f7f1f6a5dfb04941cc4b909127411a7f37900801ac146e8a",
+    "scripts/plot_tracks.py": "8c1d00599b12eac5349cff034dcca96e86ec7b59ab525143a9280953cfa00db3",
+    "scripts/predict_classifier.py": "b0f69c28c08b07888ed80479d0b18615837f6997d9e66b67eaeb3f0a32f192d4",
+    "scripts/prepare_annotations.py": "b93d29c61601f403ee498950e675116b9174aa5a24cc48897558944c9ce887be",
+    "scripts/prepare_data.py": "a0ada27e43ad1145b674cb3301529aef595fe5fe313d32eee567c531c35cab88",
+    "scripts/prepare_discovery_scan.py": "ee53f994c0105e511b3e9ac4f4f848b7a8db197ccd1ec3eced0c3e39260d644a",
+    "scripts/prepare_samples.py": "d205e720d305e1fcaaf7d8c0f80bbfa405cb5a16ef6fa3cfebd8e1a7ed65e163",
+    "scripts/preview_structures.py": "a83aaf11bbf6eb9515011ed229ee2bbcebaff8e91d87f31edd851ac63ef1a2ef",
+    "scripts/score_candidates.py": "d64c471a7c37eae88b08e2f29c50beb05b7cad8fe061a7758e43a53e13e62f4a",
+    "scripts/train_autoencoder.py": "116e5d5f6f25ebff64d2e614a8ba3dbb881265c881c3979f77e1bbd968cac30f",
+    "scripts/train_classifier.py": "968c0c362401c1508ebc011817e072ef5522af386e48e91d7cbe44eec85fbc08",
+    "scripts/validate_wt_candidates.py": "01b7d2a2be2b94caeff351548296231a9eb380e543429c7d06016a822ea26711",
+    "src/__init__.py": "59364b4ae6ebeee3af00236573f917be943139764a18adf755a004f35322b496",
+    "src/autoencoder.py": "75d5aedc6811b02299b15e8be1a153e329b1f45cfe261541e4a5598287a718ee",
+    "src/candidate_clustering.py": "88f063d59692c3209faa550f2514f570afae00f202658745c5c542205a04936f",
+    "src/classifier_data.py": "2e79422bffdea95c2d2ff56b23d3f41de50568dac69c8d2b56672c1a4f129592",
+    "src/cnn.py": "2707d181b9f43c3a62c0d95ac371b414f410c0190f69a9bdf3e085a794ef0945",
+    "src/condition_differences.py": "bbca351e5a500372821bccd5f68dc10a44ed270ef5ce6df2e69a305a6d4a9d71",
+    "src/discovery_data.py": "a1620623f2226811594f699c8f4c88199774de74b3b78d8d34f08bf4c4f7c467",
+    "src/metrics.py": "d02bae9ac1ced4df34e9eff7a0aa60a0079965c117c56440812cbabddd67f1f5",
+    "src/preprocessing.py": "a07c5460f02f82f9a9d2a8167c4ed758c2a3fad777468b79b11f4e79b732e105",
+    "src/tracks.py": "c6000ab999b7c825ceeef1c5241b1311316991cd3f0e8818d89be111cf61d5da",
+    "src/window_splits.py": "13de39b109703a778bbde695594adca12d7da4fcd2ea9d60fc899ae7320cad2b"
+  },
+  "input_sha256": {
+    "outputs/classifier/b_retrain_seed20260918/best.pt": "bcf8f3ebaa0c816be9353f13a072a19780ec67b807e6b68345ca14c40d5bede1",
+    "outputs/classifier/b_retrain_seed20260918/splits.csv": "d813c5ef415a44fe49662b763d6b626d6c3350c48ada601c4a41800d78280415",
+    "outputs/discovery/autoencoder/best.pt": "5c23deab404803a06de9d46ccbefdeef1b00e11b1c70080c2db24c90324ce506",
+    "outputs/preprocessing/default/classification/windows.csv": "e99bec15982043e31b84065433b27c4facd1ebf30af017b18fbbe88e57146d1c",
+    "outputs/preprocessing/default/classification/windows.npz": "41a345d87c1317ee3a0a6e9786d317f22c25e7d749ae124b0ccbcb1a0351d831",
+    "outputs/discovery/scan_1kb/windows.csv": "c6730b40ade0aa30ed528313459c2c5ea284e0b3d7d6086671010416d6fac02b",
+    "outputs/discovery/scan_1kb/windows.npz": "567ae34544dc22426342b885d3e9bf252630968eebb509efc7184783f3c5de7b"
+  },
+  "cnn": {
+    "samples": 104,
+    "accuracy": 0.5096,
+    "macro_f1": 0.3454,
+    "per_class_f1": {
+      "OPCID": 0.4062,
+      "CHIN": 0.6299,
+      "CHID": 0.0
+    },
+    "confusion_matrix": [
+      [
+        13,
+        7,
+        0
+      ],
+      [
+        27,
+        40,
+        9
+      ],
+      [
+        4,
+        4,
+        0
+      ]
+    ],
+    "all_labels_and_metadata_match": true,
+    "max_probability_absolute_difference": 2.399999999846969e-07
+  },
+  "autoencoder": {
+    "windows": 4642,
+    "candidates": 47,
+    "all_candidate_ids_ranks_and_metadata_match": true,
+    "max_error_absolute_difference": 1.100000000114898e-08,
+    "threshold": 0.04633596912026405,
+    "threshold_absolute_difference": 3.725290298461914e-09,
+    "latent_shape": [
+      4642,
+      32
+    ],
+    "latent_max_absolute_difference": 2.384185791015625e-06,
+    "known_recall": {
+      "available": true,
+      "known_windows": 3556,
+      "candidate_windows": 36,
+      "window_recall": 0.010123734533183352,
+      "known_structures": 344,
+      "recalled_structures": 21,
+      "structure_recall": 0.061046511627906974,
+      "per_type_window_recall": {
+        "OPCID": 0.020072992700729927,
+        "CHIN": 0.006143838091796169,
+        "CHID": 0.007462686567164179
+      }
+    },
+    "code_version_without_git": "unknown"
+  },
+  "clustering": {
+    "selected_members": 564,
+    "candidate_windows": 47,
+    "independent_candidate_loci": 10,
+    "pca_components": 10,
+    "pca_whiten": true,
+    "dbscan": {
+      "eps": 3.0,
+      "min_samples": 5
+    },
+    "non_noise_clusters": 1,
+    "noise_members": 68,
+    "suspected_new_clusters": [],
+    "classification": {
+      "available": true,
+      "features": 32,
+      "independent_reference_positions": 306,
+      "class_counts": {
+        "CHIN": 226,
+        "OPCID": 68,
+        "CHID": 12
+      },
+      "spatial_groups": 60,
+      "cross_fold_spatial_overlap_pairs": 0,
+      "fold_sizes": {
+        "0": 61,
+        "1": 61,
+        "2": 61,
+        "3": 62,
+        "4": 61
+      },
+      "folds": 5,
+      "accuracy": 0.49673202614379086,
+      "balanced_accuracy": 0.5178870958412863,
+      "majority_accuracy": 0.738562091503268,
+      "majority_balanced_accuracy": 0.3333333333333333,
+      "note": "完整窗口按空间重叠连通组进入同一折；该分组交叉验证只检查 32 维表征是否含已知类别信息，不是最终分类模型指标。"
+    },
+    "conclusion": "没有簇满足本组疑似新簇规则；不宣称发现新结构。",
+    "tables": {
+      "candidate_clusters.csv": {
+        "rows": 47,
+        "all_discrete_fields_match": true,
+        "max_numeric_absolute_difference": 3.149003776048431e-05
+      },
+      "cluster_members.csv": {
+        "rows": 564,
+        "all_discrete_fields_match": true,
+        "max_numeric_absolute_difference": 3.149003776048431e-05
+      },
+      "clusters.csv": {
+        "rows": 1,
+        "all_discrete_fields_match": true,
+        "max_numeric_absolute_difference": 2.636990471538425e-07
+      },
+      "known_reference_mapping.csv": {
+        "rows": 344,
+        "all_discrete_fields_match": true,
+        "max_numeric_absolute_difference": 0.0
+      }
+    }
+  },
+  "tracks": {
+    "received_pngs": 465,
+    "visually_checked_intervals_bp": [
+      [
+        0,
+        10000
+      ],
+      [
+        4640000,
+        4641652
+      ]
+    ],
+    "canonical_signal_dir": "outputs/tracks/contact_signal",
+    "full_received_dir": "dist/C-received-20261009/outputs/tracks/all"
+  },
+  "tested_archive": {
+    "path": "dist/code-submission-20261009-candidate.zip",
+    "bytes": 35633222,
+    "sha256": "611bfa172489509357f917e3ce482fd84c71fdc65996c8532cf942ce78102d52",
+    "payload_files": 221,
+    "total_entries": 223,
+    "all_manifest_hashes_verified": true,
+    "working_tree_has_changes": false,
+    "note": "复跑使用此包中的代码与正式权重；最终包在本次文档收尾后生成。最终逐文件哈希与来源版本以最终包内 SUBMISSION_MANIFEST.json 为准。"
+  },
+  "previous_replay_record": "docs/results/integration/checks-20261008.json",
+  "limits": [
+    "未进行全新 Python 环境安装；无 Git 的独立解压目录与现有 CPU 环境已经验证。",
+    "B 训练时 scripts/train_classifier.py 与 src/classifier_data.py 的原副本未找回；保留原始指纹及差异说明，当前源码固定推理已复现，不声称训练源码逐字节重现。",
+    "未重新训练、调参、生成全部 465 张轨道图；沿用正式产物。",
+    "视频实际播放、录制与提交尚未完成；成员实名信息和实际贡献按组长决定留到正式提交前本地填写。"
+  ],
+  "latex": {
+    "command": "xelatex -interaction=nonstopmode -halt-on-error -output-directory=build main.tex",
+    "passes_each": 2,
+    "report": {
+      "pages": 20,
+      "path": "dist/report-20261009.pdf",
+      "sha256": "7deebf196f19b4adae5d7b82a211314c3420926a1bf66925739461297f5c1ae2",
+      "visually_checked_pages": [
+        1,
+        18,
+        19,
+        20
+      ]
+    },
+    "slides": {
+      "pages": 14,
+      "path": "dist/presentation-20261009.pdf",
+      "sha256": "4ab2b71a6384f5572aff07fa30014e7841c3d1d2dd271f0b6efefabed392da46",
+      "visually_checked_pages": [
+        1,
+        7,
+        14
+      ],
+      "source_unchanged_from_20261008_full_page_review": true
+    },
+    "issues": "无 Overfull 或未解析引用；报告保留已有数学字体替代警告；抽查页面未见裁切或缺失。"
+  },
+  "latex_source_sha256": {
+    "docs/report/main.tex": "3d25a4a97aec83481276978dfbd5513128f55a041712fba6208f62f9647c1875",
+    "docs/report/references.tex": "8d12d88b30a29a6ca439e8af0e8bc8fd0d880270e1d9351e8a8696443475c0db",
+    "docs/report/sections/a_abstract.tex": "b6904a2fead113f2ed1ff654f2b93a3cbb98cc39aeb4568ba509cf3e180e6c5b",
+    "docs/report/sections/a_data.tex": "4d0e34087851da6ce6108c5f374fee7f490e2d2826d4e3e9e44c28724f2fbaf0",
+    "docs/report/sections/a_difference.tex": "92d2c29ccad054ebc347aee89450f90a85b635894f3a690b43e5f6605247c2e7",
+    "docs/report/sections/a_overview.tex": "b69d4cf0b53d5bc94128d01674c7a0702cf347381b8e01d81ad2bf9f2a0f1492",
+    "docs/report/sections/a_summary.tex": "4c8e1baf64ae07ea1c9cafa7f49b9293ce16f905f09a39419ae83c517ee3c0da",
+    "docs/report/sections/b_classification.tex": "041f1f7e69d903cfa043274819115a5106dae4c501743c1b79a981839abe7e75",
+    "docs/report/sections/b_validation.tex": "87ef5b41bc2f049346cbd465e078155a89de6117d41625aeaa669b288d074a94",
+    "docs/report/sections/c_discovery_visualization.tex": "5d77caa4ca308336935bb1afdbebf3d3cdf40c32d21b037b447dc71e6fbada74",
+    "docs/slides/main.tex": "add9582d52afa7d88d7604508fe60e98b93624e63334b80f93d68078b56d40b1",
+    "docs/slides/sections/a_difference.tex": "7f663f4cda5741254edcd70d78a05f59f7605f86e032b7402c8fe1f1cf846e02",
+    "docs/slides/sections/a_intro.tex": "f519fea90e90ce1d9e13c88d66f75ac93875d40a1c19f98370976cb963e5c171",
+    "docs/slides/sections/b_classification_validation.tex": "11ecbf9b85e4348f7b7300ea64ca20afefeab2a2b6a1f24867aa403d42e5b645",
+    "docs/slides/sections/c_discovery_visualization.tex": "d62554637ae06650932a8b100b19b728362469a4e923a2c80ade1e50a89eca4d"
+  }
+}
