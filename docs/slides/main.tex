@@ -1,24 +1,34 @@
 \documentclass[UTF8,aspectratio=169,11pt,fontset=fandol]{ctexbeamer}
-\usepackage{amsmath,booktabs,graphicx,listings}
+\usepackage{amsmath,booktabs,graphicx,listings,tabularx}
 \definecolor{projectblue}{HTML}{1E4568}
 \lstset{language=Python,basicstyle=\ttfamily\small,
   keywordstyle=\color{projectblue}\bfseries,commentstyle=\color{gray},
   backgroundcolor=\color{black!3},frame=single,rulecolor=\color{black!15},
-  showstringspaces=false,columns=fullflexible,keepspaces=true,breaklines=true}
+  showstringspaces=false,columns=fullflexible,keepspaces=true,breaklines=true,
+  aboveskip=0.8em,belowskip=0.8em,xleftmargin=0.6em,xrightmargin=0.6em}
 \setbeamercolor{structure}{fg=projectblue}
 \setbeamercolor{frametitle}{fg=projectblue,bg=white}
 \setbeamercolor{normal text}{fg=black,bg=white}
 \setbeamertemplate{navigation symbols}{}
-\setbeamertemplate{footline}{\hspace{1em}\scriptsize Micro-C 课程项目\hfill\insertframenumber\hspace{1em}\vspace{0.7em}}
-\setbeamersize{text margin left=8mm,text margin right=8mm}
+\setbeamertemplate{footline}{\hspace{1em}\scriptsize Micro-C 课程项目\hfill\insertframenumber\,/\,\inserttotalframenumber\hspace{1em}\vspace{0.8em}}
+\setbeamersize{text margin left=9mm,text margin right=9mm}
+\addtobeamertemplate{frametitle}{\vspace{0.2em}}{\vspace{0.5em}}
+\setbeamertemplate{itemize/enumerate body begin}{\setlength{\itemsep}{0.65em}}
+\linespread{1.10}
+\setlength{\parskip}{0.55em}
+\renewcommand{\arraystretch}{1.3}
 \setlength{\emergencystretch}{1em}
 \title{基于深度学习的 Micro-C 接触矩阵处理}
 \author{hycx233 \and onlysonder \and lanshuheng9-oss}
 \date{2026 年 10 月}
 
 \begin{document}
+\input{sections/opening}
 \input{sections/a_intro}
 \input{sections/b_classification_validation}
 \input{sections/c_discovery_visualization}
+\input{sections/b_validation}
+\input{sections/c_tracks}
 \input{sections/a_difference}
+\input{sections/closing}
 \end{document}

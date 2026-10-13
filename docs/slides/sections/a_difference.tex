@@ -1,16 +1,11 @@
-% A 选做与收束约 1 分 50 秒；放在 B、C 讲解之后。
-\begin{frame}{选做模块：复用输入，做可追溯的条件比较}
-\textbf{共用预处理，增加一个分析入口，无需再训练模型。}
-\vspace{0.4em}
-
-同一区间与有效像素 $\longrightarrow$ 强度均值 $\longrightarrow$ 重复一致性 $\longrightarrow$ 表与图
+\begin{frame}{选做：比较不同条件下的结构强度}
+同一区间与有效像素 $\longrightarrow$ 重复强度 $\longrightarrow$ 变化幅度与一致性
 \[
 F_c=\log_2\frac{\overline S_c}{\overline S_{\mathrm{WT}}}
 \]
-\small 均值描述幅度；两个重复都越过同一侧参照带才记为一致变化。
+\small 两个重复都越过同一侧参照带，记为一致增强或减弱。
 \vspace{0.7em}
-
-\centering
+\begin{center}
 \begin{tabular}{lrrrr}
 \toprule
 条件 & 增强 & 减弱 & 带内 & 边界/不一致 \\
@@ -19,30 +14,29 @@ $\Delta stpA$ & 217 & 6 & 94 & 27 \\
 $\Delta hns\Delta stpA$ & 182 & 10 & 92 & 60 \\
 \bottomrule
 \end{tabular}
+\end{center}
 \vspace{0.6em}
-
-\raggedright\small 344 个结构共 688 行比较。这些是描述标签，不是统计显著性结论。\\[0.4em]
-\scriptsize 入口：\texttt{compare\_conditions.py}；共享计算：\texttt{compare\_structure()}。
+\small 344 个结构共 688 行比较，描述深度归一化后的相对强度与重复一致性。
 \end{frame}
 
-\begin{frame}{结果核查：从表中一行回到对应输入}
+\begin{frame}{从结果表回查一个具体案例}
 \centering
-\includegraphics[width=0.94\textwidth]{../results/differences/figures/CHIN_126_DstpA_slide.png}\\[0.3em]
-\small CHIN\_126：青框为量化区间，灰色像素不参与比较，两图使用同一色标。\\[0.4em]
-\small 表中均值比为 \textbf{2.504}；两个重复方向一致，完整对照保存在报告中。
+\includegraphics[width=0.93\textwidth,height=0.57\textheight,keepaspectratio]{../results/differences/figures/CHIN_126_DstpA_slide.png}\par
+\vspace{0.7em}
+\raggedright\small
+CHIN\_126：青框为量化区间，两幅条件均值图共用色标。\par
+$\Delta stpA$ 的均值强度为 WT 的 \textbf{2.504 倍}，两个重复方向一致。
 \end{frame}
 
-\begin{frame}{这次实现的三个要点}
-\begin{block}{1. 模型与数据规模相称}
-轻量 CNN 做有标签分类，自编码器学习背景重建；输入和预处理共用。
-\end{block}
-\begin{block}{2. 评价要对应实际问题}
-本次 CNN 的测试表现未超过逻辑回归；候选要看独立位置和跨重复表现。\\
-当前重建误差与强度相关较高，高分并不足以说明学到了新的形态。
-\end{block}
-\begin{block}{3. 每个结果能回到输入与运行记录}
-保留位置、有效掩码、数据划分与固定权重，使用真实结果表和代表图解释输出。
-\end{block}
-\vspace{0.3em}
-\small\textcolor{projectblue}{候选跨重复结果：10 个固定代表窗口的共同有效区域图形一致；可信新结构为 0。}
+\begin{frame}{项目结果与实现体会}
+\textcolor{projectblue}{\large\textbf{共享输入，连接训练与分析}}\par
+一套坐标、窗口和数据划分，支持 CNN、自编码器与条件比较。
+\vspace{0.9em}
+
+\textcolor{projectblue}{\large\textbf{用基线和重复评价模型}}\par
+本次逻辑回归优于 CNN；候选经过聚类与跨重复核查后，可信新结构数为 0。
+\vspace{0.9em}
+
+\textcolor{projectblue}{\large\textbf{保存数据到结果的完整过程}}\par
+固定权重、结果表和代表图可复核，已完成独立目录下的流程复跑。
 \end{frame}
