@@ -5,15 +5,15 @@
   "changes": [
     "统一逐页口播，增加开场、分工与结束，预计约 10 分钟。",
     "增加段落、列表、代码块及表格间距；先讲候选发现，再讲跨重复验证。",
-    "报告直接说明方法与结果，讨论中集中保留局限，参考文献从新页开始。"
+    "报告直接说明方法与结果，讨论中集中保留局限；按组长要求删除摘要、参考文献和正文引用编号。"
   ],
   "latex": {
     "command": "xelatex -interaction=nonstopmode -halt-on-error -output-directory=build main.tex",
     "passes_each": 2,
     "report": {
-      "pages": 20,
+      "pages": 19,
       "path": "dist/report-20261013.pdf",
-      "sha256": "dbac10f48912c01c70e4eed36997668b2be960045b7059927ad7fbaf2f20ee33",
+      "sha256": "01c963d465a81cab4dde84d35368753d5805d8df8b779f3868b17b4fa5261ca1",
       "visually_checked_pages": [
         1,
         2,
@@ -33,8 +33,11 @@
         16,
         17,
         18,
-        19,
-        20
+        19
+      ],
+      "sections_removed": [
+        "摘要",
+        "参考文献"
       ]
     },
     "slides": {
@@ -80,12 +83,10 @@
     "retrained": false
   },
   "latex_source_sha256": {
-    "docs/report/main.tex": "07a8e0ab3f36d0d276d34ecc3d6f7b64aa43d6b04ff3745e6bfb9912554997d4",
-    "docs/report/references.tex": "8d12d88b30a29a6ca439e8af0e8bc8fd0d880270e1d9351e8a8696443475c0db",
-    "docs/report/sections/a_abstract.tex": "f4386cae26914faab232980b4de4886e18bf33336883c43c92f672c8e909b9b7",
-    "docs/report/sections/a_data.tex": "5726d513aa158d08ab84a8a62e0b6eda9e818a96807693ab6a4bb2493bace12b",
+    "docs/report/main.tex": "b5a7292d468fcaeee3a57838ab5604bf3a118a390e499b65cd5c77addafb7d28",
+    "docs/report/sections/a_data.tex": "a7c45a23921e7cba63da50b6777c47784fd3335f814ca53eabd0043b2c425289",
     "docs/report/sections/a_difference.tex": "3a15d962d45a515fa5c6bbef5b65d1386477943ee2231159a04edef0bcfdebdd",
-    "docs/report/sections/a_overview.tex": "1bb9621a221a15db268aa39e14a7ed1d1182420ac6bdf3469213c9360ab55160",
+    "docs/report/sections/a_overview.tex": "f6979554e6a3def0ed29009acf954c4b965df1e374b21de50ec2536c50c05645",
     "docs/report/sections/a_summary.tex": "314eb580e41b457c38260c08a8965fe4381c5e0a23781362dc9f7b7536fa987d",
     "docs/report/sections/b_classification.tex": "3757d45835783ffb9f51ccf945b705e195abfec7a48927477e3438c8eece4a67",
     "docs/report/sections/b_validation.tex": "45fb8d7217e175238d3ed273e7447c3deb23afbe641ac3172a94ca10f10aca12",

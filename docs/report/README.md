@@ -1,6 +1,6 @@
 # LaTeX 报告
 
-这是 [#11](https://github.com/hycx233/deep-learning/issues/11) 的完整报告，包含设计思路、数据与预处理、分类评价、候选发现、聚类、轨道、条件差异和跨重复验证。2026-10-13 版共 20 页，已统一语言风格：直接说明方法与结果，讨论中集中说明局限。实验指标沿用正式记录，权重和独立目录复跑已于 10/9 验收。公开源稿保留 GitHub 昵称，身份信息与实际贡献比例在正式提交前本地填写。
+这是 [#11](https://github.com/hycx233/deep-learning/issues/11) 的完整报告，包含设计思路、数据与预处理、分类评价、候选发现、聚类、轨道、条件差异和跨重复验证。2026-10-13 版共 19 页，标题后直接进入任务目标，不含摘要和参考文献，已统一语言风格：直接说明方法与结果，讨论中集中说明局限。实验指标沿用正式记录，权重和独立目录复跑已于 10/9 验收。公开源稿保留 GitHub 昵称，身份信息与实际贡献比例在正式提交前本地填写。
 
 ## 编译
 
@@ -28,7 +28,6 @@ xelatex -interaction=nonstopmode -halt-on-error -output-directory=build main.tex
 | 文件 | 负责人 | 内容 |
 | --- | --- | --- |
 | `main.tex` | A / hycx233 | 主文件、成员信息与章节顺序 |
-| `sections/a_abstract.tex` | A 汇总 | 实验摘要，已包含 B 的分类评价与重复验证 |
 | `sections/a_overview.tex` | A | 任务目标与独立的“设计思路”章节 |
 | `sections/a_data.tex` | A | 数据来源、坐标与共享预处理 |
 | `sections/a_difference.tex` | A | 条件差异定位 |
@@ -36,11 +35,10 @@ xelatex -interaction=nonstopmode -halt-on-error -output-directory=build main.tex
 | `sections/b_classification.tex` | B / onlysonder | 分类、评价与解释 |
 | `sections/b_validation.tex` | B | 候选跨重复验证、复跑与复现说明 |
 | `sections/c_discovery_visualization.tex` | C / lanshuheng9-oss | 候选发现、聚类与多轨道图 |
-| `references.tex` | 各自追加使用的来源 | 简单参考文献，无需额外 BibTeX/Biber 步骤 |
 
 各成员修改自己的章节，通过 `\input` 汇入主文件；普通章节 PR 用 `Refs #11`，不用同时改写 `main.tex`。计划中的模型或参数应写成计划，经过正式实验确认后再替换成最终方法。图表、数值和结论要对应已保存的结果，并在各章节记录结果位置。
 
-报告挑选图优先放在 `docs/results/`，在本目录编译时可用 `../results/...` 引用，不复制整批输出。成员分工表已列明实际负责内容，贡献比例保留待填写，由三人确认后本地补齐，总和为 100%。按组长 10/8 的决定，姓名、学号、组号与真实贡献暂不填写，公开源稿保留昵称；这些信息留到最终提交前本地补齐，不阻塞本轮文稿整理。摘要与结论已同步 #4 和 #9；正式权重交接和独立解压目录复跑已完成，见 [10/9 验收记录](../results/integration/交接验收-20261009.md)。
+报告挑选图优先放在 `docs/results/`，在本目录编译时可用 `../results/...` 引用，不复制整批输出。成员分工表已列明实际负责内容，贡献比例保留待填写，由三人确认后本地补齐，总和为 100%。按组长 10/8 的决定，姓名、学号、组号与真实贡献暂不填写，公开源稿保留昵称；这些信息留到最终提交前本地补齐，不阻塞本轮文稿整理。结论已同步 #4 和 #9；正式权重交接和独立解压目录复跑已完成，见 [10/9 验收记录](../results/integration/交接验收-20261009.md)。
 
 演示采用 [17 页 Beamer PDF](../slides/README.md)，配有 [单人录制讲稿](../slides/speaker_notes.md)，由组长代表小组讲解。内部目标为 10/15 前完成录制检查与提交，课程截止 10/18。
 
@@ -52,4 +50,4 @@ xelatex -interaction=nonstopmode -halt-on-error -output-directory=build main.tex
 
 2026-10-09 更新交付状态与讨论中的复跑说明后，连续两次 XeLaTeX 编译仍为 **20 页**，检查封面、讨论与末页（第 1、18–20 页），未见裁切或未解析引用，保留已有数学字体替代警告。导出 `dist/report-20261009.pdf`。实验指标未变，实名信息与实际贡献继续本地待填。详情见 [10/9 验收记录](../results/integration/交接验收-20261009.md)。
 
-2026-10-13 统一摘要、方法、结果与讨论的行文，补充实际分工，参考文献从新页开始。连续两次 XeLaTeX 编译为 **20 页**，全部页面经渲染检查，无内容裁切、Overfull 或未解析引用，保留已有数学字体尺寸替代提示。导出 `dist/report-20261013.pdf`，检查记录见 [checks-20261013.json](../results/integration/checks-20261013.json)。
+2026-10-13 统一方法、结果与讨论的行文，补充实际分工；按组长要求删除摘要、参考文献和正文引用编号。连续两次 XeLaTeX 编译为 **19 页**，全部页面经渲染检查，无内容裁切、Overfull 或未解析引用，保留已有数学字体尺寸替代提示。导出 `dist/report-20261013.pdf`，检查记录见 [checks-20261013.json](../results/integration/checks-20261013.json)。
