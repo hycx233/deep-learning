@@ -1,0 +1,107 @@
+{
+  "date": "2026-10-13",
+  "base_commit": "c590dd98e552815ebe027d3afaac8a27079f078d",
+  "scope": "单人讲稿、17 页演示、报告语言及配套说明；实验代码、输入和正式指标沿用 10/9 版本。",
+  "changes": [
+    "统一逐页口播，增加开场、分工与结束，预计约 10 分钟。",
+    "增加段落、列表、代码块及表格间距；先讲候选发现，再讲跨重复验证。",
+    "报告直接说明方法与结果，讨论中集中保留局限，参考文献从新页开始。"
+  ],
+  "latex": {
+    "command": "xelatex -interaction=nonstopmode -halt-on-error -output-directory=build main.tex",
+    "passes_each": 2,
+    "report": {
+      "pages": 20,
+      "path": "dist/report-20261013.pdf",
+      "sha256": "dbac10f48912c01c70e4eed36997668b2be960045b7059927ad7fbaf2f20ee33",
+      "visually_checked_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ]
+    },
+    "slides": {
+      "pages": 17,
+      "path": "dist/presentation-20261013.pdf",
+      "sha256": "74ad3fb1d9b04658495e58786b1ef535205a11d77b6468f63c5e9be7867f6fc8",
+      "visually_checked_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    "visual_check": "Poppler 渲染全部页面，检查标题、段落、代码、表格和图表；分工页、测试表、候选聚类页及报告末尾另作放大检查。",
+    "diagnostics": "无 Overfull 或未解析引用，未见裁切；报告保留数学字体尺寸替代提示。"
+  },
+  "narration": {
+    "path": "docs/slides/speaker_notes.md",
+    "pages": 17,
+    "estimated_seconds": 575,
+    "timing_note": "逐页时长为试讲前估计，实际按语速和停顿调整。",
+    "sha256": "a78971b9988e75091118ecac80ecefe06091f33ea5c005c0abb0e3e876f38c19"
+  },
+  "previous_experiment_check": "docs/results/integration/checks-20261009.json",
+  "experiment_hash_check": {
+    "runtime_files": 32,
+    "all_runtime_hashes_unchanged": true,
+    "inputs_and_checkpoints": 7,
+    "all_input_hashes_unchanged": true,
+    "retrained": false
+  },
+  "latex_source_sha256": {
+    "docs/report/main.tex": "07a8e0ab3f36d0d276d34ecc3d6f7b64aa43d6b04ff3745e6bfb9912554997d4",
+    "docs/report/references.tex": "8d12d88b30a29a6ca439e8af0e8bc8fd0d880270e1d9351e8a8696443475c0db",
+    "docs/report/sections/a_abstract.tex": "f4386cae26914faab232980b4de4886e18bf33336883c43c92f672c8e909b9b7",
+    "docs/report/sections/a_data.tex": "5726d513aa158d08ab84a8a62e0b6eda9e818a96807693ab6a4bb2493bace12b",
+    "docs/report/sections/a_difference.tex": "3a15d962d45a515fa5c6bbef5b65d1386477943ee2231159a04edef0bcfdebdd",
+    "docs/report/sections/a_overview.tex": "1bb9621a221a15db268aa39e14a7ed1d1182420ac6bdf3469213c9360ab55160",
+    "docs/report/sections/a_summary.tex": "314eb580e41b457c38260c08a8965fe4381c5e0a23781362dc9f7b7536fa987d",
+    "docs/report/sections/b_classification.tex": "3757d45835783ffb9f51ccf945b705e195abfec7a48927477e3438c8eece4a67",
+    "docs/report/sections/b_validation.tex": "45fb8d7217e175238d3ed273e7447c3deb23afbe641ac3172a94ca10f10aca12",
+    "docs/report/sections/c_discovery_visualization.tex": "ebf38f5a3ad399fa17f43d45f1bcbad93444d5b78784975a38ece16f0669f878",
+    "docs/slides/main.tex": "858a4c6c01b2d3c3c8930920e8a6808049f82d4ca3efb0e576d83f27574b2e81",
+    "docs/slides/sections/a_difference.tex": "6efc9fa3f3ab918dfb5857662e1e39f48d95e1019766e8ca83db6b0773ee5bd2",
+    "docs/slides/sections/a_intro.tex": "dcdbfc5d1ec4ded9355fdbc7bdb207cd08998100b05263b61a494d3154cc9378",
+    "docs/slides/sections/b_classification_validation.tex": "015785ee234a9ff1af2b302696d64a3023cfd6c951551d9507cb333e4c08061b",
+    "docs/slides/sections/b_validation.tex": "f4d7f7929e20a88d9e35f2dd756aad9207273db82315e31476409ebd8f48db8d",
+    "docs/slides/sections/c_discovery_visualization.tex": "b408e40bffb4e62b05a160dfac58dc13efb94e47b0d0ded50e665a7a5e1eef74",
+    "docs/slides/sections/c_tracks.tex": "30c78a9183ff4e48dacc0e47e98167934900c06376aca1f316076277f1f5dcf8",
+    "docs/slides/sections/closing.tex": "a8089e58705e9d74dfac52370a5a2eb5edffa5af667b6aeab3a48561e9141bc1",
+    "docs/slides/sections/opening.tex": "c86fbaa558c259d00451eb2633083795ee934a6c31d0292ecd586e4cd1272179"
+  },
+  "pending": [
+    "录制软件中的实际播放、试录、正式录制与视频检查。",
+    "正式提交前本地填写身份信息与三人确认的实际贡献比例。"
+  ]
+}
